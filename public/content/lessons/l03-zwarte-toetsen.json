@@ -1,0 +1,18 @@
+{
+  "title": "De zwarte toetsen wijzen de weg",
+  "goal": "C en F vinden met de groepjes zwarte toetsen",
+  "explanation": [
+    "De zwarte toetsen staan in groepjes van **twee** en **drie**. Daardoor kun je elke witte toets terugvinden zonder te tellen.",
+    "Een **C** ligt altijd direct links van een groepje van twee zwarte toetsen. Een **F** ligt direct links van een groepje van drie.",
+    "Er zijn veel C's en F's op een piano. Hoe verder naar rechts, hoe hoger de toon; hoe verder naar links, hoe lager."
+  ],
+  "exercise": {
+    "task": "Zoek steeds de juiste C of F en speel hem met je duim.",
+    "tempo": 60,
+    "hands": "rh",
+    "mode": "wait",
+    "parts": {
+      "rh": "C4/h@1 C5/h@1 | F4/h@1 F5/h@1 | C5/h@1 F4/h@1 | C4/w@1"
+    }
+  }
+}

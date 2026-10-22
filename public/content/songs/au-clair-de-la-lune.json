@@ -1,0 +1,33 @@
+{
+  "title": "Au clair de la lune",
+  "composer": "Frans volksliedje (18e eeuw)",
+  "icon": "🌙",
+  "hue": 240,
+  "about": "Een liedje over de maan. In het middenstuk neemt je linkerhand de melodie over: je speelt het lied samen met twee handen.",
+  "levels": [
+    {
+      "level": 1,
+      "description": "Melodie verdeeld over twee handen",
+      "tempo": 92,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "C4/q@1 C4/q@1 C4/q@1 D4/q@2 | E4/h@3 D4/h@2 | C4/q@1 E4/q@3 D4/q@2 D4/q@2 | C4/w@1 | C4/q@1 C4/q@1 C4/q@1 D4/q@2 | E4/h@3 D4/h@2 | C4/q@1 E4/q@3 D4/q@2 D4/q@2 | C4/w@1 | r/w | r/w | r/w | r/w | C4/q@1 C4/q@1 C4/q@1 D4/q@2 | E4/h@3 D4/h@2 | C4/q@1 E4/q@3 D4/q@2 D4/q@2 | C4/w@1",
+        "lh": "r/w | r/w | r/w | r/w | r/w | r/w | r/w | r/w | D4/q@1 D4/q@1 D4/q@1 D4/q@1 | A3/h@4 A3/h@4 | D4/q@1 C4/q@2 B3/q@3 A3/q@4 | G3/w@5 | r/w | r/w | r/w | r/w"
+      },
+      "chords": "C | C G | C G | C | C | C G | C G | C | G | Dm | G | G | C | C G | C G | C"
+    },
+    {
+      "level": 2,
+      "description": "Met basnoten links",
+      "tempo": 92,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "C4/q@1 C4/q@1 C4/q@1 D4/q@2 | E4/h@3 D4/h@2 | C4/q@1 E4/q@3 D4/q@2 D4/q@2 | C4/w@1 | C4/q@1 C4/q@1 C4/q@1 D4/q@2 | E4/h@3 D4/h@2 | C4/q@1 E4/q@3 D4/q@2 D4/q@2 | C4/w@1 | r/w | r/w | r/w | r/w | C4/q@1 C4/q@1 C4/q@1 D4/q@2 | E4/h@3 D4/h@2 | C4/q@1 E4/q@3 D4/q@2 D4/q@2 | C4/w@1",
+        "lh": "C3/w@5 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/w@5 | C3/w@5 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/w@5 | D4/q@1 D4/q@1 D4/q@1 D4/q@1 | A3/h@4 A3/h@4 | D4/q@1 C4/q@2 B3/q@3 A3/q@4 | G3/w@5 | C3/w@5 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/w@5"
+      },
+      "chords": "C | C G | C G | C | C | C G | C G | C | G | Dm | G | G | C | C G | C G | C"
+    }
+  ]
+}

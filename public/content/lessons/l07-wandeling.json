@@ -1,0 +1,20 @@
+{
+  "title": "Melodie: Zondagse wandeling",
+  "goal": "Een hele melodie spelen met de rechterhand",
+  "explanation": [
+    "Je kent nu alle noten van C tot G. Tijd voor een echte melodie!",
+    "Bekijk eerst het hele stuk. Zie je waar de melodie omhoog gaat en waar hij omlaag gaat? Waar zitten sprongetjes?",
+    "Druk op **Luister** om het stuk eerst te horen. Daarna speel je het zelf in de wachtmodus. Lukt dat goed? Probeer dan de tempomodus met de akkoordbegeleiding aan."
+  ],
+  "exercise": {
+    "task": "Speel de melodie. Zet bij 'Meer opties' de akkoorden aan voor begeleiding.",
+    "tempo": 84,
+    "hands": "rh",
+    "mode": "wait",
+    "accompaniment": true,
+    "parts": {
+      "rh": "E4/q@3 E4/q@3 D4/q@2 C4/q@1 | D4/q@2 E4/q@3 G4/h@5 | F4/q@4 E4/q@3 D4/q@2 F4/q@4 | E4/w@3 | E4/q@3 G4/q@5 F4/q@4 D4/q@2 | E4/q@3 D4/q@2 C4/h@1 | D4/q@2 F4/q@4 E4/q@3 D4/q@2 | C4/w@1"
+    },
+    "chords": "C | C | G | C | C G | C | G | C"
+  }
+}

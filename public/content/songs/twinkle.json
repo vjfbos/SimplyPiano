@@ -1,0 +1,45 @@
+{
+  "title": "Ah, vous dirai-je, maman",
+  "composer": "Frans volksliedje (18e eeuw)",
+  "icon": "⭐",
+  "hue": 50,
+  "about": "Deze eeuwenoude Franse melodie ken je misschien als 'Twinkle, twinkle, little star' of 'Altijd is Kortjakje ziek'. Mozart schreef er later variaties op.",
+  "levels": [
+    {
+      "level": 1,
+      "description": "Melodie rechts",
+      "tempo": 90,
+      "timeSignature": "4/4",
+      "key": "C",
+      "accompaniment": true,
+      "parts": {
+        "rh": "C4/q@1 C4/q@1 G4/q@4 G4/q@4 | A4/q@5 A4/q@5 G4/h@4 | F4/q@4 F4/q@4 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 C4/h@1 | G4/q@5 G4/q@5 F4/q@4 F4/q@4 | E4/q@3 E4/q@3 D4/h@2 | G4/q@5 G4/q@5 F4/q@4 F4/q@4 | E4/q@3 E4/q@3 D4/h@2 | C4/q@1 C4/q@1 G4/q@4 G4/q@4 | A4/q@5 A4/q@5 G4/h@4 | F4/q@4 F4/q@4 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 C4/h@1"
+      },
+      "chords": "C | F C | F C | G C | C G | C G | C G | C G | C | F C | F C | G C"
+    },
+    {
+      "level": 2,
+      "description": "Melodie rechts, basnoten links",
+      "tempo": 90,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "C4/q@1 C4/q@1 G4/q@4 G4/q@4 | A4/q@5 A4/q@5 G4/h@4 | F4/q@4 F4/q@4 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 C4/h@1 | G4/q@5 G4/q@5 F4/q@4 F4/q@4 | E4/q@3 E4/q@3 D4/h@2 | G4/q@5 G4/q@5 F4/q@4 F4/q@4 | E4/q@3 E4/q@3 D4/h@2 | C4/q@1 C4/q@1 G4/q@4 G4/q@4 | A4/q@5 A4/q@5 G4/h@4 | F4/q@4 F4/q@4 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 C4/h@1",
+        "lh": "C3/w@5 | F3/h@2 C3/h@5 | F3/h@2 C3/h@5 | G3/h@1 C3/h@5 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/w@5 | F3/h@2 C3/h@5 | F3/h@2 C3/h@5 | G3/h@1 C3/h@5"
+      },
+      "chords": "C | F C | F C | G C | C G | C G | C G | C G | C | F C | F C | G C"
+    },
+    {
+      "level": 3,
+      "description": "Melodie rechts, akkoorden links",
+      "tempo": 100,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "C4/q@1 C4/q@1 G4/q@4 G4/q@4 | A4/q@5 A4/q@5 G4/h@4 | F4/q@4 F4/q@4 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 C4/h@1 | G4/q@5 G4/q@5 F4/q@4 F4/q@4 | E4/q@3 E4/q@3 D4/h@2 | G4/q@5 G4/q@5 F4/q@4 F4/q@4 | E4/q@3 E4/q@3 D4/h@2 | C4/q@1 C4/q@1 G4/q@4 G4/q@4 | A4/q@5 A4/q@5 G4/h@4 | F4/q@4 F4/q@4 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 C4/h@1",
+        "lh": "C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | C3+F3+A3/h@5+2+1 C3+E3+G3/h@5+3+1 | C3+F3+A3/h@5+2+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | C3+F3+A3/h@5+2+1 C3+E3+G3/h@5+3+1 | C3+F3+A3/h@5+2+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1"
+      },
+      "chords": "C | F C | F C | G C | C G | C G | C G | C G | C | F C | F C | G C"
+    }
+  ]
+}

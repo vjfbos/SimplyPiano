@@ -1,0 +1,18 @@
+{
+  "title": "Middel-C op de notenbalk",
+  "goal": "C, D en E lezen in de G-sleutel",
+  "explanation": [
+    "Muziek wordt geschreven op een **notenbalk** van vijf lijnen. Hoe hoger een noot op de balk staat, hoe hoger hij klinkt.",
+    "Voor de rechterhand gebruiken we meestal de **G-sleutel** (vioolsleutel). Zijn krul draait om de tweede lijn van onderen: daar staat de G.",
+    "**Middel-C** heeft een eigen kort hulplijntje onder de notenbalk. De D hangt net onder de balk en de E staat op de onderste lijn."
+  ],
+  "exercise": {
+    "task": "Lees de noten en speel ze. De cursor laat zien waar je bent.",
+    "tempo": 70,
+    "hands": "rh",
+    "mode": "wait",
+    "parts": {
+      "rh": "C4/q@1 D4/q@2 E4/h@3 | E4/q@3 D4/q@2 C4/h@1 | C4/q@1 E4/q@3 D4/q@2 C4/q@1 | D4/q@2 E4/q@3 C4/h@1"
+    }
+  }
+}

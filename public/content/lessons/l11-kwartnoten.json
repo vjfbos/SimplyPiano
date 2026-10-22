@@ -1,0 +1,19 @@
+{
+  "title": "De tel: kwartnoten",
+  "goal": "Gelijkmatig spelen op de tel",
+  "explanation": [
+    "Muziek heeft een **puls**, net als je hartslag. Een kwartnoot (dicht bolletje met een stok) duurt precies één tel.",
+    "Vooraan staat **4/4**: er zitten vier tellen in elke maat. De maatstrepen verdelen de muziek in stukjes van vier tellen.",
+    "In de **tempomodus** loopt het stuk door, ook als je een noot mist. Je hoort eerst vier tikken aftellen; daarna speel je op elke tik één noot. Je ziet meteen of je op tijd, te vroeg of te laat was."
+  ],
+  "tip": "Tel hardop mee: 'één, twee, drie, vier'. Hardop tellen helpt echt!",
+  "exercise": {
+    "task": "Speel op elke tik van de metronoom één noot.",
+    "tempo": 72,
+    "hands": "rh",
+    "mode": "tempo",
+    "parts": {
+      "rh": "C4/q@1 C4/q@1 D4/q@2 D4/q@2 | E4/q@3 E4/q@3 D4/q@2 D4/q@2 | C4/q@1 D4/q@2 E4/q@3 F4/q@4 | E4/q@3 D4/q@2 C4/q@1 C4/q@1"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Samen tegelijk",
+  "goal": "Lange noten links onder een melodie rechts",
+  "explanation": [
+    "Je linkerhand speelt lange, hele noten en blijft liggen, terwijl je rechterhand de melodie doorspeelt.",
+    "Druk de linkernoot en de eerste rechternoot **precies tegelijk** in. In de wachtmodus gaat het stuk pas verder als beide noten goed zijn.",
+    "Lukt het nog niet? Kies boven het stuk eerst 'Rechts' of 'Links' om één hand apart te oefenen. Daarna weer 'Beide'."
+  ],
+  "exercise": {
+    "task": "Speel met twee handen tegelijk.",
+    "tempo": 76,
+    "hands": "both",
+    "mode": "wait",
+    "parts": {
+      "rh": "E4/q@3 F4/q@4 G4/h@5 | F4/q@4 E4/q@3 D4/h@2 | E4/q@3 D4/q@2 C4/q@1 E4/q@3 | D4/w@2 | E4/q@3 F4/q@4 G4/h@5 | G4/q@5 F4/q@4 E4/h@3 | D4/q@2 E4/q@3 D4/q@2 G4/q@5 | C4/w@1",
+      "lh": "C3/w@5 | G3/w@1 | C3/w@5 | G3/w@1 | C3/w@5 | C3/w@5 | G3/w@1 | C3/w@5"
+    }
+  }
+}

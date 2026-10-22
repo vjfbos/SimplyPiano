@@ -1,0 +1,45 @@
+{
+  "title": "Jingle Bells",
+  "composer": "James Lord Pierpont (1857)",
+  "icon": "🛷",
+  "hue": 0,
+  "about": "Oorspronkelijk geschreven voor Thanksgiving, nu een van de bekendste winterliedjes ter wereld. Let op het gepunteerde ritme in maat 3.",
+  "levels": [
+    {
+      "level": 1,
+      "description": "Refrein rechts",
+      "tempo": 108,
+      "timeSignature": "4/4",
+      "key": "C",
+      "accompaniment": true,
+      "parts": {
+        "rh": "E4/q@3 E4/q@3 E4/h@3 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 G4/q@5 C4/q.@1 D4/8@2 | E4/w@3 | F4/q@4 F4/q@4 F4/q.@4 F4/8@4 | F4/q@4 E4/q@3 E4/q@3 E4/8@3 E4/8@3 | E4/q@3 D4/q@2 D4/q@2 E4/q@3 | D4/h@2 G4/h@5 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 G4/q@5 C4/q.@1 D4/8@2 | E4/w@3 | F4/q@4 F4/q@4 F4/q.@4 F4/8@4 | F4/q@4 E4/q@3 E4/q@3 E4/8@3 E4/8@3 | G4/q@5 G4/q@5 F4/q@4 D4/q@2 | C4/w@1"
+      },
+      "chords": "C | C | C | C | F | C | G | G | C | C | C | C | F | C | G | C"
+    },
+    {
+      "level": 2,
+      "description": "Met basnoten links",
+      "tempo": 108,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "E4/q@3 E4/q@3 E4/h@3 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 G4/q@5 C4/q.@1 D4/8@2 | E4/w@3 | F4/q@4 F4/q@4 F4/q.@4 F4/8@4 | F4/q@4 E4/q@3 E4/q@3 E4/8@3 E4/8@3 | E4/q@3 D4/q@2 D4/q@2 E4/q@3 | D4/h@2 G4/h@5 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 G4/q@5 C4/q.@1 D4/8@2 | E4/w@3 | F4/q@4 F4/q@4 F4/q.@4 F4/8@4 | F4/q@4 E4/q@3 E4/q@3 E4/8@3 E4/8@3 | G4/q@5 G4/q@5 F4/q@4 D4/q@2 | C4/w@1",
+        "lh": "C3/w@5 | C3/w@5 | C3/w@5 | C3/w@5 | F3/w@2 | C3/w@5 | G3/w@1 | G3/w@1 | C3/w@5 | C3/w@5 | C3/w@5 | C3/w@5 | F3/w@2 | C3/w@5 | G3/w@1 | C3/w@5"
+      },
+      "chords": "C | C | C | C | F | C | G | G | C | C | C | C | F | C | G | C"
+    },
+    {
+      "level": 3,
+      "description": "Huppelende linkerhand",
+      "tempo": 116,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "E4/q@3 E4/q@3 E4/h@3 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 G4/q@5 C4/q.@1 D4/8@2 | E4/w@3 | F4/q@4 F4/q@4 F4/q.@4 F4/8@4 | F4/q@4 E4/q@3 E4/q@3 E4/8@3 E4/8@3 | E4/q@3 D4/q@2 D4/q@2 E4/q@3 | D4/h@2 G4/h@5 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 E4/q@3 E4/h@3 | E4/q@3 G4/q@5 C4/q.@1 D4/8@2 | E4/w@3 | F4/q@4 F4/q@4 F4/q.@4 F4/8@4 | F4/q@4 E4/q@3 E4/q@3 E4/8@3 E4/8@3 | G4/q@5 G4/q@5 F4/q@4 D4/q@2 | C4/w@1",
+        "lh": "C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 F3/q@2 C3/q@5 F3/q@2 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | G3/q@1 D3/q@4 G3/q@1 D3/q@4 | G3/q@1 D3/q@4 G3/q@1 D3/q@4 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | C3/q@5 F3/q@2 C3/q@5 F3/q@2 | C3/q@5 G3/q@1 C3/q@5 G3/q@1 | G3/q@1 D3/q@4 G3/q@1 D3/q@4 | C3/q@5 G3/q@1 C3/q@5 G3/q@1"
+      },
+      "chords": "C | C | C | C | F | C | G | G | C | C | C | C | F | C | G | C"
+    }
+  ]
+}

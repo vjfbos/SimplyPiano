@@ -1,0 +1,19 @@
+{
+  "title": "Vingers krijgen nummers",
+  "goal": "Vingernummers 1 tot en met 5 en de C-positie",
+  "explanation": [
+    "Elke vinger heeft een nummer: **duim = 1**, wijsvinger = 2, middelvinger = 3, ringvinger = 4 en pink = 5. Dat geldt voor allebei je handen.",
+    "Leg je rechterduim op middel-C. Je andere vingers liggen dan vanzelf op D, E, F en G, elke vinger op zijn eigen toets. Dit noemen we de **C-positie**.",
+    "Bij de noten zie je kleine cijfertjes: dat is de vinger die je gebruikt. Op het toetsenbord staat het ook, bijvoorbeeld **R3** betekent rechterhand, vinger 3."
+  ],
+  "tip": "Houd alle vingers op hun eigen toets, ook als ze even niets spelen.",
+  "exercise": {
+    "task": "Wandel met je vingers omhoog en weer omlaag.",
+    "tempo": 70,
+    "hands": "rh",
+    "mode": "wait",
+    "parts": {
+      "rh": "C4/q@1 D4/q@2 E4/q@3 F4/q@4 | G4/h@5 r/h | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/w@1"
+    }
+  }
+}

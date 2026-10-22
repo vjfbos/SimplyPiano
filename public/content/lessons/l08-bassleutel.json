@@ -1,0 +1,18 @@
+{
+  "title": "De bassleutel",
+  "goal": "De linkerhand in de C-positie",
+  "explanation": [
+    "De linkerhand leest meestal de **F-sleutel** (bassleutel). De twee puntjes staan rond de vierde lijn: daar staat de F onder middel-C.",
+    "Leg je **linkerpink (5)** op de C onder middel-C. Je andere vingers liggen dan op D, E, F en G, en je duim (1) ligt op G.",
+    "Let op: in de linkerhand speelt de duim de **hoogste** noot. De nummers lopen dus andersom dan in je rechterhand."
+  ],
+  "exercise": {
+    "task": "Wandel met je linkerhand omhoog en weer omlaag.",
+    "tempo": 70,
+    "hands": "lh",
+    "mode": "wait",
+    "parts": {
+      "lh": "C3/q@5 D3/q@4 E3/q@3 F3/q@2 | G3/h@1 r/h | G3/q@1 F3/q@2 E3/q@3 D3/q@4 | C3/w@5"
+    }
+  }
+}

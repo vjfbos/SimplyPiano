@@ -1,0 +1,20 @@
+{
+  "title": "Lang en langer",
+  "goal": "Halve en hele noten aanhouden",
+  "explanation": [
+    "Een **halve noot** (open bolletje met stok) duurt twee tellen. Een **hele noot** (open bolletje zonder stok) duurt vier tellen.",
+    "Houd de toets ingedrukt tot de tellen voorbij zijn. Tel in je hoofd door: 'één-twee-drie-vier'.",
+    "Staat er een **punt** achter een noot? Dan duurt hij de helft langer. Een gepunteerde halve noot duurt dus drie tellen."
+  ],
+  "exercise": {
+    "task": "Speel op tijd en houd de lange noten vol.",
+    "tempo": 76,
+    "hands": "rh",
+    "mode": "tempo",
+    "accompaniment": true,
+    "parts": {
+      "rh": "C4/h@1 E4/h@3 | G4/w@5 | F4/q@4 E4/q@3 D4/h@2 | E4/h.@3 r/q | G4/h@5 E4/h@3 | F4/q@4 D4/q@2 G4/h@5 | E4/q@3 D4/q@2 E4/h@3 | C4/w@1"
+    },
+    "chords": "C | C | G | C | C | G | C G | C"
+  }
+}

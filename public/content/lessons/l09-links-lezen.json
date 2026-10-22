@@ -1,0 +1,18 @@
+{
+  "title": "Links lezen",
+  "goal": "C tot en met G lezen in de bassleutel",
+  "explanation": [
+    "In de bassleutel staat de C (je pink) in de tweede tussenruimte van onderen. E staat in de derde ruimte en G in de bovenste ruimte.",
+    "D staat op de middelste lijn, F op de vierde lijn. Ook hier wisselen lijn en ruimte elkaar af.",
+    "Ezelsbruggetje: de vier tussenruimtes van de bassleutel zijn van onder naar boven **A-C-E-G**."
+  ],
+  "exercise": {
+    "task": "Lees en speel met je linkerhand.",
+    "tempo": 70,
+    "hands": "lh",
+    "mode": "wait",
+    "parts": {
+      "lh": "C3/q@5 E3/q@3 D3/q@4 F3/q@2 | E3/q@3 G3/q@1 F3/h@2 | E3/q@3 D3/q@4 E3/q@3 C3/q@5 | D3/q@4 D3/q@4 C3/h@5"
+    }
+  }
+}

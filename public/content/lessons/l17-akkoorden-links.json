@@ -1,0 +1,18 @@
+{
+  "title": "Akkoorden links",
+  "goal": "Begeleidingsakkoorden met de linkerhand",
+  "explanation": [
+    "Ook je linkerhand speelt akkoorden, meestal laag, als **begeleiding**. Het C-akkoord links is C-E-G met vinger 5, 3 en 1.",
+    "Het F-akkoord speel je als C-F-A (vinger 5, 2, 1). Voor het G-akkoord schuift je pink naar B: B-D-G met vinger 5, 3 en 1.",
+    "Een melodie in je rechterhand met akkoorden in je linkerhand: zo werken de meeste liedjes die je op de radio hoort."
+  ],
+  "exercise": {
+    "task": "Speel de akkoorden met je linkerhand.",
+    "tempo": 70,
+    "hands": "lh",
+    "mode": "wait",
+    "parts": {
+      "lh": "C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | C3+F3+A3/h@5+2+1 C3+F3+A3/h@5+2+1 | B2+D3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/w@5+3+1"
+    }
+  }
+}

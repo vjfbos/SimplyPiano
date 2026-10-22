@@ -1,0 +1,30 @@
+{
+  "name": "toetsentuin",
+  "version": "0.1.0",
+  "description": "Leer piano spelen met directe feedback per noot (PWA)",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "npm run check-content && vite build",
+    "preview": "vite preview --host",
+    "test": "vitest run",
+    "check-content": "node scripts/check-content.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vjfbos/SimplyPiano.git"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/vjfbos/SimplyPiano/issues"
+  },
+  "homepage": "https://github.com/vjfbos/SimplyPiano#readme",
+  "dependencies": {
+    "vexflow": "^5.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "private": true,
+  "type": "module"
+}

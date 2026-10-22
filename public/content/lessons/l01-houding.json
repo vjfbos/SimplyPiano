@@ -1,0 +1,20 @@
+{
+  "title": "Zit als een kampioen",
+  "goal": "Goede houding en de middel-C vinden",
+  "explanation": [
+    "Zet de kruk zo hoog dat je onderarmen ongeveer **horizontaal** zijn als je handen op de toetsen liggen. Je ellebogen hangen ontspannen naast je lichaam.",
+    "Ga op het **voorste deel** van de kruk zitten, met je voeten plat op de grond. Komen je voeten er nog niet bij? Zet ze op een stevig krukje of een stapel boeken.",
+    "Ga recht voor de **middel-C** zitten: de witte toets direct links van de twee zwarte toetsen, ongeveer in het midden van je keyboard. In deze app heeft middel-C een oranje stipje.",
+    "Maak je hand rond, alsof je een **mandarijn** vasthoudt. Je speelt met de toppen van je vingers; je duim speelt met de zijkant van zijn topje."
+  ],
+  "tip": "Voelen je schouders stijf? Laat je armen even slap hangen, schud ze los en begin opnieuw.",
+  "exercise": {
+    "task": "Speel middel-C met je rechterduim, steeds als de toets oplicht.",
+    "tempo": 60,
+    "hands": "rh",
+    "mode": "wait",
+    "parts": {
+      "rh": "C4/q@1 C4/q@1 C4/q@1 C4/q@1 | C4/h@1 C4/h@1 | C4/w@1"
+    }
+  }
+}

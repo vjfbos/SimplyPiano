@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "units": [
+    {
+      "id": "u1",
+      "title": "Klaar om te spelen",
+      "description": "Houding, vingernummers en je weg vinden op het keyboard.",
+      "icon": "🪑",
+      "hue": 35,
+      "lessons": [
+        "l01-houding",
+        "l02-vingers",
+        "l03-zwarte-toetsen"
+      ]
+    },
+    {
+      "id": "u2",
+      "title": "Noten lezen: rechterhand",
+      "description": "De G-sleutel en de noten van C tot G.",
+      "icon": "👉",
+      "hue": 15,
+      "lessons": [
+        "l04-middel-c",
+        "l05-lijnen-ruimtes",
+        "l06-sprongen",
+        "l07-wandeling"
+      ]
+    },
+    {
+      "id": "u3",
+      "title": "Noten lezen: linkerhand",
+      "description": "De bassleutel en de linker C-positie.",
+      "icon": "👈",
+      "hue": 230,
+      "lessons": [
+        "l08-bassleutel",
+        "l09-links-lezen",
+        "l10-beer"
+      ]
+    },
+    {
+      "id": "u4",
+      "title": "Ritme",
+      "description": "Tellen, lange noten, rusten en achtsten op de maat.",
+      "icon": "🥁",
+      "hue": 50,
+      "lessons": [
+        "l11-kwartnoten",
+        "l12-lange-noten",
+        "l13-rusten",
+        "l14-achtsten"
+      ]
+    },
+    {
+      "id": "u5",
+      "title": "Akkoorden",
+      "description": "Meerdere noten tegelijk: C, F en G.",
+      "icon": "🎶",
+      "hue": 150,
+      "lessons": [
+        "l15-c-akkoord",
+        "l16-c-f-g",
+        "l17-akkoorden-links"
+      ]
+    },
+    {
+      "id": "u6",
+      "title": "Beide handen",
+      "description": "Links en rechts samen laten spelen.",
+      "icon": "🙌",
+      "hue": 280,
+      "lessons": [
+        "l18-om-de-beurt",
+        "l19-samen",
+        "l20-duet"
+      ]
+    }
+  ],
+  "songs": [
+    "twinkle",
+    "vader-jacob",
+    "ode-an-die-freude",
+    "au-clair-de-la-lune",
+    "jingle-bells",
+    "fur-elise",
+    "menuet-in-g"
+  ]
+}

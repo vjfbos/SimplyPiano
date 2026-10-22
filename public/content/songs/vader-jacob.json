@@ -1,0 +1,45 @@
+{
+  "title": "Vader Jacob",
+  "composer": "Frans volksliedje (Frère Jacques)",
+  "icon": "🔔",
+  "hue": 20,
+  "about": "Een canon: iedereen zingt dezelfde melodie, maar begint later. Op niveau 3 speel je de canon met jezelf: je linkerhand begint twee maten na je rechterhand.",
+  "levels": [
+    {
+      "level": 1,
+      "description": "Melodie rechts",
+      "tempo": 100,
+      "timeSignature": "4/4",
+      "key": "C",
+      "accompaniment": true,
+      "parts": {
+        "rh": "C4/q@1 D4/q@2 E4/q@3 C4/q@1 | C4/q@1 D4/q@2 E4/q@3 C4/q@1 | E4/q@3 F4/q@4 G4/h@5 | E4/q@3 F4/q@4 G4/h@5 | G4/8@4 A4/8@5 G4/8@4 F4/8@3 E4/q@2 C4/q@1 | G4/8@4 A4/8@5 G4/8@4 F4/8@3 E4/q@2 C4/q@1 | C4/q@2 G3/q@1 C4/h@2 | C4/q@2 G3/q@1 C4/h@2"
+      },
+      "chords": "C | C | C | C | C | C | C | C"
+    },
+    {
+      "level": 2,
+      "description": "Melodie rechts, bromtoon links",
+      "tempo": 100,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "C4/q@1 D4/q@2 E4/q@3 C4/q@1 | C4/q@1 D4/q@2 E4/q@3 C4/q@1 | E4/q@3 F4/q@4 G4/h@5 | E4/q@3 F4/q@4 G4/h@5 | G4/8@4 A4/8@5 G4/8@4 F4/8@3 E4/q@2 C4/q@1 | G4/8@4 A4/8@5 G4/8@4 F4/8@3 E4/q@2 C4/q@1 | C4/q@2 G3/q@1 C4/h@2 | C4/q@2 G3/q@1 C4/h@2",
+        "lh": "C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1 | C3/h@5 G3/h@1"
+      },
+      "chords": "C | C | C | C | C | C | C | C"
+    },
+    {
+      "level": 3,
+      "description": "Canon met jezelf",
+      "tempo": 92,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "C4/q@1 D4/q@2 E4/q@3 C4/q@1 | C4/q@1 D4/q@2 E4/q@3 C4/q@1 | E4/q@3 F4/q@4 G4/h@5 | E4/q@3 F4/q@4 G4/h@5 | G4/8@4 A4/8@5 G4/8@4 F4/8@3 E4/q@2 C4/q@1 | G4/8@4 A4/8@5 G4/8@4 F4/8@3 E4/q@2 C4/q@1 | C4/q@2 G3/q@1 C4/h@2 | C4/q@2 G3/q@1 C4/h@2 | r/w | r/w",
+        "lh": "r/w | r/w | C3/q@5 D3/q@4 E3/q@3 C3/q@5 | C3/q@5 D3/q@4 E3/q@3 C3/q@5 | E3/q@3 F3/q@2 G3/h@1 | E3/q@3 F3/q@2 G3/h@1 | G3/8@2 A3/8@1 G3/8@2 F3/8@3 E3/q@4 C3/q@5 | G3/8@2 A3/8@1 G3/8@2 F3/8@3 E3/q@4 C3/q@5 | C3/q G2/q C3/h | C3/q G2/q C3/h"
+      },
+      "chords": "C | C | C | C | C | C | C | C | C | C"
+    }
+  ]
+}

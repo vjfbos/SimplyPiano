@@ -1,0 +1,19 @@
+{
+  "title": "Duet met jezelf",
+  "goal": "Twee bewegende handen tegelijk",
+  "explanation": [
+    "In dit stuk bewegen allebei je handen. Rechts zingt de melodie, links speelt een rustige tweede stem in halve noten.",
+    "Oefen eerst elke hand apart in de wachtmodus. Zet daarna 'Beide' aan en begin op 60% tempo.",
+    "Gaat het goed? Probeer de tempomodus en schuif het tempo steeds een stukje hoger. Zo word je stap voor stap een echte pianist!"
+  ],
+  "exercise": {
+    "task": "Speel het duet met allebei je handen.",
+    "tempo": 80,
+    "hands": "both",
+    "mode": "wait",
+    "parts": {
+      "rh": "G4/h@5 E4/h@3 | F4/q@4 E4/q@3 D4/h@2 | E4/q@3 F4/q@4 G4/q@5 E4/q@3 | D4/w@2 | G4/h@5 E4/h@3 | F4/q@4 E4/q@3 D4/q@2 F4/q@4 | E4/q@3 D4/q@2 E4/q@3 D4/q@2 | C4/w@1",
+      "lh": "C3/h@5 E3/h@3 | G3/h@1 G3/h@1 | C3/h@5 E3/h@3 | G3/w@1 | C3/h@5 E3/h@3 | D3/h@4 F3/h@2 | E3/h@3 G3/h@1 | C3/w@5"
+    }
+  }
+}

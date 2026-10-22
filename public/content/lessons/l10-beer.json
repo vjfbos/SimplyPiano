@@ -1,0 +1,20 @@
+{
+  "title": "Melodie: De brommende beer",
+  "goal": "Een hele melodie spelen met de linkerhand",
+  "explanation": [
+    "Lage noten klinken donker en zwaar. Perfect voor een brommende beer die door het bos sjokt!",
+    "Kijk vooral naar de **richting**: gaat de noot omhoog of omlaag, is het een stapje of een sprongetje?",
+    "Blijf met je linkerhand in de C-positie: pink op C, duim op G."
+  ],
+  "exercise": {
+    "task": "Speel de beren-melodie met je linkerhand.",
+    "tempo": 76,
+    "hands": "lh",
+    "mode": "wait",
+    "accompaniment": true,
+    "parts": {
+      "lh": "G3/q@1 F3/q@2 E3/q@3 D3/q@4 | C3/h@5 E3/h@3 | D3/q@4 E3/q@3 F3/q@2 D3/q@4 | G3/w@1 | G3/q@1 E3/q@3 F3/q@2 D3/q@4 | E3/q@3 C3/q@5 D3/h@4 | E3/q@3 D3/q@4 F3/q@2 D3/q@4 | C3/w@5"
+    },
+    "chords": "C | C | G | G | C G | C G | C G | C"
+  }
+}

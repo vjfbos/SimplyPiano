@@ -1,0 +1,45 @@
+{
+  "title": "Ode an die Freude",
+  "composer": "Ludwig van Beethoven (1824)",
+  "icon": "🎺",
+  "hue": 200,
+  "about": "Het slotdeel van Beethovens Negende symfonie. De melodie bestaat bijna helemaal uit stapjes, daardoor is hij heel geschikt om mee te beginnen.",
+  "levels": [
+    {
+      "level": 1,
+      "description": "Eerste deel, rechterhand",
+      "tempo": 96,
+      "timeSignature": "4/4",
+      "key": "C",
+      "accompaniment": true,
+      "parts": {
+        "rh": "E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | E4/h@3 D4/h@2 | E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | D4/h@2 C4/h@1"
+      },
+      "chords": "C | G | C | G | C | G | C | G C"
+    },
+    {
+      "level": 2,
+      "description": "Hele melodie, basnoten links",
+      "tempo": 96,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | E4/q.@3 D4/8@2 D4/h@2 | E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | D4/q.@2 C4/8@1 C4/h@1 | D4/q@2 D4/q@2 E4/q@3 C4/q@1 | D4/q@2 E4/8@3 F4/8@4 E4/q@3 C4/q@1 | D4/q@2 E4/8@3 F4/8@4 E4/q@3 D4/q@2 | C4/q@2 D4/q@3 G3/h@1 | E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | D4/q.@2 C4/8@1 C4/h@1",
+        "lh": "C3/w@5 | G3/w@1 | C3/w@5 | G3/w@1 | C3/w@5 | G3/w@1 | C3/w@5 | G3/h@1 C3/h@5 | G3/h@1 C3/h@5 | G3/h@1 C3/h@5 | G3/h@1 C3/h@5 | C3/h@5 G3/h@1 | C3/w@5 | G3/w@1 | C3/w@5 | G3/h@1 C3/h@5"
+      },
+      "chords": "C | G | C | G | C | G | C | G C | G C | G C | G C | C G | C | G | C | G C"
+    },
+    {
+      "level": 3,
+      "description": "Hele melodie, akkoorden links",
+      "tempo": 108,
+      "timeSignature": "4/4",
+      "key": "C",
+      "parts": {
+        "rh": "E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | E4/q.@3 D4/8@2 D4/h@2 | E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | D4/q.@2 C4/8@1 C4/h@1 | D4/q@2 D4/q@2 E4/q@3 C4/q@1 | D4/q@2 E4/8@3 F4/8@4 E4/q@3 C4/q@1 | D4/q@2 E4/8@3 F4/8@4 E4/q@3 D4/q@2 | C4/q@2 D4/q@3 G3/h@1 | E4/q@3 E4/q@3 F4/q@4 G4/q@5 | G4/q@5 F4/q@4 E4/q@3 D4/q@2 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | D4/q.@2 C4/8@1 C4/h@1",
+        "lh": "C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 B2+D3+G3/h@5+3+1 | C3+E3+G3/h@5+3+1 C3+E3+G3/h@5+3+1 | B2+D3+G3/h@5+3+1 C3+E3+G3/h@5+3+1"
+      },
+      "chords": "C | G | C | G | C | G | C | G C | G C | G C | G C | C G | C | G | C | G C"
+    }
+  ]
+}

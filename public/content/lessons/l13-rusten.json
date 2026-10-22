@@ -1,0 +1,18 @@
+{
+  "title": "Stilte telt mee",
+  "goal": "Rusten herkennen en doortellen",
+  "explanation": [
+    "Een **rust** betekent: even niets spelen, maar wél doortellen. Een kwartrust duurt één tel, een halve rust twee tellen.",
+    "De halve rust ligt als een hoedje óp de middelste lijn. De hele rust hangt eronder als een gat in de grond.",
+    "Til je hand bij een rust niet ver op: blijf klaar boven de toetsen, dan ben je op tijd voor de volgende noot."
+  ],
+  "exercise": {
+    "task": "Speel de noten en tel tijdens de rusten door.",
+    "tempo": 80,
+    "hands": "rh",
+    "mode": "tempo",
+    "parts": {
+      "rh": "C4/q@1 r/q E4/q@3 r/q | G4/q@5 r/q G4/h@5 | F4/q@4 r/q D4/q@2 r/q | C4/h@1 r/h | E4/q@3 E4/q@3 r/q E4/q@3 | D4/q@2 D4/q@2 r/q D4/q@2 | C4/q@1 E4/q@3 G4/q@5 r/q | C4/w@1"
+    }
+  }
+}

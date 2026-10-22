@@ -1,0 +1,18 @@
+{
+  "title": "Snelle stapjes: achtste noten",
+  "goal": "Twee noten in één tel",
+  "explanation": [
+    "Een **achtste noot** duurt een halve tel: er passen er twee in één tel. Twee achtsten naast elkaar worden vaak met een balk verbonden.",
+    "Tel: 'één-en-twee-en-drie-en-vier-en'. Op de 'en' speel je de tweede achtste.",
+    "Zet de tempo-schuif eerst op 60% en maak hem steeds een stukje sneller als het goed gaat."
+  ],
+  "exercise": {
+    "task": "Speel de achtsten gelijkmatig, niet gehaast.",
+    "tempo": 70,
+    "hands": "rh",
+    "mode": "tempo",
+    "parts": {
+      "rh": "C4/8@1 D4/8@2 E4/q@3 E4/8@3 F4/8@4 G4/q@5 | G4/8@5 F4/8@4 E4/8@3 D4/8@2 C4/h@1 | E4/8@3 E4/8@3 D4/q@2 F4/8@4 F4/8@4 E4/q@3 | D4/8@2 E4/8@3 D4/8@2 E4/8@3 C4/h@1"
+    }
+  }
+}

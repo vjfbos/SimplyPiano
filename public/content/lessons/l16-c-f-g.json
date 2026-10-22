@@ -1,0 +1,18 @@
+{
+  "title": "Drie buren: C, F en G",
+  "goal": "Wisselen tussen de drie hoofdakkoorden",
+  "explanation": [
+    "Het **F-akkoord** speel je hier als C-F-A: je duim blijft op C, vinger 4 gaat naar F en je pink rekt een klein stukje naar A.",
+    "Het **G-akkoord** speel je als B-D-G: je duim schuift één toets naar links (B), vinger 2 speelt D en je pink blijft op G.",
+    "C, F en G zijn de drie belangrijkste akkoorden in C. Met alleen deze drie kun je honderden liedjes begeleiden!"
+  ],
+  "exercise": {
+    "task": "Wissel tussen de akkoorden. Beweeg zo weinig mogelijk.",
+    "tempo": 70,
+    "hands": "rh",
+    "mode": "wait",
+    "parts": {
+      "rh": "C4+E4+G4/w@1+3+5 | C4+F4+A4/w@1+4+5 | C4+E4+G4/w@1+3+5 | B3+D4+G4/w@1+2+5 | C4+E4+G4/h@1+3+5 C4+F4+A4/h@1+4+5 | C4+E4+G4/h@1+3+5 B3+D4+G4/h@1+2+5 | C4+E4+G4/w@1+3+5"
+    }
+  }
+}

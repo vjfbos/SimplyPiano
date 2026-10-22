@@ -1,0 +1,19 @@
+{
+  "title": "Vraag en antwoord",
+  "goal": "Afwisselend met links en rechts spelen",
+  "explanation": [
+    "Nu gebruik je allebei je handen. Rechts stelt een muzikale **vraag**, links geeft **antwoord**.",
+    "Leg beide handen alvast klaar: rechterduim op middel-C, linkerpink op de C eronder. Je linkerduim ligt dan op G.",
+    "Kijk tijdens het spelen alvast vooruit: welke hand is straks aan de beurt?"
+  ],
+  "exercise": {
+    "task": "Speel om de beurt met rechts en links.",
+    "tempo": 76,
+    "hands": "both",
+    "mode": "wait",
+    "parts": {
+      "rh": "C4/q@1 D4/q@2 E4/h@3 | r/w | E4/q@3 F4/q@4 G4/h@5 | r/w | G4/q@5 E4/q@3 C4/h@1 | r/w | D4/q@2 E4/q@3 C4/h@1 | r/w",
+      "lh": "r/w | G3/q@1 F3/q@2 E3/h@3 | r/w | E3/q@3 D3/q@4 C3/h@5 | r/w | C3/q@5 E3/q@3 G3/h@1 | r/w | G3/q@1 E3/q@3 C3/h@5"
+    }
+  }
+}

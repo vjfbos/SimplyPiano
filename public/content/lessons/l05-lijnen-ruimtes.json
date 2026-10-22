@@ -1,0 +1,18 @@
+{
+  "title": "Op de lijn of ertussen",
+  "goal": "C tot en met G lezen",
+  "explanation": [
+    "Een noot staat **op** een lijn (de lijn gaat door het bolletje) of **tussen** twee lijnen in de tussenruimte.",
+    "E staat op de onderste lijn, F in de eerste tussenruimte en G op de tweede lijn. Zo wissel je steeds af: lijn, ruimte, lijn, ruimte.",
+    "Een stapje op de notenbalk is een stapje naar de buurtoets op de piano. Gaat de noot omhoog, dan ga je naar rechts."
+  ],
+  "exercise": {
+    "task": "Speel de stapjes omhoog en omlaag.",
+    "tempo": 70,
+    "hands": "rh",
+    "mode": "wait",
+    "parts": {
+      "rh": "E4/q@3 F4/q@4 G4/h@5 | G4/q@5 F4/q@4 E4/h@3 | D4/q@2 E4/q@3 F4/q@4 G4/q@5 | E4/q@3 D4/q@2 C4/h@1"
+    }
+  }
+}

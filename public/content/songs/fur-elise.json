@@ -1,0 +1,34 @@
+{
+  "title": "Für Elise",
+  "composer": "Ludwig van Beethoven (1810)",
+  "icon": "🎹",
+  "hue": 320,
+  "about": "Het begin van een van de bekendste pianostukken. Het staat in a-klein en in 3/8: drie achtsten per maat. De zestienden wisselen tussen de handen, dus begin langzaam!",
+  "levels": [
+    {
+      "level": 2,
+      "label": "Gevorderd",
+      "description": "Thema, rechterhand",
+      "tempo": 36,
+      "timeSignature": "3/8",
+      "key": "Am",
+      "pickup": 0.5,
+      "parts": {
+        "rh": "E5/16@5 D#5/16@4 | E5/16@5 D#5/16@4 E5/16@5 B4/16@2 D5/16@4 C5/16@3 | A4/8@1 r/16 C4/16 E4/16 A4/16 | B4/8 r/16 E4/16 G#4/16 B4/16 | C5/8 r/16 E4/16 E5/16@5 D#5/16@4 | E5/16@5 D#5/16@4 E5/16@5 B4/16@2 D5/16@4 C5/16@3 | A4/8@1 r/16 C4/16 E4/16 A4/16 | B4/8 r/16 E4/16 C5/16 B4/16 | A4/q."
+      }
+    },
+    {
+      "level": 3,
+      "label": "Uitdaging",
+      "description": "Thema, beide handen",
+      "tempo": 44,
+      "timeSignature": "3/8",
+      "key": "Am",
+      "pickup": 0.5,
+      "parts": {
+        "rh": "E5/16@5 D#5/16@4 | E5/16@5 D#5/16@4 E5/16@5 B4/16@2 D5/16@4 C5/16@3 | A4/8@1 r/16 C4/16 E4/16 A4/16 | B4/8 r/16 E4/16 G#4/16 B4/16 | C5/8 r/16 E4/16 E5/16@5 D#5/16@4 | E5/16@5 D#5/16@4 E5/16@5 B4/16@2 D5/16@4 C5/16@3 | A4/8@1 r/16 C4/16 E4/16 A4/16 | B4/8 r/16 E4/16 C5/16 B4/16 | A4/q.",
+        "lh": "r/8 | r/q. | A2/16@5 E3/16@2 A3/16@1 r/8. | E2/16@5 E3/16@1 G#3/16 r/8. | A2/16@5 E3/16@2 A3/16@1 r/8. | r/q. | A2/16@5 E3/16@2 A3/16@1 r/8. | E2/16@5 E3/16@1 G#3/16 r/8. | A2/16@5 E3/16@2 A3/q@1"
+      }
+    }
+  ]
+}
