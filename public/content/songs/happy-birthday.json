@@ -1,0 +1,20 @@
+{
+  "title": "Happy Birthday",
+  "composer": "Mildred en Patty Hill (1893)",
+  "category": "feest",
+  "aka": [
+    "Good morning to all",
+    "verjaardag",
+    "jarig",
+    "Happy birthday to you"
+  ],
+  "icon": "🎂",
+  "hue": 340,
+  "about": "De melodie komt van het kinderliedje 'Good Morning to All' uit 1893 en is inmiddels vrij van auteursrecht. Let op de grote sprong in maat 5.",
+  "tempo": 96,
+  "timeSignature": "3/4",
+  "key": "C",
+  "pickup": 1,
+  "melody": "G4/8.@1 G4/16@1 | A4/q@2 G4/q@1 C5/q@4 | B4/h@3 G4/8.@1 G4/16@1 | A4/q@2 G4/q@1 D5/q@5 | C5/h@4 G4/8.@1 G4/16@1 | G5/q@5 E5/q@3 C5/q@1 | B4/q@3 A4/q@2 F5/8.@4 F5/16@4 | E5/q@3 C5/q@1 D5/q@2 | C5/h.@1",
+  "chords": "C | G | G | C | C | F | C G | C"
+}

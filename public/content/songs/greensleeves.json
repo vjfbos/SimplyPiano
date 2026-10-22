@@ -1,0 +1,17 @@
+{
+  "title": "Greensleeves",
+  "composer": "Engels volksliedje (16e eeuw)",
+  "category": "traditioneel",
+  "aka": [
+    "Alas my love"
+  ],
+  "icon": "🍃",
+  "hue": 110,
+  "about": "Een eeuwenoud Engels liedje in driekwartsmaat. Het begint met een opmaat: één tel vóór de eerste volle maat.",
+  "tempo": 88,
+  "timeSignature": "3/4",
+  "key": "Am",
+  "pickup": 1,
+  "melody": "A4/q@1 | C5/h@3 D5/q@4 | E5/q.@5 F5/8@5 E5/q@5 | D5/h@4 B4/q@2 | G4/q.@1 A4/8@2 B4/q@3 | C5/h@4 A4/q@2 | A4/q.@2 G#4/8@1 A4/q@2 | B4/h@3 G#4/q@1 | E4/h@1 A4/q@3 | C5/h@4 D5/q@5 | E5/q.@5 F5/8@5 E5/q@5 | D5/h@4 B4/q@2 | G4/q.@1 A4/8@2 B4/q@3 | C5/q.@4 B4/8@3 A4/q@2 | G#4/q.@1 F#4/8@1 G#4/q@1 | A4/h.@2",
+  "chords": "Am | C | G | Em | Am | Am E | E | E Am | Am | C | G | Em | Am | E | Am"
+}

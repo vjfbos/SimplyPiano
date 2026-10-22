@@ -1,0 +1,16 @@
+{
+  "title": "Mary Had a Little Lamb",
+  "composer": "Amerikaans kinderliedje (1830)",
+  "category": "kinderliedjes",
+  "aka": [
+    "Mary had a little lamb",
+    "lammetje"
+  ],
+  "icon": "🐑",
+  "hue": 60,
+  "tempo": 100,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "E4/q@3 D4/q@2 C4/q@1 D4/q@2 | E4/q@3 E4/q@3 E4/h@3 | D4/q@2 D4/q@2 D4/h@2 | E4/q@3 G4/q@5 G4/h@5 | E4/q@3 D4/q@2 C4/q@1 D4/q@2 | E4/q@3 E4/q@3 E4/q@3 E4/q@3 | D4/q@2 D4/q@2 E4/q@3 D4/q@2 | C4/w@1",
+  "chords": "C | C | G | C | C | C | G | C"
+}

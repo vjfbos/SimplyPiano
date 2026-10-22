@@ -1,0 +1,18 @@
+{
+  "title": "Largo uit de Nieuwe Wereld",
+  "composer": "Antonín Dvořák (1893)",
+  "category": "klassiek",
+  "aka": [
+    "Going home",
+    "Symfonie uit de Nieuwe Wereld",
+    "New World Symphony"
+  ],
+  "icon": "🌅",
+  "hue": 30,
+  "about": "De beroemde Engelse-hoornmelodie uit Dvořáks Negende symfonie. Speel heel rustig en zingend.",
+  "tempo": 60,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "E4/q.@3 G4/8@5 G4/h@5 | E4/q.@3 D4/8@2 C4/h@1 | D4/q@2 E4/q@3 G4/q@5 E4/q@3 | D4/w@2 | E4/q.@3 G4/8@5 G4/h@5 | E4/q.@3 D4/8@2 C4/h@1 | D4/q@2 E4/q@3 D4/q@2 C4/q@1 | C4/w@1",
+  "chords": "C | C | G | G | C | C | G | C"
+}

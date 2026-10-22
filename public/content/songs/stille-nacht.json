@@ -1,0 +1,18 @@
+{
+  "title": "Stille Nacht",
+  "composer": "Franz Xaver Gruber (1818)",
+  "category": "feest",
+  "aka": [
+    "Silent Night",
+    "Stille nacht heilige nacht",
+    "kerst"
+  ],
+  "icon": "🕯️",
+  "hue": 230,
+  "about": "Het bekendste kerstlied ter wereld, in 6/8-maat: voel de zachte wiegende beweging van twee grote tellen per maat.",
+  "tempo": 66,
+  "timeSignature": "6/8",
+  "key": "C",
+  "melody": "G4/q.@3 A4/8@4 G4/q@3 | E4/h.@1 | G4/q.@3 A4/8@4 G4/q@3 | E4/h.@1 | D5/h@5 D5/q@5 | B4/h.@3 | C5/h@4 C5/q@4 | G4/h.@1 | A4/h@2 A4/q@2 | C5/q.@4 B4/8@3 A4/q@2 | G4/q.@1 A4/8@2 G4/q@1 | E4/h.@1 | A4/h@2 A4/q@2 | C5/q.@4 B4/8@3 A4/q@2 | G4/q.@1 A4/8@2 G4/q@1 | E4/h.@1 | D5/h@4 D5/q@4 | F5/q.@5 D5/8@4 B4/q@2 | C5/h.@3 | E5/h.@5 | C5/q.@3 G4/8@1 E4/q@1 | G4/q.@3 F4/8@2 D4/q@1 | C4/h.@1",
+  "chords": "C | C | C | C | G | G | C | C | F | F | C | C | F | F | C | C | G | G7 | C | C | C | G7 | C"
+}

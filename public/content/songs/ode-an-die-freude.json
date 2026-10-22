@@ -1,6 +1,13 @@
 {
   "title": "Ode an die Freude",
   "composer": "Ludwig van Beethoven (1824)",
+  "category": "klassiek",
+  "aka": [
+    "Ode to Joy",
+    "Ode aan de vreugde",
+    "Negende symfonie",
+    "Europees volkslied"
+  ],
   "icon": "🎺",
   "hue": 200,
   "about": "Het slotdeel van Beethovens Negende symfonie. De melodie bestaat bijna helemaal uit stapjes, daardoor is hij heel geschikt om mee te beginnen.",

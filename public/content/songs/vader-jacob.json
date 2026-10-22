@@ -1,6 +1,12 @@
 {
   "title": "Vader Jacob",
   "composer": "Frans volksliedje (Frère Jacques)",
+  "category": "kinderliedjes",
+  "aka": [
+    "Frère Jacques",
+    "Bruder Jakob",
+    "Are you sleeping"
+  ],
   "icon": "🔔",
   "hue": 20,
   "about": "Een canon: iedereen zingt dezelfde melodie, maar begint later. Op niveau 3 speel je de canon met jezelf: je linkerhand begint twee maten na je rechterhand.",

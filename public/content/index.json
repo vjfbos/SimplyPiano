@@ -78,11 +78,55 @@
   ],
   "songs": [
     "twinkle",
+    "mary-lamb",
+    "haenschen-klein",
+    "london-bridge",
+    "old-macdonald",
+    "row-your-boat",
     "vader-jacob",
     "ode-an-die-freude",
-    "au-clair-de-la-lune",
-    "jingle-bells",
+    "largo-nieuwe-wereld",
+    "kleine-nachtmusik",
+    "canon-pachelbel",
+    "mountain-king",
     "fur-elise",
-    "menuet-in-g"
+    "menuet-in-g",
+    "au-clair-de-la-lune",
+    "greensleeves",
+    "when-the-saints",
+    "yankee-doodle",
+    "happy-birthday",
+    "jingle-bells",
+    "we-wish-you",
+    "deck-the-halls",
+    "stille-nacht",
+    "auld-lang-syne"
+  ],
+  "categories": [
+    {
+      "id": "kinderliedjes",
+      "label": "Kinderliedjes",
+      "icon": "🧸"
+    },
+    {
+      "id": "klassiek",
+      "label": "Klassiek",
+      "icon": "🎻"
+    },
+    {
+      "id": "traditioneel",
+      "label": "Volksmuziek",
+      "icon": "🪕"
+    },
+    {
+      "id": "feest",
+      "label": "Feest & seizoen",
+      "icon": "🎉"
+    },
+    {
+      "id": "eigen",
+      "label": "Eigen nummers",
+      "icon": "⭐"
+    }
   ]
 }

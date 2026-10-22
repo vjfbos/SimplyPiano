@@ -1,0 +1,17 @@
+{
+  "title": "We Wish You a Merry Christmas",
+  "composer": "Engels volksliedje",
+  "category": "feest",
+  "aka": [
+    "kerst",
+    "Merry Christmas"
+  ],
+  "icon": "🎄",
+  "hue": 140,
+  "tempo": 104,
+  "timeSignature": "3/4",
+  "key": "C",
+  "pickup": 1,
+  "melody": "G4/q@1 | C5/q@4 C5/8@4 D5/8@5 C5/8@4 B4/8@3 | A4/q@2 A4/q@2 A4/q@2 | D5/q@5 D5/8@5 E5/8@5 D5/8@4 C5/8@3 | B4/q@2 G4/q@1 G4/q@1 | E5/q@5 E5/8@5 F5/8@5 E5/8@4 D5/8@3 | C5/q@2 A4/q@1 G4/8@1 G4/8@1 | A4/q@1 D5/q@4 B4/q@2 | C5/h.@3",
+  "chords": "C | F | D7 | G | E7 | Am | F G | C"
+}

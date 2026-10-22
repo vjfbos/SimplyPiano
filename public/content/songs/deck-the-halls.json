@@ -1,0 +1,17 @@
+{
+  "title": "Deck the Halls",
+  "composer": "Welsh volksliedje",
+  "category": "feest",
+  "aka": [
+    "kerst",
+    "Fa la la la la"
+  ],
+  "icon": "🔔",
+  "hue": 10,
+  "about": "Dit stuk staat in F: de B wordt steeds een Bes (zwarte toets). De voortekening vooraan herinnert je daaraan.",
+  "tempo": 104,
+  "timeSignature": "4/4",
+  "key": "F",
+  "melody": "C5/q.@5 Bb4/8@4 A4/q@3 G4/q@2 | F4/q@1 G4/q@2 A4/q@3 F4/q@1 | G4/8@2 A4/8@3 Bb4/8@4 G4/8@2 A4/q.@3 G4/8@2 | F4/q@1 E4/q@1 F4/h@1 | C5/q.@5 Bb4/8@4 A4/q@3 G4/q@2 | F4/q@1 G4/q@2 A4/q@3 F4/q@1 | G4/8@2 A4/8@3 Bb4/8@4 G4/8@2 A4/q.@3 G4/8@2 | F4/q@1 E4/q@1 F4/h@1",
+  "chords": "F | F | C F | C F | F | F | C F | C F"
+}

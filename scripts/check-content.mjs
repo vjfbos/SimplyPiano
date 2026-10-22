@@ -2,6 +2,7 @@
 // Gebruik: npm run check-content
 import { readFile, readdir } from 'node:fs/promises';
 import { buildPiece } from '../src/core/piece.js';
+import { expandSong } from '../src/core/arrange.js';
 
 const dir = new URL('../public/content/', import.meta.url);
 const read = async (p) => JSON.parse(await readFile(new URL(p, dir), 'utf8'));
@@ -34,8 +35,9 @@ for (const unit of index.units) {
 }
 for (const id of index.songs) {
   if (!songFiles.has(id)) { report('index.json', [`liedje "${id}" bestaat niet in songs/`]); continue; }
-  const s = await read(`songs/${id}.json`);
-  if (!s.levels?.length) report(`songs/${id}`, ['geen levels']);
+  const s = expandSong(await read(`songs/${id}.json`));
+  if (!s.levels?.length) report(`songs/${id}`, ['geen levels en geen melody']);
+  if (!s.title) report(`songs/${id}`, ['geen title']);
   for (const lv of s.levels || []) {
     const p = buildPiece(lv);
     report(`songs/${id} niveau ${lv.level}`, p.errors);

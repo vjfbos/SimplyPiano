@@ -16,7 +16,10 @@ function waitForFonts() {
 }
 
 const REST_KEY = { treble: 'b/4', bass: 'd/3' };
-const KEY_ACCIDENTALS = { C: 0, G: 1, D: 2, A: 3, F: 1, Bb: 2, Eb: 3, Am: 0, Em: 1, Dm: 1 };
+const KEY_ACCIDENTALS = {
+  C: 0, G: 1, D: 2, A: 3, E: 4, B: 5, 'F#': 6, 'C#': 7, F: 1, Bb: 2, Eb: 3, Ab: 4, Db: 5, Gb: 6, Cb: 7,
+  Am: 0, Em: 1, Bm: 2, 'F#m': 3, 'C#m': 4, 'G#m': 5, 'D#m': 6, 'A#m': 7, Dm: 1, Gm: 2, Cm: 3, Fm: 4, Bbm: 5, Ebm: 6, Abm: 7,
+};
 
 export class Staff {
   constructor() {

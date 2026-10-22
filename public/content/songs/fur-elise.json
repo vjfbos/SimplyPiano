@@ -1,6 +1,11 @@
 {
   "title": "Für Elise",
   "composer": "Ludwig van Beethoven (1810)",
+  "category": "klassiek",
+  "aka": [
+    "Fur Elise",
+    "Voor Elise"
+  ],
   "icon": "🎹",
   "hue": 320,
   "about": "Het begin van een van de bekendste pianostukken. Het staat in a-klein en in 3/8: drie achtsten per maat. De zestienden wisselen tussen de handen, dus begin langzaam!",

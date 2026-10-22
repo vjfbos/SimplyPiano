@@ -1,6 +1,12 @@
 {
   "title": "Ah, vous dirai-je, maman",
   "composer": "Frans volksliedje (18e eeuw)",
+  "category": "kinderliedjes",
+  "aka": [
+    "Twinkle twinkle little star",
+    "Altijd is Kortjakje ziek",
+    "ABC-lied"
+  ],
   "icon": "⭐",
   "hue": 50,
   "about": "Deze eeuwenoude Franse melodie ken je misschien als 'Twinkle, twinkle, little star' of 'Altijd is Kortjakje ziek'. Mozart schreef er later variaties op.",

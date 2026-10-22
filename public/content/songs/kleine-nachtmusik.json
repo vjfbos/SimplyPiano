@@ -1,0 +1,17 @@
+{
+  "title": "Eine kleine Nachtmusik",
+  "composer": "Wolfgang Amadeus Mozart (1787)",
+  "category": "klassiek",
+  "aka": [
+    "Serenade nr. 13",
+    "Kleine Nachtmusik"
+  ],
+  "icon": "🎻",
+  "hue": 280,
+  "about": "Het openingsthema van Mozarts beroemde serenade. Speel de eerste noten krachtig, als een vraag.",
+  "tempo": 100,
+  "timeSignature": "4/4",
+  "key": "G",
+  "melody": "G4/q.@1 D4/8@1 G4/q.@1 D4/8@1 | G4/8@1 D4/8@1 G4/8@1 B4/8@3 D5/h@5 | C5/q.@4 A4/8@2 C5/q.@4 A4/8@2 | C5/8@4 A4/8@2 F#4/8@1 A4/8@2 D4/h@1",
+  "chords": "G | G | D | D"
+}

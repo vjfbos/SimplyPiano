@@ -1,0 +1,19 @@
+{
+  "title": "Auld Lang Syne",
+  "composer": "Schots volksliedje",
+  "category": "feest",
+  "aka": [
+    "Oudjaar",
+    "nieuwjaar",
+    "Should auld acquaintance"
+  ],
+  "icon": "🥂",
+  "hue": 45,
+  "about": "Het traditionele afscheids- en nieuwjaarslied. Let op het huppelende ritme: lang-kort.",
+  "tempo": 84,
+  "timeSignature": "4/4",
+  "key": "C",
+  "pickup": 1,
+  "melody": "G3/q@1 | C4/q.@2 C4/8@2 C4/q@2 E4/q@4 | D4/q.@3 C4/8@2 D4/q@3 E4/8@4 D4/8@3 | C4/q.@2 C4/8@2 E4/q@4 G4/q@5 | A4/h.@5 A4/q@5 | G4/q.@5 E4/8@3 E4/q@3 C4/q@1 | D4/q.@2 C4/8@1 D4/q@2 E4/8@3 D4/8@2 | C4/q.@2 A3/8@1 A3/q@1 G3/q@1 | C4/h.@2",
+  "chords": "C | G | C | F | C | G | Am G | C"
+}

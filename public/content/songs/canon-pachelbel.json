@@ -1,0 +1,18 @@
+{
+  "title": "Canon (thema)",
+  "composer": "Johann Pachelbel (ca. 1700)",
+  "category": "klassiek",
+  "aka": [
+    "Canon in D",
+    "Pachelbel",
+    "bruiloft"
+  ],
+  "icon": "💍",
+  "hue": 330,
+  "about": "De beroemde akkoordenreeks die eindeloos herhaalt. Hier het rustige openingsthema in halve noten; op niveau 2 en 3 speel je de bekende baslijn en akkoorden mee.",
+  "tempo": 66,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "E5/h@5 D5/h@4 | C5/h@3 B4/h@2 | A4/h@1 G4/h@1 | A4/h@2 B4/h@3 | E5/h@5 D5/h@4 | C5/h@3 B4/h@2 | A4/h@1 G4/h@1 | A4/h@2 B4/h@3 | C5/w@4",
+  "chords": "C G | Am Em | F C | F G | C G | Am Em | F C | F G | C"
+}

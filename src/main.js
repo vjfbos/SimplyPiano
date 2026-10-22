@@ -7,6 +7,7 @@ import { unlockAudio } from './audio/audio.js';
 import { pathView } from './ui/views/path.js';
 import { lessonView } from './ui/views/lesson.js';
 import { songsView, songView } from './ui/views/songs.js';
+import { songEditorView } from './ui/views/songEditor.js';
 import { progressView } from './ui/views/progress.js';
 import { profilesView } from './ui/views/profiles.js';
 import { settingsView } from './ui/views/settings.js';
@@ -16,6 +17,8 @@ const routes = [
   [/^\/les\/([\w-]+)$/, lessonView, 'pad'],
   [/^\/liedjes$/, songsView, 'liedjes'],
   [/^\/lied\/([\w-]+)(?:\/(\d))?$/, songView, 'liedjes'],
+  [/^\/eigen\/nieuw$/, () => songEditorView(null), 'liedjes'],
+  [/^\/eigen\/(eigen-[\w-]+)$/, songEditorView, 'liedjes'],
   [/^\/voortgang$/, progressView, 'voortgang'],
   [/^\/instellingen$/, settingsView, 'instellingen'],
   [/^\/profielen$/, profilesView, 'profielen'],

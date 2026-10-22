@@ -1,0 +1,16 @@
+{
+  "title": "Old MacDonald",
+  "composer": "Amerikaans kinderliedje",
+  "category": "kinderliedjes",
+  "aka": [
+    "Old MacDonald had a farm",
+    "Boer Bert"
+  ],
+  "icon": "🐄",
+  "hue": 90,
+  "tempo": 110,
+  "timeSignature": "4/4",
+  "key": "G",
+  "melody": "G4/q@1 G4/q@1 G4/q@1 D4/q@1 | E4/q@2 E4/q@2 D4/h@1 | B4/q@3 B4/q@3 A4/q@2 A4/q@2 | G4/h.@1 D4/q@1 | G4/q@1 G4/q@1 G4/q@1 D4/q@1 | E4/q@2 E4/q@2 D4/h@1 | B4/q@3 B4/q@3 A4/q@2 A4/q@2 | G4/w@1",
+  "chords": "G | C G | G D | G | G | C G | G D | G"
+}

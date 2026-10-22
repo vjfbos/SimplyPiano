@@ -1,0 +1,17 @@
+{
+  "title": "Row, Row, Row Your Boat",
+  "composer": "Eliphalet Oram Lyte (1881)",
+  "category": "kinderliedjes",
+  "aka": [
+    "Row your boat",
+    "Roei roei"
+  ],
+  "icon": "🚣",
+  "hue": 190,
+  "about": "Een liedje in 6/8: elke maat heeft twee grote tellen die je in drieën verdeelt. Het werkt ook als canon.",
+  "tempo": 72,
+  "timeSignature": "6/8",
+  "key": "C",
+  "melody": "C4/q.@1 C4/q.@1 | C4/q@1 D4/8@2 E4/q.@3 | E4/q@3 D4/8@2 E4/q@3 F4/8@4 | G4/h.@5 | C5/8@5 C5/8@5 C5/8@5 G4/8@3 G4/8@3 G4/8@3 | E4/8@2 E4/8@2 E4/8@2 C4/8@1 C4/8@1 C4/8@1 | G4/q@5 F4/8@4 E4/q@3 D4/8@2 | C4/h.@1",
+  "chords": "C | C | C | C | C | C | G | C"
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Yankee Doodle",
+  "composer": "Amerikaans volksliedje",
+  "category": "traditioneel",
+  "aka": [],
+  "icon": "🥁",
+  "hue": 0,
+  "tempo": 112,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "C4/q@1 C4/q@1 D4/q@2 E4/q@3 | C4/q@1 E4/q@3 D4/q@2 G3/q@1 | C4/q@2 C4/q@2 D4/q@3 E4/q@4 | C4/h@2 B3/h@1 | C4/q@1 C4/q@1 D4/q@2 E4/q@3 | F4/q@4 E4/q@3 D4/q@2 C4/q@1 | B3/q@1 G3/q@1 A3/q@2 B3/q@3 | C4/h@4 C4/h@4",
+  "chords": "C | C G | C | C G | C | F | G | C"
+}

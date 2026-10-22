@@ -1,6 +1,6 @@
 // Kleine IndexedDB-wrapper. Alles blijft lokaal op het apparaat.
 const DB_NAME = 'toetsentuin';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 let dbPromise = null;
 
 function open() {
@@ -18,6 +18,8 @@ function open() {
         const s = db.createObjectStore('practice', { keyPath: ['profileId', 'day'] });
         s.createIndex('profileId', 'profileId');
       }
+      // v2: eigen nummers (gedeeld door alle profielen op dit apparaat)
+      if (!db.objectStoreNames.contains('songs')) db.createObjectStore('songs', { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);

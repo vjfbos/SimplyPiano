@@ -1,0 +1,17 @@
+{
+  "title": "Hänschen klein",
+  "composer": "Duits volksliedje",
+  "category": "kinderliedjes",
+  "aka": [
+    "Hansje klein",
+    "Kleine Hans"
+  ],
+  "icon": "🎒",
+  "hue": 25,
+  "about": "Een Duits kinderliedje dat helemaal in de C-positie past: ideaal na de eerste lessen.",
+  "tempo": 100,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "G4/q@5 E4/q@3 E4/h@3 | F4/q@4 D4/q@2 D4/h@2 | C4/q@1 D4/q@2 E4/q@3 F4/q@4 | G4/q@5 G4/q@5 G4/h@5 | G4/q@5 E4/q@3 E4/h@3 | F4/q@4 D4/q@2 D4/h@2 | C4/q@1 E4/q@3 G4/q@5 G4/q@5 | C4/w@1 | D4/q@2 D4/q@2 D4/q@2 D4/q@2 | D4/q@2 E4/q@3 F4/h@4 | E4/q@3 E4/q@3 E4/q@3 E4/q@3 | E4/q@3 F4/q@4 G4/h@5 | G4/q@5 E4/q@3 E4/h@3 | F4/q@4 D4/q@2 D4/h@2 | C4/q@1 E4/q@3 G4/q@5 G4/q@5 | C4/w@1",
+  "chords": "C | G | C | C | C | G | C | C | G | G | C | C | C | G | C G | C"
+}

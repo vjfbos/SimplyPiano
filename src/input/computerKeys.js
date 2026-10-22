@@ -9,7 +9,8 @@ const down = new Map();
 export function initComputerKeys() {
   window.addEventListener('keydown', (e) => {
     if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
-    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    // In invoervelden typen we gewoon, behalve als een veld alleen-lezen is (inspelen in de editor).
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) && !e.target.readOnly) return;
     const k = e.key.toLowerCase();
     if (k === 'z') return void (octave = Math.max(1, octave - 1));
     if (k === 'x') return void (octave = Math.min(7, octave + 1));

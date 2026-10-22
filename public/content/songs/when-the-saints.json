@@ -1,0 +1,17 @@
+{
+  "title": "When the Saints Go Marching In",
+  "composer": "Traditional (Verenigde Staten)",
+  "category": "traditioneel",
+  "aka": [
+    "Oh when the saints",
+    "The Saints"
+  ],
+  "icon": "🎷",
+  "hue": 40,
+  "about": "Een gospel- en jazzklassieker uit New Orleans. Begint steeds met een rust: tel goed mee!",
+  "tempo": 112,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "r/q C4/q@1 E4/q@3 F4/q@4 | G4/w@5 | r/q C4/q@1 E4/q@3 F4/q@4 | G4/w@5 | r/q C4/q@1 E4/q@3 F4/q@4 | G4/h@5 E4/h@3 | C4/h@1 E4/h@3 | D4/w@2 | r/q E4/q@3 E4/q@3 D4/q@2 | C4/h.@1 C4/q@1 | E4/h@3 G4/h@5 | G4/q@5 F4/h.@4 | r/h E4/q@3 F4/q@4 | G4/h@5 E4/h@3 | C4/h@1 D4/h@2 | C4/w@1",
+  "chords": "C | C | C | C | C | C | C | G | G | C | C7 | F | C | C | G | C"
+}

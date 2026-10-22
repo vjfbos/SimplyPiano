@@ -7,7 +7,11 @@ eigen code en eigen lesstof. Liedjes komen uit het publieke domein, in eigen bew
 - **Invoer:** MIDI-keyboard (Web MIDI, via USB of Bluetooth), microfoon (eigen YIN-toonhoogtedetectie),
   scherm-toetsenbord (touch/muis, meerdere vingers tegelijk) en het computertoetsenbord (A–L, Z/X = octaaf).
 - **Leerpad:** 6 units en 20 lessen: houding en vingers → noten lezen rechts → links → ritme → akkoorden → beide handen.
-- **Liedjes:** 7 stukken uit het publieke domein, elk in 2 of 3 niveaus.
+- **Liedjes:** 24 stukken uit het publieke domein (kinderliedjes, klassiek, volksmuziek, feest), elk in 2 of 3 niveaus,
+  met **zoeken** (titel, componist, alternatieve titels, accentongevoelig) en filters op categorie en niveau.
+- **Eigen nummers (vrije keuze):** importeer een **MIDI-bestand** (handen verdelen per spoor of op middel-C,
+  maatbereik kiezen), of **voer zelf noten in** door ze te typen of op je keyboard in te spelen. Exporteren en
+  importeren kan als .json. Eigen nummers blijven alleen op het apparaat.
 - **Oefenmodi:** wachtmodus, tempomodus met metronoom en timingbeoordeling, tempo 50–100%,
   een passage herhalen, links/rechts/beide handen, de andere hand laten meespelen, en een luistermodus.
 - **Feedback:** goed / fout / te vroeg / te laat / gemist, steeds met kleur **én** symbool en tekst.
@@ -54,7 +58,10 @@ src/
     notes.js               notatie-parser, noot ↔ MIDI, maatsoorten
     chords.js              akkoordsymbolen → noten
     piece.js               stuk-model: partijen, maten, gecombineerde tijdlijn
-    content.js             laadt JSON-content
+    content.js             laadt JSON-content en eigen nummers
+    arrange.js             automatische niveaus (basnoten/akkoorden links) en notatie-schrijver
+    midifile.js            MIDI-bestanden lezen en omzetten naar notatie
+    search.js              zoeken in de bibliotheek
     store.js               IndexedDB-wrapper
     profiles.js            profielen, instellingen, resultaten, oefentijd, reeks
   input/
@@ -78,7 +85,7 @@ src/
     keyboard.js            scherm-toetsenbord
     staff.js               notenbalk (VexFlow) met cursor en kleuren
     player.js              oefenscherm dat alles koppelt
-    views/                 leerpad, les, liedjes, voortgang, profielen, instellingen
+    views/                 leerpad, les, liedjes (+ zoeken), editor voor eigen nummers, voortgang, profielen, instellingen
 tests/                     Vitest-tests
 ```
 
@@ -122,6 +129,12 @@ een octaaf laten verspringen.
 8. **Offline/PWA:** `npm run build && npm run preview`, open de pagina één keer en zet je netwerk uit
    (of kies "Offline" in de DevTools). Herlaad: alles blijft werken. In Safari kies je *Deel → Zet op
    beginscherm*, in Chrome *Installeren*.
+
+9. **Zoeken en eigen nummers:** typ bij *Liedjes* bijvoorbeeld "kerst" of "beethoven". Zoek je iets dat er
+   niet in staat, dan kun je het meteen zelf toevoegen. Via *＋ Eigen nummer → MIDI-bestand importeren* kies je
+   een .mid-bestand; controleer de handverdeling en de maten en druk op *Opslaan en spelen*. Bij *Zelf noten
+   invoeren* zet je *Inspelen* aan, kies je een notenwaarde en speel je de noten. Onder *Controle en
+   voorbeeld* zie je direct of alles klopt.
 
 Op een laptop kun je ook zonder keyboard testen: de toetsen **A W S E D F T G Y H U J K** spelen C4 t/m C5,
 en met **Z/X** schuif je een octaaf omlaag of omhoog.
@@ -181,6 +194,23 @@ maat, dan krijgen ze elk evenveel tellen. Mogelijke akkoorden zijn `C`, `Am`, `G
   `"lh": { "notes": "...", "clef": "treble" }`
 
 ### Liedje (`public/content/songs/<id>.json`)
+
+De makkelijkste vorm: geef alleen een melodie en akkoorden. De app maakt dan zelf drie niveaus: melodie rechts,
+met basnoten links, en met akkoorden links (in dezelfde liggingen als in de lessen).
+
+```json
+{
+  "title": "London Bridge", "composer": "Engels kinderliedje", "category": "kinderliedjes",
+  "aka": ["London Bridge is falling down"], "icon": "🌉", "hue": 200,
+  "tempo": 100, "timeSignature": "4/4", "key": "C",
+  "melody": "G4/q. A4/8 G4/q F4/q | E4/q F4/q G4/h | ...",
+  "chords": "C | C | G | C",
+  "lh": "optioneel: een eigen linkerhand voor niveau 3"
+}
+```
+
+`category` is een van de ids uit `index.json → categories` (`kinderliedjes`, `klassiek`, `traditioneel`, `feest`);
+`aka` zijn extra zoektermen. Wil je de niveaus helemaal zelf bepalen, gebruik dan `levels`:
 
 ```json
 {

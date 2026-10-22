@@ -1,0 +1,15 @@
+{
+  "title": "London Bridge",
+  "composer": "Engels kinderliedje",
+  "category": "kinderliedjes",
+  "aka": [
+    "London Bridge is falling down"
+  ],
+  "icon": "🌉",
+  "hue": 200,
+  "tempo": 100,
+  "timeSignature": "4/4",
+  "key": "C",
+  "melody": "G4/q.@5 A4/8@5 G4/q@5 F4/q@4 | E4/q@3 F4/q@4 G4/h@5 | D4/q@2 E4/q@3 F4/h@4 | E4/q@3 F4/q@4 G4/h@5 | G4/q.@5 A4/8@5 G4/q@5 F4/q@4 | E4/q@3 F4/q@4 G4/h@5 | D4/h@2 G4/h@5 | E4/q@3 C4/h.@1",
+  "chords": "C | C | G | C | C | C | G | C"
+}
