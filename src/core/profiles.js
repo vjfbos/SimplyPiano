@@ -1,7 +1,7 @@
 // Profielen (meerdere spelers op één apparaat) en hun voortgang.
 import { db, prefs } from './store.js';
 
-export const AVATARS = ['🦊', '🐼', '🐸', '🐙', '🦉', '🐢', '🦁', '🐝', '🐳', '🌻', '🚀', '🎩'];
+export const AVATARS = ['🦊', '🐼', '🐯', '🐬', '🦄', '🐉', '🎧', '🎸', '⚡', '🚀', '⚽', '🌙', '🦋', '🎮', '🏀', '🌸'];
 
 export const DEFAULT_SETTINGS = {
   input: 'auto', // auto | midi | mic | screen

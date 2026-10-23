@@ -1,7 +1,6 @@
 // Profielen kiezen, aanmaken en verwijderen.
 import { h } from '../dom.js';
 import { icon } from '../icons.js';
-import { tiko } from '../mascot.js';
 import { listProfiles, createProfile, selectProfile, deleteProfile, currentProfile, AVATARS } from '../../core/profiles.js';
 
 export async function profilesView() {
@@ -27,13 +26,15 @@ export async function profilesView() {
       location.hash = '#/';
     },
   },
-  h('h2', profiles.length ? 'Nieuwe speler' : 'Hoe heet je?'),
+  h('h2', profiles.length ? 'Nieuwe speler' : 'Maak je profiel'),
   h('p.hint', 'Alles wordt alleen op dit apparaat bewaard. Je hebt geen account nodig.'),
   nameInput, avatarBox,
-  h('button.btn.primary.xl', { type: 'submit' }, 'Laten we beginnen!'));
+  h('button.btn.primary.xl', { type: 'submit' }, 'Start'));
 
   return h('div.view.profiles',
-    h('div.center', tiko(profiles.length ? 'blij' : 'juich', 96), h('h1', profiles.length ? 'Wie gaat er spelen?' : 'Welkom in de Toetsentuin!')),
+    h('div.center.welcome', h('img', { src: import.meta.env.BASE_URL + 'icons/icon.svg', alt: '', width: 72, height: 72 }),
+      h('h1', profiles.length ? 'Wie speelt er?' : 'Welkom bij Toetsentuin'),
+      profiles.length ? null : h('p.lead', 'Leer piano spelen op je eigen keyboard, met directe feedback op elke noot.')),
     profiles.length ? h('div.profile-grid', profiles.map((p) => h('div.profile-card', { class: p.id === cur?.id ? 'current' : '' },
       h('button.profile-pick', {
         type: 'button',

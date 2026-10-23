@@ -1,7 +1,7 @@
 // Oefenscherm: notenbalk + toetsenbord + bediening. Gebruikt door lessen en liedjes.
 import { h, toast } from './dom.js';
 import { icon } from './icons.js';
-import { tiko } from './mascot.js';
+import { coach } from './coach.js';
 import { openSheet, toggle } from './sheet.js';
 import { Staff } from './staff.js';
 import { Keyboard } from './keyboard.js';
@@ -17,7 +17,7 @@ import { accompanimentItems, padChord } from '../audio/accompaniment.js';
 import { currentProfile, saveResult, addPracticeSeconds } from '../core/profiles.js';
 import { inputSummary } from '../input/manager.js';
 
-const PRAISE = ['Goed zo!', 'Top!', 'Ja, precies!', 'Mooi!', 'Super!', 'Lekker bezig!'];
+const PRAISE = ['Goed', 'Precies', 'Mooi', 'Goed zo', 'Netjes', 'Ja'];
 let praise = 0;
 
 function makeSound(piece) {
@@ -78,7 +78,7 @@ export function createPlayer(opts) {
 
   const staff = new Staff();
   const kb = new Keyboard({ ...rangeObj(Keyboard.rangeFor(piece.range)), labels: settings.noteLabels || 'letters' });
-  const feedback = h('div.feedback', { role: 'status', 'aria-live': 'polite' }, h('span.fb-face'), h('span.fb-text'));
+  const feedback = coach('', { cls: 'feedback' });
   const countin = h('div.countin', { 'aria-live': 'assertive' });
 
   // ---------- bediening: alleen het belangrijkste in beeld, de rest in een onderblad ----------
@@ -95,8 +95,8 @@ export function createPlayer(opts) {
     return box;
   };
   const modeSeg = choice('Hoe wil je spelen?', [
-    ['wait', [icon('turtle', { size: 22 }), h('span', 'Rustig')], 'Rustig: het liedje wacht op jou', !allowModes.includes('wait')],
-    ['tempo', [icon('rabbit', { size: 22 }), h('span', 'Op de maat')], 'Op de maat: het liedje loopt door', !allowModes.includes('tempo')],
+    ['wait', [icon('hand', { size: 20 }), h('span', 'Stap voor stap')], 'Stap voor stap: de muziek wacht tot je de goede toets speelt', !allowModes.includes('wait')],
+    ['tempo', [icon('metronome', { size: 20 }), h('span', 'Op tempo')], 'Op tempo: de muziek loopt door op de maat', !allowModes.includes('tempo')],
   ], state.mode, (v) => {
     state.mode = v;
     reset();
@@ -140,7 +140,7 @@ export function createPlayer(opts) {
         toggle('Steeds herhalen', state.repeat, (v) => (state.repeat = v), { hint: 'Na het einde begint het stukje opnieuw' }),
         h('div.control-row', h('label', 'Van ', fromSel), h('label', 'tot en met ', toSel))),
       h('div.opt-group', h('h3', 'Muziek erbij'),
-        toggle('Metronoom', state.metronome, (v) => (state.metronome = v), { hint: 'Tikjes op de maat (bij "Op de maat")' }),
+        toggle('Metronoom', state.metronome, (v) => (state.metronome = v), { hint: 'Tikken op de tel (bij "Op tempo")' }),
         toggle('Drums', state.drums, (v) => (state.drums = v)),
         toggle('Akkoorden', state.chords, (v) => (state.chords = v), { disabled: !piece.chords.length }),
         hasHands.length > 1 ? toggle('De andere hand speelt mee', state.autoplayOther, (v) => (state.autoplayOther = v)) : null),
@@ -163,11 +163,9 @@ export function createPlayer(opts) {
   let lastInput = 0;
   let pendingSeconds = 0;
 
-  const FACE = { ok: 'juich', retry: 'blij', early: 'wow', late: 'wow', missed: 'denk', wrong: 'denk' };
+  const TONE = { ok: 'ok', retry: 'ok', early: 'warn', late: 'warn', missed: 'wrong', wrong: 'wrong' };
   function setFeedback(result, text) {
-    feedback.className = 'feedback fb-' + (result || 'idle');
-    feedback.querySelector('.fb-face').replaceChildren(tiko(FACE[result] || 'blij', 40));
-    feedback.querySelector('.fb-text').textContent = text;
+    feedback.say(text, TONE[result] || 'idle');
   }
 
   async function redraw() {
@@ -188,7 +186,7 @@ export function createPlayer(opts) {
     stopPlaying(false);
     staff.clearMarks();
     showFirst();
-    setFeedback('', state.mode === 'wait' ? 'Druk op de groene knop en speel de gekleurde toets. Ik wacht op je!' : 'Op de maat: na 4 tikjes loopt het liedje door. Speel mee!');
+    setFeedback('', state.mode === 'wait' ? 'Druk op start en speel de gemarkeerde toets. De muziek wacht op jou.' : 'Na vier tikken aftellen loopt de muziek door. Speel op de maat mee.');
   }
 
   async function startPlaying(listen = false) {
@@ -230,14 +228,14 @@ export function createPlayer(opts) {
         const name = (m) => noteLabel(m, settings.noteLabels === 'solfege' ? 'solfege' : 'letters', false);
         let t;
         if (result === 'wrong' && played != null) {
-          t = `Oeps, dat was ${name(played)}.`;
-          if (expected?.length) t += ` Zoek de gekleurde toets${expected.length > 1 ? 'en' : ''}!`;
+          t = `Dat was ${name(played)}.`;
+          if (expected?.length) t += ` Zoek ${expected.map(name).join(' + ')} (gemarkeerd).`;
         } else if (result === 'ok') t = PRAISE[(praise = (praise + 1) % PRAISE.length)];
-        else t = { early: 'Iets te vroeg!', late: 'Iets te laat!', missed: 'Gemist, speel gewoon door!' }[result] || '';
+        else t = { early: 'Iets te vroeg', late: 'Iets te laat', missed: 'Gemist, speel door' }[result] || '';
         setFeedback(result, t);
       }),
       engine.on('loop', (r) => {
-        toast(`Rondje klaar: ${'★'.repeat(r.stars) || 'nog een keer!'}`);
+        toast(`Ronde klaar: ${r.score} punten`);
         staff.clearMarks();
         flushPractice();
       }),
@@ -253,7 +251,7 @@ export function createPlayer(opts) {
       }, 5000);
       lastInput = performance.now();
     }
-    setFeedback('', listen ? 'Luister goed en kijk mee…' : state.mode === 'wait' ? 'Speel de gekleurde toets!' : 'Tel mee: 1, 2, 3, 4…');
+    setFeedback('', listen ? 'Luister en kijk mee…' : state.mode === 'wait' ? 'Speel de gemarkeerde toets.' : 'Tel mee: 1, 2, 3, 4…');
     bringIntoView();
     engine.start();
   }
@@ -302,7 +300,7 @@ export function createPlayer(opts) {
     const listen = state.listening;
     finishUi();
     engine = null;
-    if (listen) return setFeedback('ok', 'Klaar met luisteren. Nu jij!');
+    if (listen) return setFeedback('ok', 'Klaar met luisteren. Nu jij.');
     staff.hideCursor();
     const full = state.fromBar === 0 && state.toBar === piece.bars.length - 1 && state.hands.length === hasHands.length;
     if (full) {
@@ -313,22 +311,21 @@ export function createPlayer(opts) {
   }
 
   function showResults(r, partial, saved) {
-    const head = partial ? 'Tussenstand' : ['Bijna! Nog een keer?', 'Goed bezig!', 'Knap gedaan!', 'Fantastisch!'][r.stars];
+    const head = partial ? 'Tussenstand' : ['Nog een keer proberen?', 'Goed gespeeld', 'Heel goed', 'Perfect'][r.stars];
     const facts = [h('span.fact.ok', icon('check', { size: 18 }), `${r.counts.ok} goed`)];
     if (r.mode === 'tempo') {
       if (r.counts.early + r.counts.late) facts.push(h('span.fact.warn', icon('clock', { size: 18 }), `${r.counts.early + r.counts.late} net niet op tijd`));
-      if (r.counts.missed + r.counts.extra) facts.push(h('span.fact.bad', icon('close', { size: 18 }), `${r.counts.missed + r.counts.extra} foutjes`));
-    } else if (r.counts.wrong) facts.push(h('span.fact.bad', icon('close', { size: 18 }), `${r.counts.wrong} foutje${r.counts.wrong === 1 ? '' : 's'}`));
+      if (r.counts.missed + r.counts.extra) facts.push(h('span.fact.bad', icon('close', { size: 18 }), `${r.counts.missed + r.counts.extra} fout`));
+    } else if (r.counts.wrong) facts.push(h('span.fact.bad', icon('close', { size: 18 }), `${r.counts.wrong} fout`));
     const goNext = !partial && saved && r.stars > 0 && opts.nextHref;
     const dlg = h('dialog.results', { 'aria-labelledby': 'res-title', class: r.stars === 3 && !partial ? 'party' : '' },
-      r.stars === 3 && !partial ? h('div.confetti', { 'aria-hidden': 'true' }, Array.from({ length: 24 }, (_, i) => h('i', { style: { '--i': i } }))) : null,
-      h('div.res-tiko', tiko(r.stars >= 2 ? 'juich' : r.stars === 1 ? 'blij' : 'denk', 96)),
+      r.stars === 3 && !partial ? h('div.confetti', { 'aria-hidden': 'true' }, Array.from({ length: 16 }, (_, i) => h('i', { style: { '--i': i * 1.5 } }))) : null,
       h('h2#res-title', head),
       h('div.res-stars', { role: 'img', 'aria-label': `${r.stars} van 3 sterren` }, [1, 2, 3].map((i) => icon('star', { size: 54, cls: i <= r.stars ? 'on' : 'off' }))),
       h('p.res-score', h('strong', String(r.score)), ' punten'),
       h('div.facts', facts),
       r.tips[0] ? h('p.res-tip', r.tips[0]) : null,
-      !partial && !saved ? h('p.hint', 'Je oefende een stukje of één hand. Speel alles om sterren te verdienen.') : null,
+      !partial && !saved ? h('p.hint', 'Je oefende een deel of één hand. Speel alles om sterren te verdienen.') : null,
       h('div.actions.center',
         h('button.btn.ghost', { type: 'button', onclick: () => { dlg.close(); startPlaying(); } }, icon('repeat'), 'Nog een keer'),
         goNext ? h('a.btn.primary', { href: opts.nextHref, onclick: () => dlg.close() }, 'Verder', icon('next'))

@@ -1,7 +1,7 @@
 // "Ik": jouw reeks, sterren, oefentijd en profiel. Instellingen zitten achter een ouderslot.
 import { h, formatMinutes } from '../dom.js';
 import { icon } from '../icons.js';
-import { tikoSays } from '../mascot.js';
+import { coach } from '../coach.js';
 import { getPractice, getResults, bestByItem, computeStreak, weekSeconds, currentProfile } from '../../core/profiles.js';
 import { loadPath, loadSongs } from '../../core/content.js';
 import { listSheets } from '../../core/sheets.js';
@@ -25,15 +25,15 @@ export async function meView() {
   sheets.forEach((sh) => (titles['ak:' + sh.id] = titles['mee:' + sh.id] = `${sh.title} (akkoorden)`));
   const recent = results.sort((a, b) => b.date - a.date).slice(0, 6);
 
-  const cheer = streak >= 3 ? `${streak} dagen op rij! Je bent op dreef, ${profile.name}!`
-    : streak > 0 ? `Goed zo ${profile.name}! Speel morgen weer, dan groeit je reeks.`
-      : `Hoi ${profile.name}! Elke dag een paar minuten spelen is het beste.`;
+  const cheer = streak >= 3 ? `${streak} dagen op rij gespeeld. Houd het vol.`
+    : streak > 0 ? 'Speel morgen weer, dan groeit je reeks.'
+      : 'Tip: elke dag tien minuten spelen werkt beter dan één keer per week een uur.';
 
   return h('div.view.me',
     h('div.me-head',
       h('span.big-avatar', { 'aria-hidden': 'true' }, profile.avatar),
-      h('div', h('h1', profile.name), h('a.btn.ghost.small', { href: '#/profielen' }, icon('user', { size: 18 }), 'Wissel van speler'))),
-    tikoSays(cheer, { mood: streak > 0 ? 'juich' : 'blij', size: 64 }),
+      h('div', h('h1', profile.name), h('a.btn.ghost.small', { href: '#/profielen' }, icon('user', { size: 18 }), 'Andere speler'))),
+    coach(cheer, { tone: streak > 0 ? 'ok' : 'info', ic: streak > 0 ? 'flame' : 'sparkle' }),
     h('div.stat-row',
       stat('flame', String(streak), streak === 1 ? 'dag op rij' : 'dagen op rij', 'flame'),
       stat('star', String(starTotal), 'sterren', 'star'),

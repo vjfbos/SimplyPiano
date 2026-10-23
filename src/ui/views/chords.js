@@ -221,7 +221,7 @@ export async function chordSheetView(id) {
 
   // ---------- tab: oefenen ----------
   let mode = isTimed(chords) ? 'opname' : 'wachten';
-  const modeSel = segmented('Hoe wil je oefenen?', [['wachten', [icon('turtle', { size: 20 }), 'Rustig']], ['tempo', [icon('rabbit', { size: 20 }), 'Op de maat']], ['opname', [icon('headphones', { size: 20 }), 'Met muziek']]], mode, (v) => { mode = v; resetPractice(); });
+  const modeSel = segmented('Hoe wil je oefenen?', [['wachten', [icon('hand', { size: 20 }), 'Stap voor stap']], ['tempo', [icon('metronome', { size: 20 }), 'Op tempo']], ['opname', [icon('headphones', { size: 20 }), 'Met opname']]], mode, (v) => { mode = v; resetPractice(); });
   const handSel = segmented('Welke hand?', [['lh', h('span.hand-badge.lh', 'L')], ['both', [h('span.hand-badge.lh', 'L'), h('span.hand-badge.rh', 'R')]], ['rh', h('span.hand-badge.rh', 'R')]], hand, (v) => { hand = v; lastShown = null; });
   const bpm = h('input', { type: 'number', min: 30, max: 220, value: sheet.bpm || 90, 'aria-label': 'Tempo in tellen per minuut', onchange: () => { sheet.bpm = Number(bpm.value) || 90; persist(); } });
   const beats = h('select', { 'aria-label': 'Tellen per akkoord', onchange: () => { sheet.beatsPerChord = Number(beats.value); persist(); } },
@@ -462,7 +462,7 @@ export async function chordSheetView(id) {
         r.timing !== null ? h('div', h('strong', `${r.timing}%`), h('span', 'timing')) : null),
       !r.total ? h('p', 'Er zijn nog geen akkoorden voorbijgekomen.')
         : r.missed.length ? h('p', 'Oefen deze akkoorden nog even los: ', h('strong', [...new Set(r.missed)].slice(0, 6).join(', '))) : null,
-      h('p.hint', mode === 'wachten' ? (r.accuracy >= 90 ? 'Tip: probeer nu "Op de maat" met een rustig tempo.' : 'Tip: tik bij "Lezen" op een akkoord om te zien welke toetsen erbij horen.')
+      h('p.hint', mode === 'wachten' ? (r.accuracy >= 90 ? 'Tip: probeer nu "Op tempo" met een rustig tempo.' : 'Tip: tik bij "Lezen" op een akkoord om te zien welke toetsen erbij horen.')
         : r.timing < 70 ? 'Tip: kijk naar "Straks" en zet je hand alvast klaar voordat de wissel komt.' : 'Tip: zet het tempo iets hoger, of speel met allebei je handen (L R).'),
       h('div.actions', h('button.btn.primary', { type: 'button', onclick: () => dlg.close() }, 'Sluiten')));
     dlg.addEventListener('close', () => dlg.remove());

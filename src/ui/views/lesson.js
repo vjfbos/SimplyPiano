@@ -1,7 +1,6 @@
-// Eén les: Tiko legt in kleine stapjes uit, daarna oefen je. Geen lappen tekst.
+// Eén les: korte uitleg in stappen, daarna oefenen.
 import { h } from '../dom.js';
 import { icon } from '../icons.js';
-import { tiko } from '../mascot.js';
 import { loadLesson, loadPath } from '../../core/content.js';
 import { bestByItem } from '../../core/profiles.js';
 
@@ -10,42 +9,45 @@ export async function lessonView(id) {
   const flat = units.flatMap((u) => u.lessons);
   const idx = flat.findIndex((l) => l.id === id);
   const next = flat[idx + 1];
+  const unit = units.find((u) => u.lessons.some((l) => l.id === id));
   const ex = lesson.exercise;
   let player = null;
 
-  // ---------- uitleg in stapjes ----------
+  // ---------- uitleg in stappen ----------
   const steps = [...lesson.explanation, ...(lesson.tip ? [`Tip: ${lesson.tip}`] : [])];
   let step = 0;
-  const bubble = h('div.big-bubble', { 'aria-live': 'polite' });
-  const dots = h('div.step-dots', { 'aria-hidden': 'true' }, steps.map(() => h('span')));
+  const counter = h('span.step-count');
+  const body = h('p.step-text', { 'aria-live': 'polite' });
+  const bar = h('div.step-bar', { 'aria-hidden': 'true' }, steps.map(() => h('span')));
   const prevBtn = h('button.btn.ghost', { type: 'button', onclick: () => go(step - 1) }, icon('back'), 'Terug');
-  const nextBtn = h('button.btn.primary.xl', { type: 'button', onclick: () => (step < steps.length - 1 ? go(step + 1) : startPractice()) });
-  const mascot = h('div.lesson-tiko');
+  const nextBtn = h('button.btn.primary.big', { type: 'button', onclick: () => (step < steps.length - 1 ? go(step + 1) : startPractice()) });
   function go(i) {
     step = Math.max(0, Math.min(steps.length - 1, i));
-    bubble.replaceChildren(...paragraph(steps[step]));
-    bubble.classList.remove('pop');
-    void bubble.offsetWidth;
-    bubble.classList.add('pop');
-    dots.querySelectorAll('span').forEach((d, k) => d.classList.toggle('on', k <= step));
-    prevBtn.hidden = step === 0;
-    mascot.replaceChildren(tiko(step === steps.length - 1 ? 'juich' : step % 2 ? 'wow' : 'blij', 120));
-    nextBtn.replaceChildren(...(step < steps.length - 1 ? ['Verder', icon('next')] : [icon('play'), 'Probeer het!']));
+    body.replaceChildren(...paragraph(steps[step]));
+    body.classList.remove('fade');
+    void body.offsetWidth;
+    body.classList.add('fade');
+    counter.textContent = `Stap ${step + 1} van ${steps.length}`;
+    bar.querySelectorAll('span').forEach((d, k) => d.classList.toggle('on', k <= step));
+    prevBtn.disabled = step === 0;
+    nextBtn.replaceChildren(...(step < steps.length - 1 ? ['Volgende', icon('next')] : [icon('play'), 'Oefenen']));
   }
 
   const intro = h('section.lesson-intro',
-    h('p.kicker', `Les ${idx + 1}`), h('h1', lesson.title),
-    h('div.lesson-stage', mascot, bubble),
-    dots,
-    h('div.actions.center', prevBtn, nextBtn),
+    h('p.kicker', `Les ${idx + 1} · ${unit?.title || ''}`),
+    h('h1', lesson.title),
+    lesson.goal ? h('p.lead', lesson.goal) : null,
+    h('div.step-card', bar, counter, body,
+      h('div.step-actions', prevBtn, nextBtn)),
     h('button.linklike', { type: 'button', onclick: startPractice }, 'Uitleg overslaan'));
 
   // ---------- oefenen ----------
   const done = h('div.lesson-done', { hidden: true },
-    h('a.btn.primary.xl', { href: next ? `#/les/${next.id}` : '#/' }, next ? 'Volgende les' : 'Terug naar de tuin', icon('next')));
+    h('a.btn.primary.big', { href: next ? `#/les/${next.id}` : '#/' }, next ? 'Volgende les' : 'Terug naar het overzicht', icon('next')));
   const practice = h('section.lesson-practice', { hidden: true },
-    h('div.task-bar', tiko('blij', 44), h('p', ex.task || 'Speel de toetsen die oplichten.'),
-      h('button.btn.ghost.small', { type: 'button', onclick: () => { practice.hidden = true; intro.hidden = false; go(0); } }, icon('info', { size: 20 }), h('span', 'Uitleg'))),
+    h('div.task-bar',
+      h('div', h('p.kicker', `Les ${idx + 1}`), h('p.task-text', ex.task || 'Speel de gemarkeerde toetsen.')),
+      h('button.btn.ghost.small', { type: 'button', onclick: () => { practice.hidden = true; intro.hidden = false; go(0); } }, icon('info', { size: 18 }), h('span', 'Uitleg'))),
     h('div.player-slot'), done);
   if (best['les:' + id]?.stars > 0) done.hidden = false;
 

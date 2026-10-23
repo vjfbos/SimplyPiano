@@ -1,4 +1,4 @@
-# Toetsentuin 🌱🎹
+# Toetsentuin 🎹
 
 Een webapp (PWA) om piano te leren spelen op een echt keyboard of een akoestische piano,
 met directe feedback per noot. Voor kinderen en volwassen beginners. Eigen ontwerp,
@@ -26,19 +26,22 @@ eigen code en eigen lesstof. Liedjes komen uit het publieke domein, in eigen bew
 
 ## Ontwerp
 
-De app is ontworpen voor kinderen vanaf een jaar of 8, en blijft prettig voor volwassenen:
+De app is gemaakt voor kinderen van ongeveer 8 tot 12 jaar, en blijft prettig voor volwassenen: vriendelijk, maar
+niet kinderachtig.
 
-- **Drie tabbladen:** *Leren* (de tuin), *Spelen* (liedjes en akkoorden) en *Ik* (reeks, sterren en profiel).
-- **De tuin:** elke les is een plantje op een kronkelpad. Het groeit met je sterren: kiemplantje → knop → bloem.
-- **Tiko:** een eigen getekende plantjes-mascotte die in korte zinnen uitlegt wat je moet doen en reageert op
-  je spel.
-- **Les in stapjes:** uitleg komt in kaartjes van een paar zinnen, met *Verder*. Daarna volgt de oefening.
-- **Rustige speler:** één grote speelknop, *Rustig* (🐢) of *Op de maat* (🐇), en *L / R* voor de handen.
-  Snelheid, herhalen en begeleiding staan in een onderblad *Opties*. Tijdens het spelen verdwijnt het menu
-  (focusmodus), zodat er alleen een terugknop overblijft.
-- **Ouderslot:** de instellingen open je via *Ik → Voor ouders*, door de knop 2 seconden ingedrukt te houden.
-- **Huisstijl:** een eigen iconenset (SVG), het lettertype Nunito, grote "indrukbare" knoppen, een licht en een
-  donker thema, en minder beweging als het apparaat daarom vraagt (*reduced motion*).
+- **Drie tabbladen:** *Leren* (lessen), *Spelen* (liedjes en akkoorden) en *Ik* (reeks, sterren en profiel).
+- **Levelkaart:** de lessen zijn genummerde levels op een pad, per hoofdstuk. Gehaald = vinkje en sterren, de
+  volgende les is gemarkeerd. Bovenaan staat een kaart met *Volgende les* en een *Verder*-knop.
+- **Coach-regels:** aanwijzingen en feedback staan in korte, zakelijke zinnen met een icoon, en kleuren mee
+  (groen = goed, geel = timing, rood = fout).
+- **Lessen in stappen:** de uitleg staat op een kaart met een voortgangsbalk (*Stap 2 van 4*), met *Volgende* en
+  *Oefenen*.
+- **Speler:** één grote startknop, *Stap voor stap* of *Op tempo*, en *L / R* voor de handen. Snelheid, herhalen
+  en begeleiding staan in *Opties*. Tijdens het spelen verdwijnt het menu (focusmodus).
+- **Ouderslot:** de instellingen open je via *Ik → Voor ouders*, door de knop 2 seconden vast te houden.
+- **Huisstijl:** een eigen iconenset (SVG), het lettertype Lexend (ontworpen voor goede leesbaarheid), een
+  neutraal palet met smaragdgroen, koraal (rechterhand) en blauw (linkerhand), een licht en een donker thema, en
+  minder beweging als het apparaat daarom vraagt (*reduced motion*).
 
 ## Snel starten
 
@@ -108,7 +111,7 @@ src/
   ui/
     dom.js                 mini DOM-helper
     icons.js               eigen iconenset (SVG)
-    mascot.js              Tiko, de mascotte
+    coach.js               korte aanwijzingen en feedback met icoon
     sheet.js               onderblad en schakelaars
     keyboard.js            scherm-toetsenbord
     staff.js               notenbalk (VexFlow) met cursor en kleuren
@@ -137,24 +140,24 @@ een octaaf laten verspringen.
 
 ## Per stap testen
 
-1. **Eerste keer en wachtmodus:** `npm run dev`, vul een naam in, kies een dier en druk op *Laten we beginnen!*.
-   Tik in de tuin op het plantje met *Start!*, lees Tiko's uitleg (*Verder*) en kies *Probeer het!*. Druk op de
-   groene speelknop en tik de gekleurde toets aan. Speel je een verkeerde noot, dan zegt Tiko "Oeps, dat was …".
-   Na de laatste noot krijg je sterren, en het plantje in de tuin groeit.
+1. **Eerste keer en stap voor stap:** `npm run dev`, vul een naam in, kies een icoon en druk op *Start*. Kies
+   *Verder* bij *Volgende les*, lees de uitleg (*Volgende*) en kies *Oefenen*. Druk op de groene startknop en
+   speel de gemarkeerde toets. Bij een verkeerde noot zie je "Dat was C#. Zoek E (gemarkeerd)." Na de laatste
+   noot krijg je sterren, en het level krijgt een vinkje.
 2. **MIDI:** sluit een keyboard aan (Chrome of Edge op desktop, of Chrome op Android). Ga naar *Ik → Voor ouders*
    (knop 2 seconden vasthouden), kies *MIDI-keyboard* of *Automatisch* en geef toestemming. Bij *Test je
    invoer* zie je de gespeelde noten. Klinkt je keyboard zelf al? Zet dan "Speel zelf geluid af bij MIDI" uit.
 3. **Microfoon (iPad/iPhone/akoestische piano):** open de site via https en kies in de ouderinstellingen
    *Microfoon*. Speel losse noten en kijk of het niveau en de herkende noot kloppen.
-4. **Op de maat:** kies in een les of liedje 🐇 *Op de maat*. Na vier tikjes aftellen loopt de cursor mee en
+4. **Op tempo:** kies in een les of liedje *Op tempo*. Na vier tikjes aftellen loopt de cursor mee en
    zie je "Iets te vroeg" of "Iets te laat". Met *Opties → Snelheid* zet je het tempo lager.
 5. **Stukje oefenen en handen:** open bijvoorbeeld *Spelen → Vader Jacob → Moeilijk*. Kies *L*, open *Opties* en
    zet *Steeds herhalen* aan met maat 3 tot en met 4. Druk op de speelknop; na elk rondje begint het stukje
    opnieuw.
-6. **Begeleiding:** in *Opties* zet je drums of akkoorden aan en kies je *Op de maat*. Met *Luister* speelt de
+6. **Begeleiding:** in *Opties* zet je drums of akkoorden aan en kies je *Op tempo*. Met *Luister* speelt de
    app het hele stuk voor.
-7. **Profielen en voortgang:** onder *Ik* zie je je reeks, sterren en weekrondjes. Met *Wissel van speler* maak
-   je een tweede profiel; elk profiel heeft zijn eigen tuin.
+7. **Profielen en voortgang:** onder *Ik* zie je je reeks, sterren en weekrondjes. Met *Andere speler* maak
+   je een tweede profiel; elk profiel heeft zijn eigen voortgang.
 8. **Offline/PWA:** `npm run build && npm run preview`, open de pagina één keer en zet je netwerk uit
    (of kies "Offline" in de DevTools). Herlaad: alles blijft werken. In Safari kies je *Deel → Zet op
    beginscherm*, in Chrome *Installeren*.
@@ -330,7 +333,7 @@ Gebruikte bibliotheken (alleen open licenties):
 | [VexFlow](https://github.com/vexflow/vexflow) 5 | notenbalk | MIT |
 | ↳ Bravura-font (meegeleverd in VexFlow) | muzieksymbolen | SIL Open Font License 1.1 |
 | ↳ Academico-font (meegeleverd in VexFlow) | cijfers/tekst in de notenbalk | SIL Open Font License 1.1 |
-| [Nunito](https://github.com/googlefonts/nunito) (meegeleverd in `src/assets/fonts`) | lettertype | SIL Open Font License 1.1 |
+| [Lexend](https://github.com/googlefonts/lexend) (meegeleverd in `src/assets/fonts`) | lettertype | SIL Open Font License 1.1 |
 | [Vite](https://vitejs.dev) (alleen ontwikkeling) | build/dev-server | MIT |
 | [Vitest](https://vitest.dev) (alleen ontwikkeling) | tests | MIT |
 

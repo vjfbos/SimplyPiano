@@ -69,14 +69,14 @@ function makeTips(r, byHand, stats) {
   const tips = [];
   const { early, late, missed, wrong, extra } = r.counts;
   const hits = r.counts.ok + early + late;
-  if (r.stars === 3) tips.push('Wauw, alles goed! Probeer nu "Op de maat" of een moeilijker liedje.');
+  if (r.stars === 3) tips.push('Alles goed! Probeer nu "Op tempo" of een moeilijker niveau.');
   if (r.mode === 'wait') {
     if (wrong > 0 && r.accuracy < 80) tips.push('Kijk eerst rustig naar de gekleurde toets. Snel worden komt later vanzelf.');
-    if (r.accuracy >= 90) tips.push('Je kent de noten! Kies nu "Op de maat" en speel mee met de tikjes.');
+    if (r.accuracy >= 90) tips.push('Je kent de noten. Kies nu "Op tempo" en speel mee met de metronoom.');
   } else {
     if (late > early * 1.5 && late >= 3) tips.push('Je was vaak net te laat. Tel hardop mee: 1, 2, 3, 4. En kijk alvast naar de volgende noot.');
     if (early > late * 1.5 && early >= 3) tips.push('Je had een beetje haast. Wacht rustig op het tikje.');
-    if (missed > hits * 0.3) tips.push('Ging het te snel? Kies bij Opties een lagere snelheid, of speel eerst "Rustig".');
+    if (missed > hits * 0.3) tips.push('Ging het te snel? Kies bij Opties een lagere snelheid, of speel eerst "Stap voor stap".');
     if (extra + wrong > 4) tips.push('Er klonken extra toetsen. Houd je vingers dicht bij de toetsen.');
   }
   const hands = Object.entries(byHand).filter(([, v]) => v.total >= 3);

@@ -3,7 +3,6 @@ import { h, toast } from '../dom.js';
 import { loadSongs, loadSong, loadIndex, isCustomSong, saveCustomSong, deleteCustomSong, getCustomSongRaw } from '../../core/content.js';
 import { bestByItem } from '../../core/profiles.js';
 import { setDraft } from './songEditor.js';
-import { tiko } from '../mascot.js';
 import { normalize, matchSong } from '../../core/search.js';
 import { icon } from '../icons.js';
 import { playSwitch } from './playnav.js';
@@ -110,7 +109,7 @@ export async function songsView() {
       return;
     }
     grid.replaceChildren(h('div.card.empty',
-      tiko('denk', 80),
+      h('span.empty-ico', icon('search', { size: 28 })),
       h('h2', filters.q ? `"${filters.q}" staat er nog niet in` : 'Hier staat nog niets'),
       h('p', 'Popsongs zitten niet in de bibliotheek. Zoek de akkoorden, of voeg het liedje zelf toe.'),
       h('div.actions.center',

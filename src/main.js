@@ -41,7 +41,7 @@ const profileBtn = h('a.profile-btn', { href: '#/ik', 'aria-label': 'Mijn pagina
 const streakPill = h('a.streak-pill', { href: '#/ik', hidden: true });
 const backBtn = h('a.back-btn', { href: '#/', 'aria-label': 'Terug' }, icon('back', { size: 26 }));
 const navItems = [
-  ['leren', '#/', 'sprout', 'Leren'],
+  ['leren', '#/', 'route', 'Leren'],
   ['spelen', '#/liedjes', 'music', 'Spelen'],
   ['ik', '#/ik', 'user', 'Ik'],
 ];
@@ -90,7 +90,7 @@ async function render() {
     window.scrollTo(0, 0);
   } catch (err) {
     console.error(err);
-    clear(main).append(h('div.view.center', h('h1', 'Oeps!'), h('p', 'Er ging iets mis bij het laden: ' + err.message), h('a.btn.primary', { href: '#/' }, 'Naar de tuin')));
+    clear(main).append(h('div.view.center', h('h1', 'Oeps!'), h('p', 'Er ging iets mis bij het laden: ' + err.message), h('a.btn.primary', { href: '#/' }, 'Naar het overzicht')));
   }
 }
 
