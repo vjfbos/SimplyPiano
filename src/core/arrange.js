@@ -78,7 +78,7 @@ function bassNote(root) {
 }
 
 /** Akkoordligging rond C3-G3, met zo weinig mogelijk beweging t.o.v. het vorige akkoord. */
-function voiceChord(chord, prev) {
+export function voiceChord(chord, prev) {
   // Drieklank (grondtoon, terts, kwint); een septiem laten we weg voor de eenvoud.
   const pcs = new Set(chord.notes.map((n) => n % 12));
   const pick = (ivs) => (chord.root + (ivs.find((iv) => pcs.has((chord.root + iv) % 12)) ?? ivs[0])) % 12;

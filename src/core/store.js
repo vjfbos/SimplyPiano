@@ -1,6 +1,6 @@
 // Kleine IndexedDB-wrapper. Alles blijft lokaal op het apparaat.
 const DB_NAME = 'toetsentuin';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 let dbPromise = null;
 
 function open() {
@@ -20,6 +20,8 @@ function open() {
       }
       // v2: eigen nummers (gedeeld door alle profielen op dit apparaat)
       if (!db.objectStoreNames.contains('songs')) db.createObjectStore('songs', { keyPath: 'id' });
+      // v3: akkoordenbladen om mee te spelen met Spotify (of een andere bron)
+      if (!db.objectStoreNames.contains('chordsheets')) db.createObjectStore('chordsheets', { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);

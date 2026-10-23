@@ -2,6 +2,7 @@
 import { h, stars, formatMinutes } from '../dom.js';
 import { getPractice, getResults, bestByItem, computeStreak, weekSeconds, currentProfile } from '../../core/profiles.js';
 import { loadPath, loadSongs } from '../../core/content.js';
+import { listSheets } from '../../core/sheets.js';
 
 const DAYS = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'];
 
@@ -19,6 +20,7 @@ export async function progressView() {
   const titles = {};
   lessons.forEach((l) => (titles['les:' + l.id] = `Les: ${l.title}`));
   songs.forEach((s) => s.levels.forEach((lv) => (titles[`lied:${s.id}:${lv.level}`] = `${s.title} (niveau ${lv.level})`)));
+  (await listSheets().catch(() => [])).forEach((sh) => (titles['mee:' + sh.id] = `Meespelen: ${sh.title}`));
   const recent = results.sort((a, b) => b.date - a.date).slice(0, 10);
 
   return h('div.view.progress',
@@ -46,7 +48,7 @@ export async function progressView() {
       recent.length ? h('table.recent',
         h('thead', h('tr', h('th', 'Wat'), h('th', 'Wanneer'), h('th', 'Score'), h('th', 'Sterren'))),
         h('tbody', recent.map((r) => h('tr',
-          h('td', titles[r.itemId] || r.itemId, r.mode === 'tempo' ? ' · tempo' : ' · wachten', r.tempoPct < 100 ? ` · ${r.tempoPct}%` : ''),
+          h('td', titles[r.itemId] || r.itemId, { tempo: ' · tempo', wait: ' · wachten' }[r.mode] || '', r.tempoPct < 100 ? ` · ${r.tempoPct}%` : ''),
           h('td', new Date(r.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })),
           h('td', String(r.score)),
           h('td', stars(r.stars)))))) : h('p', 'Nog niets gespeeld. Begin met de eerste les!')));

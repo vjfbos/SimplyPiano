@@ -394,3 +394,53 @@ textarea.recording { border: 2px solid var(--terra); box-shadow: 0 0 0 3px color
 .sticky-actions { position: sticky; bottom: calc(70px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--paper) 92%, transparent); padding: 8px 0; z-index: 5; }
 @media (min-width: 761px) { .sticky-actions { bottom: 0; } }
 .editor-keyboard { margin-top: 8px; }
+
+/* ---------- meespelen (Spotify) ---------- */
+.btn.spotify { background: #1db954; border-color: #1db954; color: #0b1f12; }
+.spotify-link { font-size: 0.85rem; font-weight: 700; color: #1a8f45; text-decoration: none; white-space: nowrap; }
+@media (prefers-color-scheme: dark) { .spotify-link { color: #1ed760; } }
+.spotify-setup ol li { margin: 6px 0; }
+code.copy { background: var(--paper-2); padding: 2px 6px; border-radius: 6px; word-break: break-all; }
+.track-card { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+.track-card img, .sheet-list img, .sheet-head img { border-radius: 8px; object-fit: cover; flex: none; }
+.track-card > div { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.track-card strong, .track-card small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.track-card small { color: var(--ink-soft); }
+.track-card .status { color: var(--green); font-weight: 700; }
+.now-playing { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+.track-results { display: flex; flex-direction: column; gap: 8px; }
+.track-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px; border: 1px solid var(--line); border-radius: 12px; }
+.track-actions { display: flex; gap: 6px; }
+.sheet-list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 6px; }
+.sheet-list li { display: flex; align-items: center; gap: 8px; }
+.sheet-list a { flex: 1; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); padding: 6px; border-radius: 10px; }
+.sheet-list a:hover { background: var(--paper-2); }
+.sheet-list a span { display: flex; flex-direction: column; }
+.sheet-list small { color: var(--ink-soft); }
+.sheet-icon { width: 40px; height: 40px; display: grid; place-items: center; background: var(--paper-2); border-radius: 8px; font-size: 1.3rem; flex: none; }
+.sheet-icon.big { width: 72px; height: 72px; font-size: 2rem; }
+.sheet-head { display: flex; gap: 14px; align-items: center; margin-bottom: 8px; }
+.sheet-head h1 { margin: 0; }
+.source-bar p { margin: 4px 0; font-weight: 600; }
+.ok-text { color: var(--ok); }
+.warn-text { color: var(--warn); }
+.bad-text { color: var(--bad); }
+.pos { font-variant-numeric: tabular-nums; font-weight: 700; min-width: 6ch; }
+.tabs-switch { margin: 12px 0; }
+.tabs-switch button[aria-selected='true'] { background: var(--card); box-shadow: var(--shadow); color: var(--green); }
+.sheet-text { width: 100%; }
+.tap-box { background: var(--paper-2); border-radius: 14px; padding: 12px; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.tap-btn { min-width: 220px; font-size: 1.25rem; }
+.tap-info { margin: 0; color: var(--ink-soft); }
+.chord-display { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; }
+.chord-display small { color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; font-weight: 700; }
+.chord-now { font-size: clamp(2.6rem, 9vw, 4.5rem); font-weight: 900; line-height: 1.05; color: var(--terra); }
+.chord-notes { font-weight: 700; color: var(--ink-soft); }
+.chord-next { font-size: 2rem; font-weight: 800; color: var(--indigo); }
+.chord-bar { height: 8px; background: var(--paper-2); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+.chord-bar-fill { height: 100%; width: 0; background: var(--indigo); }
+.chord-strip { display: flex; gap: 6px; overflow: hidden; margin: 10px 0; }
+.chord-strip span { padding: 4px 12px; border-radius: 999px; background: var(--paper-2); font-weight: 700; white-space: nowrap; }
+.chord-strip span.cur { background: var(--terra); color: #fff; }
+.live-score { font-weight: 700; color: var(--green); min-width: 8ch; }
+.legal { margin-top: 20px; }

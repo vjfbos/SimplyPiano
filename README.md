@@ -19,6 +19,9 @@ eigen code en eigen lesstof. Liedjes komen uit het publieke domein, in eigen bew
 - **Voortgang:** dagelijkse oefenreeks, oefentijd per week, behaalde lessen. Meerdere profielen op één apparaat,
   alles lokaal opgeslagen in IndexedDB. Je hebt geen account nodig.
 - **Begeleiding:** metronoom, drumgroove en akkoordbegeleiding, allemaal gesynthetiseerd met de Web Audio API.
+- **Meespelen met Spotify:** koppel je Spotify-account, kies een nummer en speel de akkoorden mee. De app
+  volgt de afspeelpositie van Spotify, toont het huidige en het volgende akkoord op het toetsenbord en controleert
+  of je ze op tijd speelt (omkeringen tellen mee). De akkoorden zet je er zelf in en tik je in op de muziek.
 - **PWA:** installeerbaar en na het eerste bezoek volledig offline te gebruiken.
 
 ## Snel starten
@@ -62,6 +65,12 @@ src/
     arrange.js             automatische niveaus (basnoten/akkoorden links) en notatie-schrijver
     midifile.js            MIDI-bestanden lezen en omzetten naar notatie
     search.js              zoeken in de bibliotheek
+    chordsheet.js          akkoordenbladen: inlezen, tijden, akkoordherkenning, score bij meespelen
+    sheets.js              opslag van akkoordenbladen
+  spotify/
+    auth.js                inloggen met OAuth PKCE, tokens verversen
+    api.js                 wat speelt er, zoeken, afspelen/pauze/spoelen
+    clock.js               afspeelpositie volgen (Spotify of handmatige klok)
     store.js               IndexedDB-wrapper
     profiles.js            profielen, instellingen, resultaten, oefentijd, reeks
   input/
@@ -85,7 +94,8 @@ src/
     keyboard.js            scherm-toetsenbord
     staff.js               notenbalk (VexFlow) met cursor en kleuren
     player.js              oefenscherm dat alles koppelt
-    views/                 leerpad, les, liedjes (+ zoeken), editor voor eigen nummers, voortgang, profielen, instellingen
+    views/                 leerpad, les, liedjes (+ zoeken), editor voor eigen nummers, meespelen (Spotify),
+                           voortgang, profielen, instellingen
 tests/                     Vitest-tests
 ```
 
@@ -229,6 +239,41 @@ Toonsoorten voor `key`: `C`, `G`, `D`, `A`, `F`, `Bb`, `Eb`, `Am`, `Em`, `Dm`.
 
 **Let op auteursrecht:** gebruik alleen melodieën uit het publieke domein, of eigen melodieën, en maak een
 eigen bewerking.
+
+## Meespelen met Spotify
+
+**Wat kan wel en wat niet?** Spotify levert via de API geen akkoorden. De audio-analyse is in november 2024
+uit de API gehaald, en de ontwikkelaarsvoorwaarden verbieden het analyseren van Spotify-content. De app haalt
+akkoorden dus **niet** automatisch uit de muziek. Wat wel kan, en wat deze app doet:
+
+1. **Verbinden** via OAuth met PKCE. Daarvoor is geen server of geheime sleutel nodig. De app vraagt alleen
+   toestemming om te zien wat er speelt (`user-read-currently-playing`, `user-read-playback-state`) en om het
+   afspelen te bedienen (`user-modify-playback-state`, alleen met Premium).
+2. **Akkoorden invoeren** per nummer, bijvoorbeeld uit een songboek: `Am F C G x4`, met kopjes als `[Refrein]`.
+3. **Meetikken:** start het nummer vanaf het begin en tik (of druk op de spatiebalk) bij elke akkoordwissel.
+   Met de schuif *Synchronisatie* verschuif je alles een fractie eerder of later.
+4. **Meespelen:** de app vraagt elke 1,5 seconde aan Spotify waar het nummer is en rekent daartussen zelf door.
+   Je ziet *Nu* en *Straks*, de toetsen lichten op (rechts, links, of basnoot met akkoord), en na afloop krijg je
+   een score met de akkoorden die je nog moet oefenen.
+
+Zonder Premium start je het nummer gewoon in de Spotify-app (telefoon, computer of speaker); de app leest dan
+alleen mee. Akkoordenbladen bewaart de app lokaal (IndexedDB). Met *Blad zonder Spotify* kun je ook oefenen met
+een eigen klok, bijvoorbeeld bij een cd.
+
+### Instellen (eenmalig)
+
+1. Ga naar [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard) en kies **Create app**
+   (vink *Web API* aan).
+2. Voeg als **Redirect URI** het adres van je app toe, met een `/` aan het eind:
+   - lokaal: `http://127.0.0.1:5173/` (Spotify accepteert geen `localhost`; de app stuurt je automatisch door
+     naar 127.0.0.1)
+   - Netlify: `https://<jouw-site>.netlify.app/`
+3. Vul de **Client ID** in op het scherm *Meespelen*. Je kunt hem ook in de build zetten met de omgevingsvariabele
+   `VITE_SPOTIFY_CLIENT_ID` (lokaal in `.env.local`, of bij Netlify onder *Site configuration → Environment
+   variables*).
+
+Een nieuwe Spotify-app staat in *development mode*: alleen accounts die je in het dashboard onder *User
+Management* toevoegt, mogen inloggen. Voor jezelf en je gezin is dat genoeg.
 
 ## Hosten op Netlify
 
