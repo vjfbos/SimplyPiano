@@ -24,6 +24,22 @@ eigen code en eigen lesstof. Liedjes komen uit het publieke domein, in eigen bew
   in de wachtmodus, op tempo met metronoom en begeleiding, of mee met een opname (met ingetikte tijden).
 - **PWA:** installeerbaar en na het eerste bezoek volledig offline te gebruiken.
 
+## Ontwerp
+
+De app is ontworpen voor kinderen vanaf een jaar of 8, en blijft prettig voor volwassenen:
+
+- **Drie tabbladen:** *Leren* (de tuin), *Spelen* (liedjes en akkoorden) en *Ik* (reeks, sterren en profiel).
+- **De tuin:** elke les is een plantje op een kronkelpad. Het groeit met je sterren: kiemplantje → knop → bloem.
+- **Tiko:** een eigen getekende plantjes-mascotte die in korte zinnen uitlegt wat je moet doen en reageert op
+  je spel.
+- **Les in stapjes:** uitleg komt in kaartjes van een paar zinnen, met *Verder*. Daarna volgt de oefening.
+- **Rustige speler:** één grote speelknop, *Rustig* (🐢) of *Op de maat* (🐇), en *L / R* voor de handen.
+  Snelheid, herhalen en begeleiding staan in een onderblad *Opties*. Tijdens het spelen verdwijnt het menu
+  (focusmodus), zodat er alleen een terugknop overblijft.
+- **Ouderslot:** de instellingen open je via *Ik → Voor ouders*, door de knop 2 seconden ingedrukt te houden.
+- **Huisstijl:** een eigen iconenset (SVG), het lettertype Nunito, grote "indrukbare" knoppen, een licht en een
+  donker thema, en minder beweging als het apparaat daarom vraagt (*reduced motion*).
+
 ## Snel starten
 
 ```bash
@@ -91,6 +107,9 @@ src/
     scoring.js             beoordeling, sterren en tips
   ui/
     dom.js                 mini DOM-helper
+    icons.js               eigen iconenset (SVG)
+    mascot.js              Tiko, de mascotte
+    sheet.js               onderblad en schakelaars
     keyboard.js            scherm-toetsenbord
     staff.js               notenbalk (VexFlow) met cursor en kleuren
     player.js              oefenscherm dat alles koppelt
@@ -118,28 +137,27 @@ een octaaf laten verspringen.
 
 ## Per stap testen
 
-1. **Scherm-toetsenbord en wachtmodus:** `npm run dev`, maak een profiel, open les 1 en kies *Naar de
-   oefening* → *Start*. Tik de oplichtende toets aan. Speel je een verkeerde noot, dan zie je "Fout: je
-   speelde … · zoek …". Na de laatste noot verschijnen sterren en tips.
-2. **MIDI:** sluit een keyboard aan (Chrome of Edge op desktop, of Chrome op Android). Ga naar
-   *Instellingen*, kies *MIDI-keyboard* of *Automatisch* en geef toestemming. Bij *Test je invoer* zie je de
-   gespeelde noten. Klinkt je keyboard zelf al? Zet dan "Speel zelf geluid af bij MIDI" uit.
-3. **Microfoon (iPad/iPhone/akoestische piano):** open de site via https, kies *Microfoon* in de
-   instellingen en sta de microfoon toe. Speel losse noten en kijk of het niveau en de herkende noot
-   kloppen. Pas zo nodig de gevoeligheid aan.
-4. **Tempomodus:** les 11 (Ritme). Na vier tikken aftellen loopt de cursor mee. Speel op de tik en kijk
-   naar "te vroeg" en "te laat". Zet het tempo lager met de schuif.
-5. **Passage en handen:** open bijvoorbeeld *Vader Jacob* niveau 3. Kies *Links*, open *Meer opties*, zet
-   *Passage herhalen* aan met maat 3 t/m 4 en druk op *Start*: na elke ronde zie je een melding en begint
-   de passage opnieuw.
-6. **Begeleiding:** in *Meer opties* zet je drums of akkoorden aan en start je de tempomodus. Met *Luister*
-   speelt de app het hele stuk voor.
-7. **Profielen en voortgang:** maak een tweede profiel via het rondje rechtsboven. Voortgang, reeks en
-   oefentijd houdt de app per profiel bij.
+1. **Eerste keer en wachtmodus:** `npm run dev`, vul een naam in, kies een dier en druk op *Laten we beginnen!*.
+   Tik in de tuin op het plantje met *Start!*, lees Tiko's uitleg (*Verder*) en kies *Probeer het!*. Druk op de
+   groene speelknop en tik de gekleurde toets aan. Speel je een verkeerde noot, dan zegt Tiko "Oeps, dat was …".
+   Na de laatste noot krijg je sterren, en het plantje in de tuin groeit.
+2. **MIDI:** sluit een keyboard aan (Chrome of Edge op desktop, of Chrome op Android). Ga naar *Ik → Voor ouders*
+   (knop 2 seconden vasthouden), kies *MIDI-keyboard* of *Automatisch* en geef toestemming. Bij *Test je
+   invoer* zie je de gespeelde noten. Klinkt je keyboard zelf al? Zet dan "Speel zelf geluid af bij MIDI" uit.
+3. **Microfoon (iPad/iPhone/akoestische piano):** open de site via https en kies in de ouderinstellingen
+   *Microfoon*. Speel losse noten en kijk of het niveau en de herkende noot kloppen.
+4. **Op de maat:** kies in een les of liedje 🐇 *Op de maat*. Na vier tikjes aftellen loopt de cursor mee en
+   zie je "Iets te vroeg" of "Iets te laat". Met *Opties → Snelheid* zet je het tempo lager.
+5. **Stukje oefenen en handen:** open bijvoorbeeld *Spelen → Vader Jacob → Moeilijk*. Kies *L*, open *Opties* en
+   zet *Steeds herhalen* aan met maat 3 tot en met 4. Druk op de speelknop; na elk rondje begint het stukje
+   opnieuw.
+6. **Begeleiding:** in *Opties* zet je drums of akkoorden aan en kies je *Op de maat*. Met *Luister* speelt de
+   app het hele stuk voor.
+7. **Profielen en voortgang:** onder *Ik* zie je je reeks, sterren en weekrondjes. Met *Wissel van speler* maak
+   je een tweede profiel; elk profiel heeft zijn eigen tuin.
 8. **Offline/PWA:** `npm run build && npm run preview`, open de pagina één keer en zet je netwerk uit
    (of kies "Offline" in de DevTools). Herlaad: alles blijft werken. In Safari kies je *Deel → Zet op
    beginscherm*, in Chrome *Installeren*.
-
 9. **Zoeken en eigen nummers:** typ bij *Liedjes* bijvoorbeeld "kerst" of "beethoven". Zoek je iets dat er
    niet in staat, dan kun je het meteen zelf toevoegen. Via *＋ Eigen nummer → MIDI-bestand importeren* kies je
    een .mid-bestand; controleer de handverdeling en de maten en druk op *Opslaan en spelen*. Bij *Zelf noten
@@ -312,6 +330,7 @@ Gebruikte bibliotheken (alleen open licenties):
 | [VexFlow](https://github.com/vexflow/vexflow) 5 | notenbalk | MIT |
 | ↳ Bravura-font (meegeleverd in VexFlow) | muzieksymbolen | SIL Open Font License 1.1 |
 | ↳ Academico-font (meegeleverd in VexFlow) | cijfers/tekst in de notenbalk | SIL Open Font License 1.1 |
+| [Nunito](https://github.com/googlefonts/nunito) (meegeleverd in `src/assets/fonts`) | lettertype | SIL Open Font License 1.1 |
 | [Vite](https://vitejs.dev) (alleen ontwikkeling) | build/dev-server | MIT |
 | [Vitest](https://vitest.dev) (alleen ontwikkeling) | tests | MIT |
 

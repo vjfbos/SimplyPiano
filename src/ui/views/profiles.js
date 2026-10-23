@@ -1,5 +1,7 @@
 // Profielen kiezen, aanmaken en verwijderen.
 import { h } from '../dom.js';
+import { icon } from '../icons.js';
+import { tiko } from '../mascot.js';
 import { listProfiles, createProfile, selectProfile, deleteProfile, currentProfile, AVATARS } from '../../core/profiles.js';
 
 export async function profilesView() {
@@ -25,13 +27,13 @@ export async function profilesView() {
       location.hash = '#/';
     },
   },
-  h('h2', profiles.length ? 'Nieuw profiel' : 'Wie gaat er spelen?'),
+  h('h2', profiles.length ? 'Nieuwe speler' : 'Hoe heet je?'),
   h('p.hint', 'Alles wordt alleen op dit apparaat bewaard. Je hebt geen account nodig.'),
   nameInput, avatarBox,
-  h('button.btn.primary', { type: 'submit' }, 'Profiel maken'));
+  h('button.btn.primary.xl', { type: 'submit' }, 'Laten we beginnen!'));
 
   return h('div.view.profiles',
-    h('h1', 'Profielen'),
+    h('div.center', tiko(profiles.length ? 'blij' : 'juich', 96), h('h1', profiles.length ? 'Wie gaat er spelen?' : 'Welkom in de Toetsentuin!')),
     profiles.length ? h('div.profile-grid', profiles.map((p) => h('div.profile-card', { class: p.id === cur?.id ? 'current' : '' },
       h('button.profile-pick', {
         type: 'button',
@@ -47,6 +49,6 @@ export async function profilesView() {
           await deleteProfile(p.id);
           location.hash = '#/profielen?' + Date.now();
         },
-      }, '🗑')))) : null,
+      }, icon('trash', { size: 18 }))))) : null,
     form);
 }

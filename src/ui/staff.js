@@ -48,7 +48,8 @@ export class Staff {
     const grand = hands.length === 2;
     const staveGap = 95;
     const rowHeight = grand ? 230 : 135;
-    const perRow = Math.max(1, Math.min(4, Math.floor((width - 20) / 210)));
+    // Smalle schermen: kortere maten, zodat er toch twee maten op een regel passen.
+    const perRow = Math.max(1, Math.min(4, Math.floor((width - 20) / (width < 520 ? 165 : 210))));
     const rowCount = Math.ceil(piece.bars.length / perRow);
     const renderer = new Renderer(this.canvas, Renderer.Backends.SVG);
     renderer.resize(pxWidth, (rowCount * rowHeight + 10) * scale);

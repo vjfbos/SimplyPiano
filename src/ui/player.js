@@ -1,10 +1,13 @@
 // Oefenscherm: notenbalk + toetsenbord + bediening. Gebruikt door lessen en liedjes.
-import { h, stars, toast } from './dom.js';
+import { h, toast } from './dom.js';
+import { icon } from './icons.js';
+import { tiko } from './mascot.js';
+import { openSheet, toggle } from './sheet.js';
 import { Staff } from './staff.js';
 import { Keyboard } from './keyboard.js';
 import { buildPiece } from '../core/piece.js';
 import { noteLabel } from '../core/notes.js';
-import { PracticeEngine, RESULT_TEXT } from '../practice/engine.js';
+import { PracticeEngine } from '../practice/engine.js';
 import { hub } from '../input/hub.js';
 import { getAudio, perfToAudioTime, unlockAudio } from '../audio/audio.js';
 import { playAt, allNotesOff } from '../audio/synth.js';
@@ -14,7 +17,8 @@ import { accompanimentItems, padChord } from '../audio/accompaniment.js';
 import { currentProfile, saveResult, addPracticeSeconds } from '../core/profiles.js';
 import { inputSummary } from '../input/manager.js';
 
-const SYMBOL = { ok: '✓', early: '«', late: '»', missed: '○', wrong: '✗', retry: '✓' };
+const PRAISE = ['Goed zo!', 'Top!', 'Ja, precies!', 'Mooi!', 'Super!', 'Lekker bezig!'];
+let praise = 0;
 
 function makeSound(piece) {
   const scheduler = new Scheduler();
@@ -74,82 +78,83 @@ export function createPlayer(opts) {
 
   const staff = new Staff();
   const kb = new Keyboard({ ...rangeObj(Keyboard.rangeFor(piece.range)), labels: settings.noteLabels || 'letters' });
-  const feedback = h('div.feedback', { role: 'status', 'aria-live': 'polite' }, h('span.fb-symbol', '♪'), h('span.fb-text', 'Druk op Start en speel de oplichtende noot.'));
+  const feedback = h('div.feedback', { role: 'status', 'aria-live': 'polite' }, h('span.fb-face'), h('span.fb-text'));
   const countin = h('div.countin', { 'aria-live': 'assertive' });
-  const inputChip = h('button.chip.input-chip', { type: 'button', title: 'Invoer wijzigen', onclick: () => (location.hash = '#/instellingen') });
-  const updateChip = () => {
-    const s = inputSummary(currentProfile()?.settings || settings);
-    inputChip.replaceChildren(h('span', { 'aria-hidden': 'true' }, s.icon), ' ', s.text);
-  };
-  updateChip();
 
-  // ---------- bediening ----------
-  const seg = (name, options, value, onChange) => {
-    const box = h('div.segmented', { role: 'radiogroup', 'aria-label': name });
-    options.forEach(([val, label, disabled]) => {
-      const b = h('button', { type: 'button', role: 'radio', 'aria-checked': String(val === value), disabled: !!disabled, onclick: () => {
+  // ---------- bediening: alleen het belangrijkste in beeld, de rest in een onderblad ----------
+  const choice = (name, options, value, onChange) => {
+    const box = h('div.choice', { role: 'radiogroup', 'aria-label': name });
+    options.forEach(([val, content, label, disabled]) => {
+      const b = h('button', { type: 'button', role: 'radio', 'aria-checked': String(val === value), 'aria-label': label, title: label, disabled: !!disabled, onclick: () => {
         box.querySelectorAll('button').forEach((x) => x.setAttribute('aria-checked', 'false'));
         b.setAttribute('aria-checked', 'true');
         onChange(val);
-      } }, label);
+      } }, content);
       box.append(b);
     });
     return box;
   };
-  const modeSeg = seg('Oefenmodus', [['wait', 'Wachten', !allowModes.includes('wait')], ['tempo', 'Op tempo', !allowModes.includes('tempo')]], state.mode, (v) => {
+  const modeSeg = choice('Hoe wil je spelen?', [
+    ['wait', [icon('turtle', { size: 22 }), h('span', 'Rustig')], 'Rustig: het liedje wacht op jou', !allowModes.includes('wait')],
+    ['tempo', [icon('rabbit', { size: 22 }), h('span', 'Op de maat')], 'Op de maat: het liedje loopt door', !allowModes.includes('tempo')],
+  ], state.mode, (v) => {
     state.mode = v;
     reset();
   });
   const handValue = state.hands.length === 2 ? 'both' : state.hands[0];
-  const handSeg = seg('Handen', [
-    ['lh', 'Links', !hasHands.includes('lh')],
-    ['rh', 'Rechts', !hasHands.includes('rh')],
-    ['both', 'Beide', hasHands.length < 2],
+  const handSeg = hasHands.length > 1 ? choice('Welke hand?', [
+    ['lh', h('span.hand-badge.lh', 'L'), 'Alleen links'],
+    ['both', [h('span.hand-badge.lh', 'L'), h('span.hand-badge.rh', 'R')], 'Allebei'],
+    ['rh', h('span.hand-badge.rh', 'R'), 'Alleen rechts'],
   ], handValue, (v) => {
     state.hands = v === 'both' ? hasHands : [v];
     redraw();
-  });
-  const tempoOut = h('output', '100%');
-  const tempoInput = h('input', { type: 'range', min: 50, max: 100, step: 5, value: 100, 'aria-label': 'Tempo', oninput: () => {
-    state.tempoPct = Number(tempoInput.value);
-    tempoOut.textContent = `${state.tempoPct}% · ${Math.round(piece.tempo * state.tempoPct / 100)} bpm`;
-  } });
-  tempoOut.textContent = `100% · ${piece.tempo} bpm`;
+  }) : null;
 
-  const barOptions = () => piece.bars.map((b) => h('option', { value: b.index }, `maat ${b.index + (piece.pickup ? 0 : 1)}`));
-  const fromSel = h('select', { 'aria-label': 'Van maat', onchange: () => {
-    state.fromBar = Number(fromSel.value);
-    if (state.toBar < state.fromBar) toSel.value = state.toBar = state.fromBar;
-  } }, barOptions());
-  const toSel = h('select', { 'aria-label': 'Tot en met maat', onchange: () => {
-    state.toBar = Number(toSel.value);
-    if (state.toBar < state.fromBar) fromSel.value = state.fromBar = state.toBar;
-  } }, barOptions());
-  toSel.value = state.toBar;
-  const check = (label, key, disabled = false) => h('label.check', h('input', { type: 'checkbox', checked: state[key], disabled, onchange: (e) => (state[key] = e.target.checked) }), label);
+  const startBtn = h('button.play-btn', { type: 'button', 'aria-label': 'Start', onclick: () => (engine?.running ? stopPlaying(true) : startPlaying()) });
+  const listenBtn = h('button.round-btn', { type: 'button', onclick: () => (engine?.running ? stopPlaying(false) : startPlaying(true)) });
+  const optsBtn = h('button.round-btn', { type: 'button', onclick: () => openOptions() }, icon('sliders'), h('span', 'Opties'));
+  const setButtons = (running, listening) => {
+    startBtn.replaceChildren(icon(running && !listening ? 'stop' : 'play', { size: 34 }));
+    startBtn.setAttribute('aria-label', running && !listening ? 'Stop' : 'Start');
+    startBtn.classList.toggle('stop', running && !listening);
+    startBtn.disabled = !!listening;
+    listenBtn.replaceChildren(icon(listening ? 'stop' : 'headphones'), h('span', listening ? 'Stop' : 'Luister'));
+  };
+  setButtons(false, false);
 
-  const startBtn = h('button.btn.primary.big', { type: 'button', onclick: () => (engine?.running ? stopPlaying(true) : startPlaying()) }, 'Start');
-  const listenBtn = h('button.btn', { type: 'button', onclick: () => (engine?.running ? stopPlaying(false) : startPlaying(true)) }, '▶ Luister');
+  function openOptions() {
+    const tempoOut = h('output.tempo-out');
+    const showTempo = () => (tempoOut.textContent = `${state.tempoPct}%`);
+    showTempo();
+    const tempo = h('input.big-range', { type: 'range', min: 50, max: 100, step: 5, value: state.tempoPct, 'aria-label': 'Snelheid', oninput: () => { state.tempoPct = Number(tempo.value); showTempo(); } });
+    const barOptions = () => piece.bars.map((b) => h('option', { value: b.index }, `maat ${b.index + (piece.pickup ? 0 : 1)}`));
+    const fromSel = h('select', { 'aria-label': 'Van maat', value: state.fromBar, onchange: () => { state.fromBar = Number(fromSel.value); if (state.toBar < state.fromBar) toSel.value = state.toBar = state.fromBar; } }, barOptions());
+    const toSel = h('select', { 'aria-label': 'Tot en met maat', value: state.toBar, onchange: () => { state.toBar = Number(toSel.value); if (state.toBar < state.fromBar) fromSel.value = state.fromBar = state.toBar; } }, barOptions());
+    const s = currentProfile()?.settings || settings;
+    const inp = inputSummary(s);
+    openSheet('Opties',
+      h('div.opt-group', h('h3', 'Snelheid'),
+        h('div.tempo-row', icon('turtle', { size: 28 }), tempo, icon('rabbit', { size: 28 }), tempoOut)),
+      h('div.opt-group', h('h3', 'Een stukje oefenen'),
+        toggle('Steeds herhalen', state.repeat, (v) => (state.repeat = v), { hint: 'Na het einde begint het stukje opnieuw' }),
+        h('div.control-row', h('label', 'Van ', fromSel), h('label', 'tot en met ', toSel))),
+      h('div.opt-group', h('h3', 'Muziek erbij'),
+        toggle('Metronoom', state.metronome, (v) => (state.metronome = v), { hint: 'Tikjes op de maat (bij "Op de maat")' }),
+        toggle('Drums', state.drums, (v) => (state.drums = v)),
+        toggle('Akkoorden', state.chords, (v) => (state.chords = v), { disabled: !piece.chords.length }),
+        hasHands.length > 1 ? toggle('De andere hand speelt mee', state.autoplayOther, (v) => (state.autoplayOther = v)) : null),
+      h('div.opt-group', h('h3', 'Hoe speel je?'),
+        h('a.input-row', { href: '#/instellingen' }, icon(s.input === 'mic' ? 'mic' : 'piano'), h('span', inp.text), icon('next'))));
+  }
 
-  const controls = h('div.controls',
-    h('div.control-row', modeSeg, handSeg, inputChip),
-    h('div.control-row', h('label.tempo', 'Tempo ', tempoInput, tempoOut)),
-    h('details.more',
-      h('summary', 'Meer opties: herhalen en begeleiding'),
-      h('div.control-row',
-        check('Passage herhalen', 'repeat'),
-        h('label', 'van ', fromSel), h('label', 't/m ', toSel)),
-      h('div.control-row',
-        check('Andere hand speelt mee', 'autoplayOther'),
-        check('Metronoom', 'metronome'),
-        check('Drums', 'drums'),
-        check('Akkoorden', 'chords', !piece.chords.length)),
-      h('p.hint', 'Metronoom en drums klinken in de tempomodus. Akkoorden klinken in beide modi.')),
-    h('div.control-row.actions', startBtn, listenBtn),
-  );
-
+  // Bovenaan: hoe spelen (links) en de grote speelknop (rechts). Daaronder noten, Tiko en het toetsenbord.
+  const toolbar = h('div.player-bar',
+    h('div.bar-left', modeSeg, handSeg),
+    h('div.bar-right', optsBtn, listenBtn, startBtn));
   const stage = h('div.stage', staff.el, countin);
-  const el = h('section.player', controls, stage, feedback, kb.el);
+  const rotateTip = h('p.rotate-tip', icon('info', { size: 18 }), 'Tip: draai je telefoon, dan zie je meer toetsen.');
+  const el = h('section.player', toolbar, stage, feedback, kb.el, rotateTip);
 
   // ---------- engine ----------
   let engine = null;
@@ -158,9 +163,10 @@ export function createPlayer(opts) {
   let lastInput = 0;
   let pendingSeconds = 0;
 
+  const FACE = { ok: 'juich', retry: 'blij', early: 'wow', late: 'wow', missed: 'denk', wrong: 'denk' };
   function setFeedback(result, text) {
-    feedback.className = 'feedback fb-' + result;
-    feedback.querySelector('.fb-symbol').textContent = SYMBOL[result] || '♪';
+    feedback.className = 'feedback fb-' + (result || 'idle');
+    feedback.querySelector('.fb-face').replaceChildren(tiko(FACE[result] || 'blij', 40));
     feedback.querySelector('.fb-text').textContent = text;
   }
 
@@ -182,7 +188,7 @@ export function createPlayer(opts) {
     stopPlaying(false);
     staff.clearMarks();
     showFirst();
-    setFeedback('', state.mode === 'wait' ? 'Wachtmodus: het stuk wacht tot je de juiste noot speelt.' : 'Tempomodus: na vier tikken aftellen loopt het stuk mee met de maat.');
+    setFeedback('', state.mode === 'wait' ? 'Druk op de groene knop en speel de gekleurde toets. Ik wacht op je!' : 'Op de maat: na 4 tikjes loopt het liedje door. Speel mee!');
   }
 
   async function startPlaying(listen = false) {
@@ -220,18 +226,18 @@ export function createPlayer(opts) {
         if (tokenId) staff.mark(tokenId, result);
         if (result !== 'missed') kb.flash(midi, result);
       }),
-      engine.on('feedback', ({ result, text, played, expected, dt }) => {
-        let t = text;
+      engine.on('feedback', ({ result, played, expected }) => {
+        const name = (m) => noteLabel(m, settings.noteLabels === 'solfege' ? 'solfege' : 'letters', false);
+        let t;
         if (result === 'wrong' && played != null) {
-          t = `Fout: je speelde ${noteLabel(played, settings.noteLabels === 'solfege' ? 'solfege' : 'letters')}`;
-          if (expected?.length) t += ` · zoek ${expected.map((m) => noteLabel(m, settings.noteLabels === 'solfege' ? 'solfege' : 'letters')).join(' + ')}`;
-        } else if ((result === 'early' || result === 'late') && dt != null) {
-          t = `${RESULT_TEXT[result]} (${Math.abs(dt)} ms)`;
-        }
+          t = `Oeps, dat was ${name(played)}.`;
+          if (expected?.length) t += ` Zoek de gekleurde toets${expected.length > 1 ? 'en' : ''}!`;
+        } else if (result === 'ok') t = PRAISE[(praise = (praise + 1) % PRAISE.length)];
+        else t = { early: 'Iets te vroeg!', late: 'Iets te laat!', missed: 'Gemist, speel gewoon door!' }[result] || '';
         setFeedback(result, t);
       }),
       engine.on('loop', (r) => {
-        toast(`Ronde klaar: ${r.score} punten ${'★'.repeat(r.stars)}`);
+        toast(`Rondje klaar: ${'★'.repeat(r.stars) || 'nog een keer!'}`);
         staff.clearMarks();
         flushPractice();
       }),
@@ -239,9 +245,7 @@ export function createPlayer(opts) {
       engine.on('stop', () => finishUi()),
     );
     countin.classList.remove('show');
-    startBtn.textContent = listen ? 'Start' : 'Stop';
-    listenBtn.textContent = listen ? '■ Stop' : '▶ Luister';
-    startBtn.disabled = listen;
+    setButtons(true, listen);
     el.classList.add('running');
     if (!listen) {
       practiceTimer = setInterval(() => {
@@ -249,7 +253,7 @@ export function createPlayer(opts) {
       }, 5000);
       lastInput = performance.now();
     }
-    setFeedback('', listen ? 'Luister en kijk mee…' : state.mode === 'wait' ? 'Speel de oplichtende noot.' : 'Tel mee…');
+    setFeedback('', listen ? 'Luister goed en kijk mee…' : state.mode === 'wait' ? 'Speel de gekleurde toets!' : 'Tel mee: 1, 2, 3, 4…');
     bringIntoView();
     engine.start();
   }
@@ -269,9 +273,7 @@ export function createPlayer(opts) {
   }
 
   function finishUi() {
-    startBtn.textContent = 'Start';
-    listenBtn.textContent = '▶ Luister';
-    startBtn.disabled = false;
+    setButtons(false, false);
     countin.classList.remove('show');
     el.classList.remove('running');
     clearInterval(practiceTimer);
@@ -300,7 +302,7 @@ export function createPlayer(opts) {
     const listen = state.listening;
     finishUi();
     engine = null;
-    if (listen) return setFeedback('', 'Klaar met luisteren. Nu jij!');
+    if (listen) return setFeedback('ok', 'Klaar met luisteren. Nu jij!');
     staff.hideCursor();
     const full = state.fromBar === 0 && state.toBar === piece.bars.length - 1 && state.hands.length === hasHands.length;
     if (full) {
@@ -311,23 +313,26 @@ export function createPlayer(opts) {
   }
 
   function showResults(r, partial, saved) {
-    const dlg = h('dialog.results', { 'aria-labelledby': 'res-title' },
-      h('h2#res-title', partial ? 'Tussenstand' : r.stars >= 2 ? 'Knap gedaan!' : r.stars === 1 ? 'Goed bezig!' : 'Blijf oefenen!'),
-      stars(r.stars),
-      h('div.res-grid',
-        h('div', h('strong', `${r.score}`), h('span', 'punten')),
-        h('div', h('strong', `${r.accuracy}%`), h('span', 'nauwkeurig')),
-        r.timing !== null ? h('div', h('strong', `${r.timing}%`), h('span', 'timing')) : null),
-      h('ul.res-counts',
-        h('li.ok', `✓ goed: ${r.counts.ok}`),
-        r.mode === 'tempo' ? [h('li.warn', `« te vroeg: ${r.counts.early}`), h('li.warn', `» te laat: ${r.counts.late}`), h('li.bad', `○ gemist: ${r.counts.missed}`), h('li.bad', `✗ extra/fout: ${r.counts.extra}`)]
-          : h('li.bad', `✗ foute noten: ${r.counts.wrong}`)),
-      h('h3', 'Tips'),
-      h('ul.tips', r.tips.map((t) => h('li', t))),
-      !partial && !saved ? h('p.hint', 'Dit resultaat telt niet mee voor de sterren, omdat je een deel of één hand oefende.') : null,
-      h('div.actions',
-        h('button.btn', { type: 'button', onclick: () => { dlg.close(); startPlaying(); } }, 'Opnieuw'),
-        h('button.btn.primary', { type: 'button', onclick: () => dlg.close(), autofocus: true }, 'Sluiten')),
+    const head = partial ? 'Tussenstand' : ['Bijna! Nog een keer?', 'Goed bezig!', 'Knap gedaan!', 'Fantastisch!'][r.stars];
+    const facts = [h('span.fact.ok', icon('check', { size: 18 }), `${r.counts.ok} goed`)];
+    if (r.mode === 'tempo') {
+      if (r.counts.early + r.counts.late) facts.push(h('span.fact.warn', icon('clock', { size: 18 }), `${r.counts.early + r.counts.late} net niet op tijd`));
+      if (r.counts.missed + r.counts.extra) facts.push(h('span.fact.bad', icon('close', { size: 18 }), `${r.counts.missed + r.counts.extra} foutjes`));
+    } else if (r.counts.wrong) facts.push(h('span.fact.bad', icon('close', { size: 18 }), `${r.counts.wrong} foutje${r.counts.wrong === 1 ? '' : 's'}`));
+    const goNext = !partial && saved && r.stars > 0 && opts.nextHref;
+    const dlg = h('dialog.results', { 'aria-labelledby': 'res-title', class: r.stars === 3 && !partial ? 'party' : '' },
+      r.stars === 3 && !partial ? h('div.confetti', { 'aria-hidden': 'true' }, Array.from({ length: 24 }, (_, i) => h('i', { style: { '--i': i } }))) : null,
+      h('div.res-tiko', tiko(r.stars >= 2 ? 'juich' : r.stars === 1 ? 'blij' : 'denk', 96)),
+      h('h2#res-title', head),
+      h('div.res-stars', { role: 'img', 'aria-label': `${r.stars} van 3 sterren` }, [1, 2, 3].map((i) => icon('star', { size: 54, cls: i <= r.stars ? 'on' : 'off' }))),
+      h('p.res-score', h('strong', String(r.score)), ' punten'),
+      h('div.facts', facts),
+      r.tips[0] ? h('p.res-tip', r.tips[0]) : null,
+      !partial && !saved ? h('p.hint', 'Je oefende een stukje of één hand. Speel alles om sterren te verdienen.') : null,
+      h('div.actions.center',
+        h('button.btn.ghost', { type: 'button', onclick: () => { dlg.close(); startPlaying(); } }, icon('repeat'), 'Nog een keer'),
+        goNext ? h('a.btn.primary', { href: opts.nextHref, onclick: () => dlg.close() }, 'Verder', icon('next'))
+          : h('button.btn.primary', { type: 'button', onclick: () => dlg.close(), autofocus: true }, 'Klaar')),
     );
     dlg.addEventListener('close', () => dlg.remove());
     document.body.append(dlg);
@@ -339,7 +344,6 @@ export function createPlayer(opts) {
     lastInput = performance.now();
     engine?.input(d);
   });
-  const offStatus = hub.on('status', updateChip);
 
   // eerste weergave zodra het element in de pagina staat
   requestAnimationFrame(() => redraw().then(reset));
@@ -360,7 +364,6 @@ export function createPlayer(opts) {
     destroy() {
       stopPlaying(false);
       offOn();
-      offStatus();
       ro.disconnect();
       kb.destroy();
     },

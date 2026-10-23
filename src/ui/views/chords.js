@@ -8,6 +8,8 @@ import { parseChord } from '../../core/chords.js';
 import { voiceChord } from '../../core/arrange.js';
 import { noteLabel, midiToName } from '../../core/notes.js';
 import { ManualClock } from '../../core/clock.js';
+import { icon } from '../icons.js';
+import { playSwitch } from './playnav.js';
 import { hub } from '../../input/hub.js';
 import { currentProfile, saveResult, addPracticeSeconds } from '../../core/profiles.js';
 import { getAudio, perfToAudioTime, unlockAudio } from '../../audio/audio.js';
@@ -58,7 +60,7 @@ export async function chordsView() {
       }
     } }, 'Inladen');
     return h('div.track-row',
-      h('div.track-card', h('span.sheet-icon', '🎸'),
+      h('div.track-card', h('span.sheet-icon', icon('guitar')),
         h('div', h('strong', `${r.title}${r.version > 1 ? ` (versie ${r.version})` : ''}`), h('small', [r.artist, r.key && `toonsoort ${r.key}`].filter(Boolean).join(' · ')),
           h('small.status', r.votes ? `★ ${r.rating} · ${r.votes} stemmen · ${r.source}` : r.source))),
       btn);
@@ -69,8 +71,7 @@ export async function chordsView() {
   const pArtist = h('input', { type: 'text', placeholder: 'Artiest (optioneel)', 'aria-label': 'Artiest' });
   const pText = h('textarea.notes', { rows: 8, spellcheck: false, placeholder: 'Plak hier een akkoordenblad van een website (akkoorden boven de tekst), of typ alleen de akkoorden:\n\n[Couplet]\nAm F C G x2' });
   const pUrl = h('input', { type: 'url', placeholder: 'https://tabs.ultimate-guitar.com/tab/…', 'aria-label': 'Link naar akkoordenpagina' });
-  const pasteCard = h('section.card',
-    h('h2', 'Zelf plakken of een link inladen'),
+  const pasteCard = h('div',
     h('div.control-row', pUrl, h('button.btn', { type: 'button', onclick: async () => {
       if (!pUrl.value.trim()) return pUrl.focus();
       try {
@@ -92,24 +93,31 @@ export async function chordsView() {
     } }, 'Opslaan en openen')),
     h('p.hint', 'De app herkent zelf welke regels akkoorden zijn en welke songtekst. Ongebruikelijke akkoorden (bijv. E7#9) worden voor het oefenen vereenvoudigd (E7).'));
 
-  const list = h('section.card',
-    h('h2', 'Mijn akkoordenbladen'),
+  const list = h('section',
+    h('h2.section-title', 'Mijn akkoorden'),
     sheets.length ? h('ul.sheet-list', sheets.map((s) => h('li',
-      h('a', { href: `#/akkoorden/${s.id}` }, h('span.sheet-icon', '🎸'),
+      h('a', { href: `#/akkoorden/${s.id}` }, h('span.sheet-icon', icon('guitar')),
         h('span', h('strong', s.title), h('small', [s.artist, s.source].filter(Boolean).join(' · ')))),
       h('button.icon-btn.danger', { type: 'button', 'aria-label': `Verwijder ${s.title}`, onclick: async (e) => {
         if (!confirm(`Akkoordenblad "${s.title}" verwijderen?`)) return;
         await deleteSheet(s.id);
         e.target.closest('li').remove();
-      } }, '🗑')))) : h('p.hint', 'Nog geen bladen. Zoek een nummer of plak de akkoorden.'));
+      } }, icon('trash', { size: 20 }))))) : h('p.hint', 'Nog niets bewaard. Zoek hierboven een liedje.'));
 
+  // Doorgestuurd vanaf Liedjes met een zoekterm? Dan meteen zoeken.
+  const preset = sessionStorage.getItem('akkoorden:q');
+  if (preset) {
+    sessionStorage.removeItem('akkoorden:q');
+    q.value = preset;
+    setTimeout(go, 0);
+  }
   return h('div.view.chords',
-    h('h1', '🎸 Akkoorden'),
-    h('p.lead', 'Zoek de akkoorden van een nummer, lees ze mee terwijl je speelt en oefen ze: op je eigen tempo, met metronoom of samen met de opname.'),
-    h('section.card', h('h2', 'Akkoorden zoeken'),
-      h('div.search-bar', h('span.search-icon', { 'aria-hidden': 'true' }, '🔍'), q, h('button.btn.primary', { type: 'button', onclick: go }, 'Zoek')),
-      results),
-    list, pasteCard);
+    playSwitch('akkoorden'),
+    h('h1', 'Akkoorden van elk liedje'),
+    h('div.search-bar', icon('search', { cls: 'search-icon' }), q, h('button.btn.primary', { type: 'button', onclick: go }, 'Zoek')),
+    results,
+    list,
+    h('details.card.paste-card', h('summary', icon('file', { size: 20 }), 'Zelf akkoorden plakken of een link gebruiken'), pasteCard));
 }
 
 // ======================================================================= één blad
@@ -166,7 +174,7 @@ export async function chordSheetView(id) {
   };
   updateTr();
   const header = h('header.sheet-head',
-    h('span.sheet-icon.big', '🎸'),
+    h('span.sheet-icon.big', icon('guitar', { size: 36 })),
     h('div', h('h1', sheet.title), h('p.composer', [sheet.artist, sheet.key && `toonsoort ${sheet.key}`, sheet.capo ? `capo ${sheet.capo}` : ''].filter(Boolean).join(' · ')),
       sheet.url ? h('a.source-link', { href: sheet.url, target: '_blank', rel: 'noopener noreferrer' }, `Bron: ${sheet.source || new URL(sheet.url).hostname}`) : null));
   const toolbar = h('div.control-row',
@@ -213,8 +221,8 @@ export async function chordSheetView(id) {
 
   // ---------- tab: oefenen ----------
   let mode = isTimed(chords) ? 'opname' : 'wachten';
-  const modeSel = segmented('Oefenmodus', [['wachten', 'Wachten'], ['tempo', 'Op tempo'], ['opname', 'Met opname']], mode, (v) => { mode = v; resetPractice(); });
-  const handSel = segmented('Ligging', [['rh', 'Rechts'], ['lh', 'Links'], ['both', 'Basnoot + rechts']], hand, (v) => { hand = v; lastShown = null; });
+  const modeSel = segmented('Hoe wil je oefenen?', [['wachten', [icon('turtle', { size: 20 }), 'Rustig']], ['tempo', [icon('rabbit', { size: 20 }), 'Op de maat']], ['opname', [icon('headphones', { size: 20 }), 'Met muziek']]], mode, (v) => { mode = v; resetPractice(); });
+  const handSel = segmented('Welke hand?', [['lh', h('span.hand-badge.lh', 'L')], ['both', [h('span.hand-badge.lh', 'L'), h('span.hand-badge.rh', 'R')]], ['rh', h('span.hand-badge.rh', 'R')]], hand, (v) => { hand = v; lastShown = null; });
   const bpm = h('input', { type: 'number', min: 30, max: 220, value: sheet.bpm || 90, 'aria-label': 'Tempo in tellen per minuut', onchange: () => { sheet.bpm = Number(bpm.value) || 90; persist(); } });
   const beats = h('select', { 'aria-label': 'Tellen per akkoord', onchange: () => { sheet.beatsPerChord = Number(beats.value); persist(); } },
     [1, 2, 3, 4, 6, 8].map((b) => h('option', { value: b }, `${b} ${b === 1 ? 'tel' : 'tellen'} per akkoord`)));
@@ -251,7 +259,7 @@ export async function chordSheetView(id) {
   const strip = h('div.chord-strip', { 'aria-hidden': 'true' });
   const fb = h('div.feedback', { role: 'status', 'aria-live': 'polite' }, h('span.fb-symbol', '♪'), h('span.fb-text', 'Druk op Start.'));
   const scoreOut = h('div.live-score');
-  const startBtn = h('button.btn.primary.big', { type: 'button', onclick: () => (running ? stop(true) : start()) }, 'Start');
+  const startBtn = h('button.play-btn', { type: 'button', 'aria-label': 'Start', onclick: () => (running ? stop(true) : start()) }, icon('play', { size: 34 }));
   const practiceTab = h('div.tab-panel',
     h('div.control-row', modeSel, handSel),
     tempoOpts, recOpts,
@@ -289,7 +297,9 @@ export async function chordSheetView(id) {
     await unlockAudio();
     if (!chords.length) return toast('Er staan nog geen akkoorden in dit blad.', 'error');
     running = true;
-    startBtn.textContent = 'Stop';
+    startBtn.replaceChildren(icon('stop', { size: 34 }));
+    startBtn.classList.add('stop');
+    startBtn.setAttribute('aria-label', 'Stop');
     practiceStart = performance.now();
     collector = new ChordCollector();
     idx = 0;
@@ -315,11 +325,13 @@ export async function chordSheetView(id) {
       if (backing.checked) seq.forEach((c) => items.push({ time: t0 + c.time, fn: (t) => sound(c.chord, t, per * spb * 0.9) }));
       scheduler.start(items.sort((a, b) => a.time - b.time));
       tempoEnd = seq.length * per * spb;
+      setFb('', 'Tel mee… en speel elk akkoord zodra het verschijnt!');
     } else {
       seq = chords.filter((c) => c.time != null).map((c) => ({ chord: tr(c.chord), time: c.time }));
       if (!seq.length) return stop(false);
       scorer = new ChordScorer(seq, { from: Math.max(0, pt()) });
       tempoEnd = Infinity;
+      setFb('', 'Speel mee met de muziek!');
     }
     if (mode !== 'wachten') loop();
   }
@@ -327,7 +339,9 @@ export async function chordSheetView(id) {
 
   function stop(showResult) {
     running = false;
-    startBtn.textContent = 'Start';
+    startBtn.replaceChildren(icon('play', { size: 34 }));
+    startBtn.classList.remove('stop');
+    startBtn.setAttribute('aria-label', 'Start');
     scheduler.stop();
     cancelAnimationFrame(raf);
     if (mode === 'tempo') tempoClock.pause();
@@ -448,8 +462,8 @@ export async function chordSheetView(id) {
         r.timing !== null ? h('div', h('strong', `${r.timing}%`), h('span', 'timing')) : null),
       !r.total ? h('p', 'Er zijn nog geen akkoorden voorbijgekomen.')
         : r.missed.length ? h('p', 'Oefen deze akkoorden nog even los: ', h('strong', [...new Set(r.missed)].slice(0, 6).join(', '))) : null,
-      h('p.hint', mode === 'wachten' ? (r.accuracy >= 90 ? 'Tip: probeer nu "Op tempo" met een rustig tempo.' : 'Tip: tik bij "Blad" op een akkoord om de ligging nog eens te bekijken.')
-        : r.timing < 70 ? 'Tip: kijk naar "Straks" en zet je hand alvast klaar voordat de wissel komt.' : 'Tip: verhoog het tempo of probeer "Basnoot + rechts".'),
+      h('p.hint', mode === 'wachten' ? (r.accuracy >= 90 ? 'Tip: probeer nu "Op de maat" met een rustig tempo.' : 'Tip: tik bij "Lezen" op een akkoord om te zien welke toetsen erbij horen.')
+        : r.timing < 70 ? 'Tip: kijk naar "Straks" en zet je hand alvast klaar voordat de wissel komt.' : 'Tip: zet het tempo iets hoger, of speel met allebei je handen (L R).'),
       h('div.actions', h('button.btn.primary', { type: 'button', onclick: () => dlg.close() }, 'Sluiten')));
     dlg.addEventListener('close', () => dlg.remove());
     document.body.append(dlg);
@@ -563,10 +577,9 @@ export async function chordSheetView(id) {
     if (v === 'oefenen') resetPractice();
     if (v === 'blad') renderSheet();
   };
-  [['blad', '📄 Blad'], ['oefenen', '🎹 Oefenen'], ['bewerken', '✏️ Bewerken']].forEach(([v, l]) => tabBar.append(h('button', { type: 'button', role: 'tab', 'data-v': v, onclick: () => showTab(v) }, l)));
+  [['blad', 'book', 'Lezen'], ['oefenen', 'piano', 'Oefenen'], ['bewerken', 'edit', 'Aanpassen']].forEach(([v, ic, l]) => tabBar.append(h('button', { type: 'button', role: 'tab', 'data-v': v, onclick: () => showTab(v) }, icon(ic, { size: 20 }), l)));
 
   const view = h('div.view.sheet',
-    h('nav.crumbs', h('a', { href: '#/akkoorden' }, '← Akkoorden')),
     header, toolbar, tabBar, sheetTab, practiceTab, editTab, kb.el);
   view.destroy = () => {
     if (running) stop(false);

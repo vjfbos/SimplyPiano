@@ -1,11 +1,17 @@
 // Liedjesbibliotheek met zoeken en filteren, eigen nummers, en het oefenen van één liedje.
-import { h, stars, toast } from '../dom.js';
+import { h, toast } from '../dom.js';
 import { loadSongs, loadSong, loadIndex, isCustomSong, saveCustomSong, deleteCustomSong, getCustomSongRaw } from '../../core/content.js';
 import { bestByItem } from '../../core/profiles.js';
 import { setDraft } from './songEditor.js';
+import { tiko } from '../mascot.js';
 import { normalize, matchSong } from '../../core/search.js';
+import { icon } from '../icons.js';
+import { playSwitch } from './playnav.js';
 
-const LEVEL_NAMES = { 1: 'Starter', 2: 'Gevorderd', 3: 'Uitdaging' };
+const LEVEL_NAMES = { 1: 'Makkelijk', 2: 'Gemiddeld', 3: 'Moeilijk' };
+const levelName = (lv) => LEVEL_NAMES[lv.level] || lv.label;
+const miniStars = (n) => h('span.mini-stars', { role: 'img', 'aria-label': `${n} van 3 sterren` }, [1, 2, 3].map((i) => icon('star', { size: 14, cls: i <= n ? 'on' : 'off' })));
+const levelDots = (l) => h('span.level-dots', { 'aria-hidden': 'true' }, [1, 2, 3].map((i) => h('i', { class: i <= l ? 'on' : '' })));
 // Zoek- en filterkeuze blijft bewaard zolang de app open is.
 const filters = { q: '', category: '', level: 0 };
 
@@ -14,7 +20,7 @@ export async function songsView() {
   const categories = index.categories || [];
 
   const search = h('input.search', {
-    type: 'search', placeholder: 'Zoek op titel, componist of genre…', 'aria-label': 'Zoek een liedje', value: filters.q, autocomplete: 'off',
+    type: 'search', placeholder: 'Zoek een liedje…', 'aria-label': 'Zoek een liedje', value: filters.q, autocomplete: 'off',
     oninput: () => { filters.q = search.value; render(); },
   });
   const chipBox = h('div.chips', { role: 'radiogroup', 'aria-label': 'Categorie' });
@@ -28,9 +34,7 @@ export async function songsView() {
     'data-id': id,
   }, label);
   chipBox.append(chip('', 'Alles'), ...categories.map((c) => chip(c.id, `${c.icon || ''} ${c.label}`)));
-  const levelSel = h('select', { 'aria-label': 'Niveau', onchange: () => { filters.level = Number(levelSel.value); render(); } },
-    h('option', { value: 0 }, 'Elk niveau'), [1, 2, 3].map((l) => h('option', { value: l }, `Niveau ${l}: ${LEVEL_NAMES[l]}`)));
-  levelSel.value = filters.level;
+  filters.level = 0;
   const count = h('p.result-count', { role: 'status', 'aria-live': 'polite' });
   const grid = h('div.song-grid');
 
@@ -38,7 +42,7 @@ export async function songsView() {
   const midiInput = h('input', { type: 'file', accept: '.mid,.midi,audio/midi,audio/x-midi', hidden: true, onchange: () => importMidi(midiInput.files[0]) });
   const jsonInput = h('input', { type: 'file', accept: '.json,application/json', hidden: true, onchange: () => importJson(jsonInput.files[0]) });
   const addMenu = h('details.add-menu',
-    h('summary.btn.primary', '＋ Eigen nummer'),
+    h('summary.btn.ghost', icon('plus'), h('span', 'Eigen liedje')),
     h('div.menu',
       h('button', { type: 'button', onclick: () => midiInput.click() }, h('strong', '🎹 MIDI-bestand importeren'), h('small', 'Een .mid-bestand dat je zelf hebt; de app maakt er noten voor links en rechts van.')),
       h('a', { href: '#/eigen/nieuw' }, h('strong', '✏️ Zelf noten invoeren'), h('small', 'Typ de noten of speel ze in op je keyboard.')),
@@ -80,11 +84,11 @@ export async function songsView() {
       h('div.song-art', { 'aria-hidden': 'true', style: { '--hue': s.hue ?? 200 } }, s.icon || (custom ? '⭐' : '🎼')),
       h('div.song-info',
         h('h2', s.title),
-        h('p.composer', s.composer || (custom ? 'Eigen nummer' : '')),
-        h('div.levels', s.levels.map((lv) => h('a.level-pill', { href: `#/lied/${s.id}/${lv.level}` },
-          h('span', `${lv.level}. ${lv.label || LEVEL_NAMES[lv.level]}`),
-          stars(best[`lied:${s.id}:${lv.level}`]?.stars || 0)))),
-        custom ? h('div.card-actions',
+        h('p.composer', s.composer || (custom ? 'Eigen nummer' : ''))),
+      h('div.levels', s.levels.map((lv) => h('a.level-pill', { href: `#/lied/${s.id}/${lv.level}` },
+          levelDots(lv.level), h('span', levelName(lv)),
+          miniStars(best[`lied:${s.id}:${lv.level}`]?.stars || 0)))),
+      custom ? h('div.card-actions',
           h('a', { href: `#/eigen/${s.id}` }, 'Bewerken'),
           h('button.linklike', { type: 'button', onclick: () => exportSong(s.id) }, 'Exporteren'),
           h('button.linklike.danger', { type: 'button', onclick: async () => {
@@ -92,7 +96,7 @@ export async function songsView() {
             await deleteCustomSong(s.id);
             songs.splice(songs.indexOf(s), 1);
             render();
-          } }, 'Verwijderen')) : null));
+          } }, 'Verwijderen')) : null);
   }
 
   function render() {
@@ -106,20 +110,19 @@ export async function songsView() {
       return;
     }
     grid.replaceChildren(h('div.card.empty',
-      h('h2', filters.q ? `Niets gevonden voor "${filters.q}"` : 'Geen nummers in deze selectie'),
-      h('p', 'In de bibliotheek staan alleen nummers die vrij zijn van auteursrecht. Popsongs, zoals filmmuziek of hits van de radio, kunnen we daarom niet meeleveren.'),
-      h('p', 'Je kunt elk nummer wel zelf toevoegen voor eigen gebruik: importeer een MIDI-bestand, of voer de noten in door ze op je keyboard te spelen. Het nummer blijft alleen op dit apparaat.'),
-      h('div.actions',
-        h('button.btn.primary', { type: 'button', onclick: () => midiInput.click() }, '🎹 MIDI importeren'),
-        h('a.btn', { href: '#/eigen/nieuw', onclick: () => setDraft({ title: titleCase(filters.q) }) }, '✏️ Zelf invoeren'))));
+      tiko('denk', 80),
+      h('h2', filters.q ? `"${filters.q}" staat er nog niet in` : 'Hier staat nog niets'),
+      h('p', 'Popsongs zitten niet in de bibliotheek. Zoek de akkoorden, of voeg het liedje zelf toe.'),
+      h('div.actions.center',
+        filters.q ? h('a.btn.primary', { href: '#/akkoorden', onclick: () => sessionStorage.setItem('akkoorden:q', filters.q) }, icon('guitar'), 'Zoek de akkoorden') : null,
+        h('a.btn.ghost', { href: '#/eigen/nieuw', onclick: () => setDraft({ title: titleCase(filters.q) }) }, icon('plus'), 'Zelf toevoegen'))));
   }
   render();
 
   return h('div.view.songs',
-    h('div.songs-head',
-      h('div', h('h1', 'Liedjes'), h('p.lead', 'Muziek uit het publieke domein in eigen bewerkingen, plus je eigen nummers.')),
-      addMenu),
-    h('div.search-bar', h('span.search-icon', { 'aria-hidden': 'true' }, '🔍'), search, levelSel),
+    playSwitch('liedjes'),
+    h('div.songs-head', h('h1', 'Kies een liedje'), addMenu),
+    h('div.search-bar', icon('search', { cls: 'search-icon' }), search),
     chipBox, count, grid);
 }
 
@@ -149,18 +152,19 @@ export async function songView(id, levelStr) {
     def: { title: song.title, ...lv },
     mode: 'wait',
     stars: song.stars,
+    nextHref: song.levels.some((l) => l.level === lv.level + 1) ? `#/lied/${id}/${lv.level + 1}` : '#/liedjes',
   });
   const custom = isCustomSong(id);
   const view = h('div.view.song',
-    h('nav.crumbs', h('a', { href: '#/liedjes' }, '← Liedjes'), custom ? h('a', { href: `#/eigen/${id}` }, '✏️ Bewerken') : null),
     h('header.song-head',
-      h('div', h('h1', song.title), h('p.composer', [song.composer, lv.description].filter(Boolean).join(' · '))),
+      h('div', h('h1', song.title), h('p.composer', song.composer,
+        custom ? h('a.edit-link', { href: `#/eigen/${id}` }, icon('edit', { size: 16 }), 'Bewerken') : null)),
       h('nav.level-tabs', { 'aria-label': 'Niveau' }, song.levels.map((l) => h('a', {
         href: `#/lied/${id}/${l.level}`,
         'aria-current': l.level === lv.level ? 'page' : null,
-      }, `${l.level}. ${l.label || LEVEL_NAMES[l.level]}`)))),
-    song.about ? h('details.about', h('summary', 'Over dit stuk'), h('p', song.about)) : null,
-    player.el);
+      }, levelDots(l.level), levelName(l))))),
+    player.el,
+    song.about ? h('details.about', h('summary', icon('info', { size: 18 }), 'Over dit liedje'), h('p', song.about)) : null);
   view.destroy = () => player.destroy();
   return view;
 }

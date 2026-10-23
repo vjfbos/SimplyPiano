@@ -1,59 +1,82 @@
-// Voortgang: oefenreeks, oefentijd deze week, behaalde lessen en recente resultaten.
-import { h, stars, formatMinutes } from '../dom.js';
+// "Ik": jouw reeks, sterren, oefentijd en profiel. Instellingen zitten achter een ouderslot.
+import { h, formatMinutes } from '../dom.js';
+import { icon } from '../icons.js';
+import { tikoSays } from '../mascot.js';
 import { getPractice, getResults, bestByItem, computeStreak, weekSeconds, currentProfile } from '../../core/profiles.js';
 import { loadPath, loadSongs } from '../../core/content.js';
 import { listSheets } from '../../core/sheets.js';
 
 const DAYS = ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'];
 
-export async function progressView() {
-  const [practice, results, best, units, songs] = await Promise.all([getPractice(), getResults(), bestByItem(), loadPath(), loadSongs()]);
+export async function meView() {
+  const [practice, results, best, units, songs, sheets] = await Promise.all([getPractice(), getResults(), bestByItem(), loadPath(), loadSongs(), listSheets().catch(() => [])]);
+  const profile = currentProfile();
   const streak = computeStreak(practice);
   const week = weekSeconds(practice);
   const weekTotal = week.reduce((s, d) => s + d.seconds, 0);
-  const maxDay = Math.max(600, ...week.map((d) => d.seconds));
+  const goal = 10 * 60; // 10 minuten per dag is een mooi doel
   const lessons = units.flatMap((u) => u.lessons);
   const lessonsDone = lessons.filter((l) => best['les:' + l.id]?.stars > 0).length;
   const starTotal = Object.values(best).reduce((s, r) => s + r.stars, 0);
-  const allTime = practice.reduce((s, r) => s + r.seconds, 0);
 
   const titles = {};
-  lessons.forEach((l) => (titles['les:' + l.id] = `Les: ${l.title}`));
-  songs.forEach((s) => s.levels.forEach((lv) => (titles[`lied:${s.id}:${lv.level}`] = `${s.title} (niveau ${lv.level})`)));
-  (await listSheets().catch(() => [])).forEach((sh) => (titles['ak:' + sh.id] = titles['mee:' + sh.id] = `Akkoorden: ${sh.title}`));
-  const recent = results.sort((a, b) => b.date - a.date).slice(0, 10);
+  lessons.forEach((l) => (titles['les:' + l.id] = l.title));
+  songs.forEach((s) => s.levels.forEach((lv) => (titles[`lied:${s.id}:${lv.level}`] = s.title)));
+  sheets.forEach((sh) => (titles['ak:' + sh.id] = titles['mee:' + sh.id] = `${sh.title} (akkoorden)`));
+  const recent = results.sort((a, b) => b.date - a.date).slice(0, 6);
 
-  return h('div.view.progress',
-    h('h1', `Voortgang van ${currentProfile().name}`),
+  const cheer = streak >= 3 ? `${streak} dagen op rij! Je bent op dreef, ${profile.name}!`
+    : streak > 0 ? `Goed zo ${profile.name}! Speel morgen weer, dan groeit je reeks.`
+      : `Hoi ${profile.name}! Elke dag een paar minuten spelen is het beste.`;
+
+  return h('div.view.me',
+    h('div.me-head',
+      h('span.big-avatar', { 'aria-hidden': 'true' }, profile.avatar),
+      h('div', h('h1', profile.name), h('a.btn.ghost.small', { href: '#/profielen' }, icon('user', { size: 18 }), 'Wissel van speler'))),
+    tikoSays(cheer, { mood: streak > 0 ? 'juich' : 'blij', size: 64 }),
     h('div.stat-row',
-      stat('🔥', String(streak), streak === 1 ? 'dag op rij' : 'dagen op rij'),
-      stat('⏱', formatMinutes(weekTotal), 'deze week'),
-      stat('📘', `${lessonsDone}/${lessons.length}`, 'lessen gehaald'),
-      stat('★', String(starTotal), 'sterren')),
+      stat('flame', String(streak), streak === 1 ? 'dag op rij' : 'dagen op rij', 'flame'),
+      stat('star', String(starTotal), 'sterren', 'star'),
+      stat('sprout', `${lessonsDone}/${lessons.length}`, 'lessen', 'sprout'),
+      stat('clock', formatMinutes(weekTotal), 'deze week', 'clock')),
     h('section.card',
-      h('h2', 'Oefentijd deze week'),
-      h('div.week-chart', { role: 'list' }, week.map((d, i) => h('div.day', { role: 'listitem', class: d.isToday ? 'today' : '', 'aria-label': `${DAYS[i]}: ${formatMinutes(d.seconds)}` },
-        h('div.bar-wrap', h('div.bar', { style: { height: `${Math.round((d.seconds / maxDay) * 100)}%` } })),
-        h('span.val', d.seconds ? Math.round(d.seconds / 60) + "'" : ''),
-        h('span.lbl', DAYS[i])))),
-      h('p.hint', `Totaal geoefend: ${formatMinutes(allTime)}. Tip: elke dag 10 minuten werkt beter dan één keer per week een uur.`)),
-    h('section.card',
-      h('h2', 'Lessen'),
-      h('ul.lesson-progress', units.map((u) => h('li',
-        h('span', `${u.icon || ''} ${u.title}`),
-        h('progress', { max: u.lessons.length, value: u.lessons.filter((l) => best['les:' + l.id]?.stars > 0).length }),
-        h('span.count', `${u.lessons.filter((l) => best['les:' + l.id]?.stars > 0).length}/${u.lessons.length}`))))),
-    h('section.card',
+      h('h2', 'Deze week'),
+      h('div.week-chart', { role: 'list' }, week.map((d, i) => {
+        const pct = Math.min(1, d.seconds / goal);
+        return h('div.day', { role: 'listitem', class: [d.isToday ? 'today' : '', pct >= 1 ? 'goal' : ''].join(' '), 'aria-label': `${DAYS[i]}: ${formatMinutes(d.seconds)}` },
+          h('div.day-ring', { style: { '--p': pct } }, pct >= 1 ? icon('check', { size: 18 }) : d.seconds ? h('span', Math.round(d.seconds / 60)) : null),
+          h('span.lbl', DAYS[i]));
+      })),
+      h('p.hint', 'Een vol rondje = 10 minuten gespeeld.')),
+    recent.length ? h('section.card',
       h('h2', 'Laatst gespeeld'),
-      recent.length ? h('table.recent',
-        h('thead', h('tr', h('th', 'Wat'), h('th', 'Wanneer'), h('th', 'Score'), h('th', 'Sterren'))),
-        h('tbody', recent.map((r) => h('tr',
-          h('td', titles[r.itemId] || r.itemId, { tempo: ' · tempo', wait: ' · wachten', wachten: ' · wachten', opname: ' · met opname' }[r.mode] || '', r.tempoPct < 100 ? ` · ${r.tempoPct}%` : ''),
-          h('td', new Date(r.date).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })),
-          h('td', String(r.score)),
-          h('td', stars(r.stars)))))) : h('p', 'Nog niets gespeeld. Begin met de eerste les!')));
+      h('ul.recent-list', recent.map((r) => h('li',
+        h('span.r-title', titles[r.itemId] || 'Oefening'),
+        h('span.mini-stars', { role: 'img', 'aria-label': `${r.stars} van 3 sterren` }, [1, 2, 3].map((i) => icon('star', { size: 16, cls: i <= r.stars ? 'on' : 'off' }))))))) : null,
+    parentGate());
 }
 
-function stat(icon, value, label) {
-  return h('div.stat', h('span.icon', { 'aria-hidden': 'true' }, icon), h('strong', value), h('span', label));
+function stat(ic, value, label, cls) {
+  return h('div.stat', { class: cls }, h('span.stat-ico', icon(ic, { size: 26 })), h('strong', value), h('span', label));
+}
+
+/** Ouderslot: knop 2 seconden vasthouden om de instellingen te openen. */
+function parentGate() {
+  let timer = null;
+  const btn = h('button.hold-btn', { type: 'button', 'aria-label': 'Instellingen voor ouders: houd de knop 2 seconden ingedrukt' },
+    h('span.hold-fill'), icon('lock', { size: 20 }), h('span', 'Voor ouders: houd ingedrukt'));
+  const start = (e) => {
+    e.preventDefault();
+    btn.classList.add('holding');
+    timer = setTimeout(() => (location.hash = '#/instellingen'), 2000);
+  };
+  const cancel = () => {
+    btn.classList.remove('holding');
+    clearTimeout(timer);
+  };
+  btn.addEventListener('pointerdown', start);
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => btn.addEventListener(ev, cancel));
+  btn.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) start(e); });
+  btn.addEventListener('keyup', cancel);
+  return h('div.parent-zone', btn);
 }

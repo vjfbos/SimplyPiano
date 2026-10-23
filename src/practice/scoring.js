@@ -69,25 +69,25 @@ function makeTips(r, byHand, stats) {
   const tips = [];
   const { early, late, missed, wrong, extra } = r.counts;
   const hits = r.counts.ok + early + late;
-  if (r.stars === 3) tips.push('Prachtig gespeeld! Probeer het tempo te verhogen of de volgende uitdaging.');
+  if (r.stars === 3) tips.push('Wauw, alles goed! Probeer nu "Op de maat" of een moeilijker liedje.');
   if (r.mode === 'wait') {
-    if (wrong > 0 && r.accuracy < 80) tips.push('Kijk eerst rustig naar de noot en het oplichtende toetsje voordat je speelt. Snelheid komt vanzelf.');
-    if (r.accuracy >= 90) tips.push('De noten zitten goed. Probeer nu de tempomodus om ook op de maat te spelen.');
+    if (wrong > 0 && r.accuracy < 80) tips.push('Kijk eerst rustig naar de gekleurde toets. Snel worden komt later vanzelf.');
+    if (r.accuracy >= 90) tips.push('Je kent de noten! Kies nu "Op de maat" en speel mee met de tikjes.');
   } else {
-    if (late > early * 1.5 && late >= 3) tips.push('Je speelt vaak te laat. Tel hardop mee met de metronoom en kijk alvast naar de volgende noot.');
-    if (early > late * 1.5 && early >= 3) tips.push('Je speelt vaak te vroeg: je haast een beetje. Wacht rustig op de tel.');
-    if (missed > hits * 0.3) tips.push('Veel noten gemist. Zet het tempo lager (bijvoorbeeld 60%) of oefen eerst in de wachtmodus.');
-    if (extra + wrong > 4) tips.push('Er klonken extra noten. Houd je vingers dicht bij de toetsen en til ze niet te hoog op.');
+    if (late > early * 1.5 && late >= 3) tips.push('Je was vaak net te laat. Tel hardop mee: 1, 2, 3, 4. En kijk alvast naar de volgende noot.');
+    if (early > late * 1.5 && early >= 3) tips.push('Je had een beetje haast. Wacht rustig op het tikje.');
+    if (missed > hits * 0.3) tips.push('Ging het te snel? Kies bij Opties een lagere snelheid, of speel eerst "Rustig".');
+    if (extra + wrong > 4) tips.push('Er klonken extra toetsen. Houd je vingers dicht bij de toetsen.');
   }
   const hands = Object.entries(byHand).filter(([, v]) => v.total >= 3);
   if (hands.length === 2) {
     const [a, b] = hands.map(([h, v]) => [h, v.bad / v.total]);
     const worst = a[1] > b[1] ? a : b;
     const other = worst === a ? b : a;
-    if (worst[1] > other[1] + 0.2) tips.push(`De ${worst[0] === 'lh' ? 'linkerhand' : 'rechterhand'} heeft wat extra aandacht nodig. Oefen die hand eens apart.`);
+    if (worst[1] > other[1] + 0.2) tips.push(`Je ${worst[0] === 'lh' ? 'linkerhand' : 'rechterhand'} mag nog wat oefenen. Kies die hand even alleen.`);
   }
-  if (stats.loopable && r.stars < 2) tips.push('Kies een lastige passage (van maat … tot maat …) en herhaal die een paar keer langzaam.');
-  if (!tips.length) tips.push('Goed bezig! Nog een keer spelen maakt het steeds makkelijker.');
+  if (stats.loopable && r.stars < 2) tips.push('Oefen het moeilijke stukje een paar keer (Opties → Een stukje oefenen).');
+  if (!tips.length) tips.push('Goed bezig! Elke keer spelen maakt het makkelijker.');
   return tips;
 }
 

@@ -1,5 +1,6 @@
 // Instellingen: invoer (MIDI / microfoon / scherm), weergave, geluid en een microfoontest.
 import { h, toast } from '../dom.js';
+import { icon } from '../icons.js';
 import { currentProfile, updateSettings } from '../../core/profiles.js';
 import { applyInputSettings } from '../../input/manager.js';
 import { midiState, enableMidi } from '../../input/midi.js';
@@ -58,7 +59,9 @@ export async function settingsView() {
   const vol = h('input', { type: 'range', min: 0, max: 1, step: 0.05, value: s().volume, 'aria-label': 'Volume', onchange: () => save({ volume: Number(vol.value) }) });
 
   const view = h('div.view.settings',
-    h('h1', 'Instellingen'),
+    h('a.btn.ghost.small', { href: '#/ik' }, icon('back', { size: 18 }), 'Terug'),
+    h('h1', 'Instellingen voor ouders'),
+    h('p.lead', 'Hier stel je in hoe de piano verbonden is en wat je kind ziet.'),
     h('section.card',
       h('h2', 'Hoe speel je?'),
       h('div.options',
