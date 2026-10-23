@@ -1,4 +1,4 @@
-// Akkoordenblad bij een opname (bijv. een Spotify-nummer): akkoorden met tijdstippen,
+// Akkoordenblad: akkoorden in volgorde (eventueel met tijdstippen bij een opname),
 // en het controleren of de gespeelde noten een akkoord vormen.
 import { parseChord } from './chords.js';
 
@@ -85,9 +85,10 @@ export function chordIndexAt(chords, t) {
 export function chordPitchClasses(symbol) {
   const c = parseChord(symbol);
   if (!c) return null;
-  const all = c.intervals.map((iv) => (c.root + iv) % 12);
+  const all = [...c.intervals.map((iv) => (c.root + iv) % 12), c.bassPc]; // basnoot van een slash-akkoord mag ook
   const fifth = c.intervals.includes(7) && c.intervals.length > 3 ? (c.root + 7) % 12 : null;
-  return { all: new Set(all), required: new Set(all.filter((p) => p !== fifth)), root: c.root };
+  const required = c.intervals.map((iv) => (c.root + iv) % 12).filter((p) => p !== fifth);
+  return { all: new Set(all), required: new Set(required), root: c.root };
 }
 
 /**
@@ -166,4 +167,59 @@ export function chordSummary(chords) {
   const count = new Map();
   chords.forEach((c) => count.set(c.chord, (count.get(c.chord) || 0) + 1));
   return [...count.entries()].sort((a, b) => b[1] - a[1]).map(([chord, n]) => ({ chord, n }));
+}
+
+/**
+ * Verzamelt gespeelde noten tot een akkoord. Noten horen bij elkaar zolang er geen pauze (gap, s) tussen zit,
+ * zodat je ook noot voor noot mag spelen (microfoon, scherm). Na een goed akkoord worden naklinkende of
+ * nagekomen noten van dát akkoord even genegeerd, zodat ze niet als fout tellen bij het volgende akkoord.
+ */
+export class ChordCollector {
+  constructor({ gap = 0.8, grace = 0.35 } = {}) {
+    this.gap = gap;
+    this.grace = grace;
+    this.cluster = [];
+    this.lastAt = -Infinity;
+    this.ignoreUntil = -Infinity;
+    this.ignorePcs = new Set();
+  }
+
+  /**
+   * Voeg een noot toe (t in s). `wanted` = toonklassen van het akkoord dat je nu moet spelen: die worden nooit
+   * genegeerd (gedeelde tonen tussen twee akkoorden). Geeft de noten om te beoordelen terug, of null.
+   */
+  add(midi, t, held = [], wanted = new Set()) {
+    const stale = (m) => t < this.ignoreUntil && this.ignorePcs.has(m % 12) && !wanted.has(m % 12);
+    if (stale(midi)) return null;
+    if (t - this.lastAt > this.gap) this.cluster = [];
+    this.lastAt = t;
+    this.cluster.push(midi);
+    return new Set([...held.filter((m) => !stale(m)), ...this.cluster]);
+  }
+
+  /**
+   * Vergelijk met een akkoord. Ook als er eerder in dezelfde poging een foute noot zat, telt het als goed
+   * wanneer de laatst gespeelde noten (plus wat je vasthoudt) samen het akkoord vormen.
+   */
+  match(symbol, played, held = []) {
+    for (const midis of this.candidates(played, held)) {
+      const m = matchChord(midis, symbol);
+      if (m.ok) return { ...m, midis };
+    }
+    return { ...matchChord(played, symbol), midis: played };
+  }
+
+  /** Alle noten van deze poging, en daarna steeds de laatst gespeelde noten (plus wat je vasthoudt). */
+  candidates(played, held = []) {
+    const list = [played];
+    for (let k = 1; k < this.cluster.length; k++) list.push(new Set([...held, ...this.cluster.slice(k)]));
+    return list;
+  }
+
+  /** Akkoord goed gespeeld: opnieuw beginnen. */
+  success(midis, t) {
+    this.cluster = [];
+    this.ignoreUntil = t + this.grace;
+    this.ignorePcs = new Set([...midis].map((m) => m % 12));
+  }
 }

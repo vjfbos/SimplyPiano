@@ -19,9 +19,9 @@ eigen code en eigen lesstof. Liedjes komen uit het publieke domein, in eigen bew
 - **Voortgang:** dagelijkse oefenreeks, oefentijd per week, behaalde lessen. Meerdere profielen op één apparaat,
   alles lokaal opgeslagen in IndexedDB. Je hebt geen account nodig.
 - **Begeleiding:** metronoom, drumgroove en akkoordbegeleiding, allemaal gesynthetiseerd met de Web Audio API.
-- **Meespelen met Spotify:** koppel je Spotify-account, kies een nummer en speel de akkoorden mee. De app
-  volgt de afspeelpositie van Spotify, toont het huidige en het volgende akkoord op het toetsenbord en controleert
-  of je ze op tijd speelt (omkeringen tellen mee). De akkoorden zet je er zelf in en tik je in op de muziek.
+- **Akkoorden van elk nummer:** zoek online akkoorden (Ultimate Guitar) of plak een akkoordenblad van een
+  willekeurige site. Lees het blad mee met transponeren, tik op een akkoord om het te horen en te zien, en oefen:
+  in de wachtmodus, op tempo met metronoom en begeleiding, of mee met een opname (met ingetikte tijden).
 - **PWA:** installeerbaar en na het eerste bezoek volledig offline te gebruiken.
 
 ## Snel starten
@@ -45,6 +45,7 @@ npm run preview      # productiebuild lokaal bekijken, inclusief service worker
 index.html                 app-shell
 vite.config.js             build + plugin die de offline-precachelijst in sw.js invult
 netlify.toml               build- en headerinstellingen voor Netlify
+netlify/functions/chords.mjs  serverfunctie: akkoorden zoeken en ophalen (omzeilt CORS)
 public/
   manifest.webmanifest     PWA-manifest
   sw.js                    service worker (offline)
@@ -65,12 +66,11 @@ src/
     arrange.js             automatische niveaus (basnoten/akkoorden links) en notatie-schrijver
     midifile.js            MIDI-bestanden lezen en omzetten naar notatie
     search.js              zoeken in de bibliotheek
-    chordsheet.js          akkoordenbladen: inlezen, tijden, akkoordherkenning, score bij meespelen
+    chordsheet.js          akkoordvolgorde met tijden, akkoordherkenning, score
+    chordtext.js           akkoordenbladen van websites: akkoordregels herkennen, vereenvoudigen, transponeren
+    chordsource.js         zoeken/inladen via de Netlify-functie
     sheets.js              opslag van akkoordenbladen
-  spotify/
-    auth.js                inloggen met OAuth PKCE, tokens verversen
-    api.js                 wat speelt er, zoeken, afspelen/pauze/spoelen
-    clock.js               afspeelpositie volgen (Spotify of handmatige klok)
+    clock.js               oefenklok (start/pauze/spoelen)
     store.js               IndexedDB-wrapper
     profiles.js            profielen, instellingen, resultaten, oefentijd, reeks
   input/
@@ -94,7 +94,7 @@ src/
     keyboard.js            scherm-toetsenbord
     staff.js               notenbalk (VexFlow) met cursor en kleuren
     player.js              oefenscherm dat alles koppelt
-    views/                 leerpad, les, liedjes (+ zoeken), editor voor eigen nummers, meespelen (Spotify),
+    views/                 leerpad, les, liedjes (+ zoeken), editor voor eigen nummers, akkoorden,
                            voortgang, profielen, instellingen
 tests/                     Vitest-tests
 ```
@@ -145,6 +145,9 @@ een octaaf laten verspringen.
    een .mid-bestand; controleer de handverdeling en de maten en druk op *Opslaan en spelen*. Bij *Zelf noten
    invoeren* zet je *Inspelen* aan, kies je een notenwaarde en speel je de noten. Onder *Controle en
    voorbeeld* zie je direct of alles klopt.
+10. **Akkoorden:** ga naar *🎸 Akkoorden*, zoek bijvoorbeeld "eye of the tiger" en kies *Inladen*. Je kunt ook
+   een akkoordenblad plakken. Tik bij *Blad* op een akkoord om het te horen. Kies bij *Oefenen* de modus
+   *Wachten* en speel de akkoorden op je keyboard; daarna *Op tempo* met bijvoorbeeld 80 bpm.
 
 Op een laptop kun je ook zonder keyboard testen: de toetsen **A W S E D F T G Y H U J K** spelen C4 t/m C5,
 en met **Z/X** schuif je een octaaf omlaag of omhoog.
@@ -240,40 +243,40 @@ Toonsoorten voor `key`: `C`, `G`, `D`, `A`, `F`, `Bb`, `Eb`, `Am`, `Em`, `Dm`.
 **Let op auteursrecht:** gebruik alleen melodieën uit het publieke domein, of eigen melodieën, en maak een
 eigen bewerking.
 
-## Meespelen met Spotify
+## Akkoorden zoeken en oefenen
 
-**Wat kan wel en wat niet?** Spotify levert via de API geen akkoorden. De audio-analyse is in november 2024
-uit de API gehaald, en de ontwikkelaarsvoorwaarden verbieden het analyseren van Spotify-content. De app haalt
-akkoorden dus **niet** automatisch uit de muziek. Wat wel kan, en wat deze app doet:
+Onder **🎸 Akkoorden**:
 
-1. **Verbinden** via OAuth met PKCE. Daarvoor is geen server of geheime sleutel nodig. De app vraagt alleen
-   toestemming om te zien wat er speelt (`user-read-currently-playing`, `user-read-playback-state`) en om het
-   afspelen te bedienen (`user-modify-playback-state`, alleen met Premium).
-2. **Akkoorden invoeren** per nummer, bijvoorbeeld uit een songboek: `Am F C G x4`, met kopjes als `[Refrein]`.
-3. **Meetikken:** start het nummer vanaf het begin en tik (of druk op de spatiebalk) bij elke akkoordwissel.
-   Met de schuif *Synchronisatie* verschuif je alles een fractie eerder of later.
-4. **Meespelen:** de app vraagt elke 1,5 seconde aan Spotify waar het nummer is en rekent daartussen zelf door.
-   Je ziet *Nu* en *Straks*, de toetsen lichten op (rechts, links, of basnoot met akkoord), en na afloop krijg je
-   een score met de akkoorden die je nog moet oefenen.
+1. **Zoeken:** typ een titel of artiest. De Netlify-functie `netlify/functions/chords.mjs` zoekt bij Ultimate
+   Guitar en toont de akkoordversies, de best beoordeelde eerst. Met **Inladen** haal je het blad op.
+2. **Link inladen:** plak een link van Ultimate Guitar, e-chords, Chordie, AZChords, GuitareTab, Cifra Club,
+   Chordu of Boîte à chansons. Bij de andere sites zoekt de functie naar het `<pre>`-blok met de akkoorden.
+3. **Plakken:** kopieer een akkoordenblad van welke site dan ook en plak het. De app herkent zelf welke regels
+   akkoorden zijn en welke songtekst, inclusief kopjes (`[Chorus]`, `Intro:`) en herhalingen (`x2`).
 
-Zonder Premium start je het nummer gewoon in de Spotify-app (telefoon, computer of speaker); de app leest dan
-alleen mee. Akkoordenbladen bewaart de app lokaal (IndexedDB). Met *Blad zonder Spotify* kun je ook oefenen met
-een eigen klok, bijvoorbeeld bij een cd.
+Per blad zijn er drie tabbladen:
+- **Blad:** de akkoorden boven de songtekst, met transponeren (en *capo → piano*). Tik op een akkoord om het
+  te horen en de ligging op het toetsenbord te zien.
+- **Oefenen:**
+  - *Wachten*: het volgende akkoord komt pas als je het huidige goed speelt.
+  - *Op tempo*: je kiest de bpm en het aantal tellen per akkoord, met aftellen, metronoom en zachte begeleiding.
+  - *Met opname*: de akkoorden lopen mee met ingetikte tijden; je start de opname zelf, bijvoorbeeld op YouTube of cd.
+  - Je kiest de ligging *rechts*, *links* of *basnoot + rechts*. Omkeringen tellen als goed, en je mag de noten
+    ook na elkaar spelen (handig met de microfoon).
+- **Bewerken:** pas de akkoordvolgorde aan en tik de tijden in voor *Met opname*.
 
-### Instellen (eenmalig)
+Ongebruikelijke akkoorden worden voor het oefenen vereenvoudigd, zonder het karakter te veranderen: `E7#9` → `E7`,
+`F#m11` → `F#m7`, `Cadd2` → `Cadd9`. Op het blad zie je het origineel.
 
-1. Ga naar [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard) en kies **Create app**
-   (vink *Web API* aan).
-2. Voeg als **Redirect URI** het adres van je app toe, met een `/` aan het eind:
-   - lokaal: `http://127.0.0.1:5173/` (Spotify accepteert geen `localhost`; de app stuurt je automatisch door
-     naar 127.0.0.1)
-   - Netlify: `https://<jouw-site>.netlify.app/`
-3. Vul de **Client ID** in op het scherm *Meespelen*. Je kunt hem ook in de build zetten met de omgevingsvariabele
-   `VITE_SPOTIFY_CLIENT_ID` (lokaal in `.env.local`, of bij Netlify onder *Site configuration → Environment
-   variables*).
+**Lokaal:** `npm run dev` en `npm run preview` draaien de functie mee, via een Vite-plugin. Op Netlify wordt
+hij automatisch gebouwd vanuit `netlify/functions/`. Zoeken werkt alleen online. Opgeslagen bladen blijven
+offline beschikbaar.
 
-Een nieuwe Spotify-app staat in *development mode*: alleen accounts die je in het dashboard onder *User
-Management* toevoegt, mogen inloggen. Voor jezelf en je gezin is dat genoeg.
+**Let op:** akkoordensites veranderen soms hun pagina's of blokkeren automatische verzoeken. Geeft zoeken een
+foutmelding, gebruik dan *Link inladen* of *Plakken*. Pas de uitleesfuncties zo nodig aan in
+`netlify/functions/chords.mjs`; de tests in `tests/chordtext.test.js` laten zien welke paginastructuur verwacht
+wordt. Bladen van deze sites vallen onder hun eigen voorwaarden en het auteursrecht van de makers; de app
+haalt ze alleen op voor eigen gebruik.
 
 ## Hosten op Netlify
 

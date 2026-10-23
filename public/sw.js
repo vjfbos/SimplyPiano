@@ -22,6 +22,8 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
   const url = new URL(req.url);
+  // Akkoorden zoeken/inladen gaat altijd via het netwerk.
+  if (url.pathname.startsWith('/.netlify/')) return;
   // Content (JSON) en pagina's: eerst netwerk (zodat nieuwe lessen meteen verschijnen), anders de cache.
   if (req.mode === 'navigate' || url.pathname.includes('/content/')) {
     event.respondWith(

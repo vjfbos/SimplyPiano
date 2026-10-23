@@ -21,10 +21,13 @@ export function h(sel, attrs, ...children) {
       }
     }
     else if (k === 'html') el.innerHTML = v;
+    else if (k === 'value') continue; // na de kinderen zetten (textarea/select)
     else if (k in el && typeof v !== 'string') el[k] = v;
     else el.setAttribute(k, v === true ? '' : v);
   }
   append(el, children);
+  // value als eigenschap: het attribuut doet niets bij <textarea> en <select> heeft eerst zijn opties nodig.
+  if ('value' in attrs && attrs.value != null) el.value = attrs.value;
   return el;
 }
 

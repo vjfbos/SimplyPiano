@@ -1,5 +1,5 @@
 import './styles.css';
-import { h, clear, toast } from './ui/dom.js';
+import { h, clear } from './ui/dom.js';
 import { restoreProfile, currentProfile, onProfileChange } from './core/profiles.js';
 import { applyInputSettings } from './input/manager.js';
 import { initComputerKeys } from './input/computerKeys.js';
@@ -11,8 +11,7 @@ import { songEditorView } from './ui/views/songEditor.js';
 import { progressView } from './ui/views/progress.js';
 import { profilesView } from './ui/views/profiles.js';
 import { settingsView } from './ui/views/settings.js';
-import { playalongView, sheetView } from './ui/views/playalong.js';
-import { handleRedirect } from './spotify/auth.js';
+import { chordsView, chordSheetView } from './ui/views/chords.js';
 
 const routes = [
   [/^\/?$/, pathView, 'pad'],
@@ -21,8 +20,9 @@ const routes = [
   [/^\/lied\/([\w-]+)(?:\/(\d))?$/, songView, 'liedjes'],
   [/^\/eigen\/nieuw$/, () => songEditorView(null), 'liedjes'],
   [/^\/eigen\/(eigen-[\w-]+)$/, songEditorView, 'liedjes'],
-  [/^\/meespelen$/, playalongView, 'meespelen'],
-  [/^\/meespelen\/([\w-]+)$/, sheetView, 'meespelen'],
+  [/^\/akkoorden$/, chordsView, 'akkoorden'],
+  [/^\/akkoorden\/([\w-]+)$/, chordSheetView, 'akkoorden'],
+  [/^\/meespelen(?:\/.*)?$/, () => { location.replace('#/akkoorden'); return h('div'); }, 'akkoorden'],
   [/^\/voortgang$/, progressView, 'voortgang'],
   [/^\/instellingen$/, settingsView, 'instellingen'],
   [/^\/profielen$/, profilesView, 'profielen'],
@@ -33,7 +33,7 @@ const profileBtn = h('a.profile-btn', { href: '#/profielen', 'aria-label': 'Prof
 const navItems = [
   ['pad', '#/', '🌱', 'Leerpad'],
   ['liedjes', '#/liedjes', '🎼', 'Liedjes'],
-  ['meespelen', '#/meespelen', '🎧', 'Meespelen'],
+  ['akkoorden', '#/akkoorden', '🎸', 'Akkoorden'],
   ['voortgang', '#/voortgang', '📈', 'Voortgang'],
   ['instellingen', '#/instellingen', '⚙️', 'Instellingen'],
 ];
@@ -96,12 +96,6 @@ initComputerKeys();
 window.addEventListener('hashchange', render);
 
 (async () => {
-  // Terug van het inloggen bij Spotify? Dan eerst de code omruilen voor een token.
-  try {
-    await handleRedirect();
-  } catch (err) {
-    toast(err.message, 'error');
-  }
   const p = await restoreProfile();
   updateProfileBtn(p);
   render();

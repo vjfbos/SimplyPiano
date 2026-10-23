@@ -35,8 +35,25 @@ function precacheServiceWorker() {
   };
 }
 
+// Laat /.netlify/functions/chords ook werken bij `npm run dev` en `npm run preview` (zonder Netlify CLI).
+function netlifyFunctions() {
+  const mount = (server) => void server.middlewares.use('/.netlify/functions/chords', async (req, res) => {
+    try {
+      const mod = await import(new URL('./netlify/functions/chords.mjs', import.meta.url).href);
+      const r = await mod.default(new Request('http://localhost' + (req.originalUrl || req.url)));
+      res.statusCode = r.status;
+      r.headers.forEach((v, k) => res.setHeader(k, v));
+      res.end(await r.text());
+    } catch (err) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: err.message }));
+    }
+  });
+  return { name: 'netlify-functions', configureServer: mount, configurePreviewServer: mount };
+}
+
 export default defineConfig({
-  plugins: [precacheServiceWorker()],
+  plugins: [precacheServiceWorker(), netlifyFunctions()],
   build: { target: 'es2020', chunkSizeWarningLimit: 2500 },
   test: { environment: 'node' },
 });

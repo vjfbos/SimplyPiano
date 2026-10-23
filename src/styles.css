@@ -395,12 +395,16 @@ textarea.recording { border: 2px solid var(--terra); box-shadow: 0 0 0 3px color
 @media (min-width: 761px) { .sticky-actions { bottom: 0; } }
 .editor-keyboard { margin-top: 8px; }
 
-/* ---------- meespelen (Spotify) ---------- */
-.btn.spotify { background: #1db954; border-color: #1db954; color: #0b1f12; }
-.spotify-link { font-size: 0.85rem; font-weight: 700; color: #1a8f45; text-decoration: none; white-space: nowrap; }
-@media (prefers-color-scheme: dark) { .spotify-link { color: #1ed760; } }
-.spotify-setup ol li { margin: 6px 0; }
-code.copy { background: var(--paper-2); padding: 2px 6px; border-radius: 6px; word-break: break-all; }
+/* ---------- akkoorden ---------- */
+.source-link { font-size: 0.85rem; font-weight: 700; color: var(--green); text-decoration: none; white-space: nowrap; }
+.chord-sheet { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.95rem; line-height: 1.35; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; overflow-x: auto; margin: 12px 0; }
+.chord-sheet > div { white-space: pre; min-height: 1.35em; }
+.cs-section { font-family: var(--font); font-weight: 800; color: var(--green); margin-top: 10px; }
+.cs-chords { color: var(--terra); font-weight: 800; }
+.cs-chord { font: inherit; color: inherit; background: none; border: none; padding: 0; cursor: pointer; border-radius: 4px; }
+.cs-chord:hover, .cs-chord:focus-visible { background: color-mix(in srgb, var(--terra) 18%, transparent); }
+.chord-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chord-chips .chip { font-weight: 800; font-size: 1rem; }
 .track-card { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
 .track-card img, .sheet-list img, .sheet-head img { border-radius: 8px; object-fit: cover; flex: none; }
 .track-card > div { display: flex; flex-direction: column; min-width: 0; flex: 1; }

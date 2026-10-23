@@ -17,10 +17,11 @@ const QUALITIES = {
   6: [0, 4, 7, 9],
   m6: [0, 3, 7, 9],
   add9: [0, 4, 7, 2],
+  5: [0, 7], // powerchord
 };
 const ALIASES = { maj: '', min: 'm', '-': 'm', M7: 'maj7', '+': 'aug', sus: 'sus4' };
 const NOTE = '([A-G])(#|b)?';
-const CHORD_RE = new RegExp(`^${NOTE}(maj7|m7b5|dim7|add9|sus2|sus4|sus|maj|min|m6|m7|M7|dim|aug|m|7|6|\\+|-)?(?:/${NOTE})?$`);
+const CHORD_RE = new RegExp(`^${NOTE}(maj7|m7b5|dim7|add9|sus2|sus4|sus|maj|min|m6|m7|M7|dim|aug|m|7|6|5|\\+|-)?(?:/${NOTE})?$`);
 
 function pc(letter, acc) {
   return (ROOTS[letter] + (acc === '#' ? 1 : acc === 'b' ? -1 : 0) + 12) % 12;

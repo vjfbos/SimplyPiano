@@ -20,7 +20,7 @@ function open() {
       }
       // v2: eigen nummers (gedeeld door alle profielen op dit apparaat)
       if (!db.objectStoreNames.contains('songs')) db.createObjectStore('songs', { keyPath: 'id' });
-      // v3: akkoordenbladen om mee te spelen met Spotify (of een andere bron)
+      // v3: akkoordenbladen (gezocht, geplakt of zelf ingevoerd)
       if (!db.objectStoreNames.contains('chordsheets')) db.createObjectStore('chordsheets', { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);

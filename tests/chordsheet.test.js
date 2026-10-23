@@ -1,8 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { parseChordSheet, formatChordSheet, parseTime, chordIndexAt, matchChord, ChordScorer, isTimed } from '../src/core/chordsheet.js';
 import { parseChord } from '../src/core/chords.js';
-import { SpotifyClock, ManualClock } from '../src/spotify/clock.js';
-import { codeChallenge, redirectUri } from '../src/spotify/auth.js';
+import { ManualClock } from '../src/core/clock.js';
 
 describe('akkoordenblad', () => {
   it('leest akkoorden, herhalingen, kopjes en tijden', () => {
@@ -55,6 +54,8 @@ describe('akkoorden herkennen', () => {
     expect(matchChord([43, 60, 64, 67], 'C/G').ok).toBe(true);
     expect(parseChord('Dsus2')).not.toBeNull();
     expect(parseChord('F#m7b5')).not.toBeNull();
+    expect(matchChord([46, 60, 64, 67], 'C/Bb').ok).toBe(true); // basnoot buiten het akkoord
+    expect(matchChord([55, 62], 'G5').ok).toBe(true);
   });
 });
 
@@ -79,23 +80,6 @@ describe('score bij meespelen', () => {
 });
 
 describe('klokken', () => {
-  it('Spotify-klok rekent door tussen de updates', async () => {
-    let t = 1000;
-    const clock = new SpotifyClock({ fetcher: async () => ({ track: { id: 'x', durationMs: 200000 }, progressMs: 10000, isPlaying: true }), now: () => t, interval: 100000 });
-    const tracks = [];
-    clock.addEventListener('track', (e) => tracks.push(e.detail.id));
-    clock.start();
-    await new Promise((r) => setTimeout(r, 0));
-    t += 2500;
-    expect(clock.position()).toBeCloseTo(12.5);
-    clock.offset = -0.5;
-    expect(clock.position()).toBeCloseTo(12);
-    clock.nudge({ isPlaying: false });
-    t += 5000;
-    expect(clock.position()).toBeCloseTo(12);
-    expect(tracks).toEqual(['x']);
-    clock.stop();
-  });
   it('handmatige klok: start, pauze en spoelen', () => {
     let t = 0;
     const c = new ManualClock({ now: () => t });
@@ -107,15 +91,42 @@ describe('klokken', () => {
     expect(c.position()).toBe(3);
     c.seek(10);
     expect(c.position()).toBe(10);
+    c.base = -2; // aftellen
+    c.play();
+    t += 500;
+    expect(c.position()).toBe(-1.5);
   });
 });
 
-describe('Spotify-login', () => {
-  it('PKCE-challenge volgens RFC 7636', async () => {
-    expect(await codeChallenge('dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk')).toBe('E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM');
+describe('akkoord-verzamelaar', () => {
+  it('groepeert noten tot een pauze en negeert naklinkers na een goed akkoord', async () => {
+    const { ChordCollector } = await import('../src/core/chordsheet.js');
+    const c = new ChordCollector({ gap: 0.8, grace: 0.35 });
+    expect([...c.add(61, 0)]).toEqual([61]); // foute noot
+    expect([...c.add(58, 0.3)]).toEqual([61, 58]); // hoort nog bij dezelfde poging
+    const set = c.add(62, 1.5); // na een pauze: nieuwe poging zonder de foute noot
+    expect([...set]).toEqual([62]);
+    c.add(65, 1.6);
+    const ok = c.add(58, 1.7);
+    expect(matchChord(ok, 'Bb').ok).toBe(true);
+    c.success(ok, 1.7);
+    expect(c.add(65, 1.8)).toBeNull(); // naklinker van Bb
+    expect([...c.add(56, 1.9)]).toEqual([56]); // eerste noot van het volgende akkoord telt wel
+    c.success(new Set([60, 63, 67]), 3); // Cm goed
+    expect(c.add(63, 3.1, [], new Set([8, 0, 3]))).not.toBeNull(); // Es hoort ook bij Ab: niet negeren
+    expect(c.add(67, 3.15, [], new Set([8, 0, 3]))).toBeNull(); // G hoort niet bij Ab: naklinker
   });
-  it('redirect-URI gebruikt 127.0.0.1 in plaats van localhost', () => {
-    expect(redirectUri({ protocol: 'http:', hostname: 'localhost', port: '5173' })).toBe('http://127.0.0.1:5173/');
-    expect(redirectUri({ protocol: 'https:', hostname: 'piano.netlify.app', port: '' })).toBe('https://piano.netlify.app/');
+});
+
+describe('doorspelen na een misser', () => {
+  it('telt het akkoord als de laatste noten het vormen', async () => {
+    const { ChordCollector } = await import('../src/core/chordsheet.js');
+    const c = new ChordCollector();
+    let set;
+    for (const [m, t] of [[61, 0], [58, 0.2], [62, 0.4], [65, 0.6]]) set = c.add(m, t);
+    expect(matchChord(set, 'Bb').ok).toBe(false); // Db zit er nog in
+    const r = c.match('Bb', set);
+    expect(r.ok).toBe(true);
+    expect([...r.midis]).toEqual([58, 62, 65]);
   });
 });
